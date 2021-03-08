@@ -28,5 +28,10 @@ public class SemesterProfile {
     public void addDeadline(Deadline deadline) { deadlines.add(deadline); }
     public void addActivity(Activity activity) { activities.add(activity); }
     public void addTask(Task task) { tasks.add(task); }
+    /* Possibly only used when constructing -
+     * should user be able to add new exams, wouldn't the hub know and provide all of them
+     */
+    private void addExam(Exam exam) { exams.add(exam); }
+    private void addAssignments(Assignment assignment) { assignments.add(assignment); }
 
 }
