@@ -15,7 +15,10 @@ public class SemesterProfile {
     // Constructors
     public SemesterProfile(File profile) {
         /* Will create the semester profile from the file
-         * adding the exams, modules, assignments and deadlines provided.
+         * adding the modules, exams, assignments and deadlines provided.
+         * file explanation:
+         * first section denotes the type (M - module, E - exam, A - assignment, D - deadline)
+         * not all class attributes are loaded from the file such as tasks
          */
     }
 
@@ -33,5 +36,10 @@ public class SemesterProfile {
      */
     private void addExam(Exam exam) { exams.add(exam); }
     private void addAssignments(Assignment assignment) { assignments.add(assignment); }
+
+    public static void main(String[] args) {
+        // test harness
+
+    }
 
 }
