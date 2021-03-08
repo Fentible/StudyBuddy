@@ -10,4 +10,9 @@ public class Assignment {
 
     private String title;
     private LocalDateTime dueDate;
+
+    public Assignment(String title, LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+        this.title = title;
+    }
 }
