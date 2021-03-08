@@ -9,3 +9,5 @@ Software Engineering Coursework - Study Planner
   - what classes should be there
   - start of semester profile attributes and basic methods
   - ideas of what should be added to be added in comments
+  - added an example of how we may define the semester profile structure
+    - Type (M, E or A), Title (e.g. SoftwareEngineering),  Additional info {Due date, course code, etc}
