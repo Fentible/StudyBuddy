@@ -8,5 +8,6 @@ import java.time.LocalDateTime;
  */
 public class Exam {
 
-    LocalDateTime dueDate;
+    private String title;
+    private LocalDateTime dueDate;
 }
