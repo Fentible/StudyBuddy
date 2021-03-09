@@ -10,7 +10,6 @@ public class Assignment extends  Deadline {
 
 
     public Assignment(String title, LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-        this.title = title;
+        super(dueDate, title);
     }
 }

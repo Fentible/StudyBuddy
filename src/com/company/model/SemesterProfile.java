@@ -56,7 +56,7 @@ public class SemesterProfile {
                 case "E" -> {
                     title = readLine.next();
                     dueDate = LocalDateTime.parse(readLine.next(), formatter);
-                    Exam exam = new Exam(title, dueDate);
+                    Exam exam = new Exam(dueDate, title);
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
                     System.out.println("Adding exam: " + title);
@@ -140,9 +140,6 @@ public class SemesterProfile {
      * currently: user searches for object, selects then asks to delete
      */
     private boolean removeTask(Task task) { return this.tasks.remove(task); }
-
-
-
 
     // Helpers
 
