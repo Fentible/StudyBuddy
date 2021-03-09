@@ -1,6 +1,8 @@
 package com.company.model;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
@@ -37,7 +39,40 @@ public class Task {
     public String getTitle() { return this.title; }
     public String getNotes() { return this.notes; }
 
+    // Getters
+    public LocalDateTime getStart() { return start; }
+    public LocalDateTime getEnd() { return end; }
+    public int getProgress() { return progress; }
+    public Exam getExam() { return exam; }
+    public Assignment getAssignment() { return assignment; }
+    public Module getModule() { return module; }
+    public List<Task> getDependencies() { return dependencies; }
+    public List<Milestone> getMilestones() { return milestones; }
 
+    // Setters
+    /* User may make mistake when creating it the first time
+     * should be altered or current one destroyed and a new one inserted instead?
+     */
+    public void setTitle(String title) { this.title = title; }
+    public void setStart(LocalDateTime start) { this.start = start; }
+    public void setEnd(LocalDateTime end) { this.end = end; }
+    public void setProgress(int progress) { this.progress = progress; }
+    public void setNotes(String notes) { this.notes = notes; }
+    public void appendNotes(String notes) { this.notes = this.notes + notes; }
+    public void setExam(Exam exam) { this.exam = exam; }
+    public void setAssignment(Assignment assignment) { this.assignment = assignment; }
+    public void setModule(Module module) { this.module = module; }
+
+    // Add to lists
+    public void addDependencies(ArrayList<Task> dependencies) { this.dependencies.addAll(dependencies); }
+    public void addMilestones(ArrayList<Milestone> milestones) {this.milestones.addAll(milestones); }
+    public void addDependency(Task dependency) { this.dependencies.add(dependency); }
+    public void addMilestone(Milestone milestone) { this.milestones.add(milestone); }
+
+    public static void main(String[] args) {
+        // test harness
+        // note, intellij alt+ins create test class feature?
+    }
 
 
 }

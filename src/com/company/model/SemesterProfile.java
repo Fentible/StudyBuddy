@@ -17,11 +17,14 @@ public class SemesterProfile {
 
     private ArrayList<Task> tasks = new ArrayList<>();
     // private ArrayList<Reminder> reminders = new ArrayList<>();
-    private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Activity> activities = new ArrayList<>();
+    private ArrayList<Module> modules = new ArrayList<>();
+    /* although exam and assignments extends deadlines it may be beneficial to store them separately
+     * from generic deadlines for the purpose of searching and displaying them
+     */
+    private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
-    private ArrayList<Module> modules = new ArrayList<>();
 
     // Constructors
     public SemesterProfile(File profile) throws FileNotFoundException, InvalidParameterException {
@@ -30,8 +33,10 @@ public class SemesterProfile {
          * file explanation:
          * first section denotes the type (M - module, E - exam, A - assignment, D - deadline)
          * not all class attributes are loaded from the file such as tasks
+         * this current method requires all deadlines relating to modules to come afterwards rather
          */
-        String line, type, code, title;
+        String line, type, title;
+        String code = null;
         LocalDateTime dueDate;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         Scanner read = new Scanner(profile);
@@ -51,13 +56,17 @@ public class SemesterProfile {
                 case "E" -> {
                     title = readLine.next();
                     dueDate = LocalDateTime.parse(readLine.next(), formatter);
-                    this.addExam(new Exam(title, dueDate));
+                    Exam exam = new Exam(title, dueDate);
+                    this.addExam(exam);
+                    this.getModule(code).addDeadline(exam);
                     System.out.println("Adding exam: " + title);
                 }
                 case "A" -> {
                     title = readLine.next();
                     dueDate = LocalDateTime.parse(readLine.next(), formatter);
-                    this.addAssignment(new Assignment(title, dueDate));
+                    Assignment assignment = new Assignment(title, dueDate);
+                    this.addAssignment(assignment);
+                    this.getModule(code).addDeadline(assignment);
                     System.out.println("Adding assignment: " + title);
                 }
                 default -> {
@@ -98,6 +107,19 @@ public class SemesterProfile {
         return null;
     }
 
+    public Module getModule(String code) {
+        Pattern pattern = Pattern.compile(code, Pattern.CASE_INSENSITIVE);
+        for(Module mod : modules) {
+            Matcher matcher = pattern.matcher(mod.getCode());
+            boolean found = matcher.find();
+            if(found) {
+                return mod;
+            }
+        }
+        return null;
+    }
+
+
 
 
     // Setters/Adders
@@ -117,9 +139,7 @@ public class SemesterProfile {
     /* how to implement?
      * currently: user searches for object, selects then asks to delete
      */
-    private boolean removeTask(Task task) {
-        return this.tasks.remove(task);
-    }
+    private boolean removeTask(Task task) { return this.tasks.remove(task); }
 
 
 
