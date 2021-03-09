@@ -17,6 +17,10 @@ public class Module {
         this.code = code;
     }
 
+    public void addTask(Task task) { tasks.add(task); }
+    public void addMilestone(Milestone milestone) { milestones.add(milestone); }
+    public void addDeadline(Deadline deadline) { deadlines.add(deadline); }
+
     public String getType() { return this.type; }
     public String getCode() { return this.code; }
     /* displayGantt() */
