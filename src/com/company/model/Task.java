@@ -2,6 +2,7 @@ package com.company.model;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class Task {
     private List<Milestone> milestones;
 
     // Constructors
-    public Task(String title, LocalDateTime start, LocalDateTime end, int progress, String notes,
+    public Task(String title, String start, String end, int progress, String notes,
                 Exam exam, Assignment assignment, Module module, List<Task> tasks, List<Milestone> milestones) {
-        this.title = title; this.start = start; this.end = end; this.progress = progress; this.module = module;
-        this.exam = exam; this.assignment = assignment; this.dependencies = tasks; this.milestones = milestones;
-        this.notes = notes;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        this.start = LocalDateTime.parse(start, formatter);
+        this.start = LocalDateTime.parse(end, formatter);
+        this.title = title; this.progress = progress; this.module = module; this.exam = exam;
+        this.assignment = assignment; this.dependencies = tasks; this.milestones = milestones; this.notes = notes;
         /* How to handle nulls?
          * Likely a user wont input notes, progress, dependencies or milestones
          * a task may only belong to an assignment or exam, not both
