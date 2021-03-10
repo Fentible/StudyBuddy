@@ -17,3 +17,5 @@ Displaying the Gantt chart :: could use JFreeChart?
 + Task 4 :: implementation of sketch designs (layouts, window, parent windows)
 + Task 5 :: create dashboard
   - basic layout so far
++ Task 6 :: create profile class
+  - basics implemented, will find more methods needed as other tasks progress
