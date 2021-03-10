@@ -1,5 +1,6 @@
 package com.company.model;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 
 /*
@@ -9,5 +10,11 @@ import java.time.LocalDateTime;
 public class Assignment extends  Deadline {
 
 
-    public Assignment(String title, LocalDateTime dueDate) { super(dueDate, title); }
+    public Assignment(String title, String dueDate) { super(dueDate, title); }
+    public static void main(String[] args) {
+
+        Assignment assignment = new Assignment("SoftEng Report", "13-06-2021 12:00");
+        System.out.println(assignment.getDueDate());
+    }
+
 }

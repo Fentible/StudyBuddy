@@ -37,8 +37,6 @@ public class SemesterProfile {
          */
         String line, type, title;
         String code = null;
-        LocalDateTime dueDate;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         Scanner read = new Scanner(profile);
 
         while(read.hasNextLine()) {
@@ -55,16 +53,14 @@ public class SemesterProfile {
                 }
                 case "E" -> {
                     title = readLine.next();
-                    dueDate = LocalDateTime.parse(readLine.next(), formatter);
-                    Exam exam = new Exam(dueDate, title);
+                    Exam exam = new Exam(readLine.next(), title);
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
                     System.out.println("Adding exam: " + title);
                 }
                 case "A" -> {
                     title = readLine.next();
-                    dueDate = LocalDateTime.parse(readLine.next(), formatter);
-                    Assignment assignment = new Assignment(title, dueDate);
+                    Assignment assignment = new Assignment(title, readLine.next());
                     this.addAssignment(assignment);
                     this.getModule(code).addDeadline(assignment);
                     System.out.println("Adding assignment: " + title);
@@ -161,6 +157,8 @@ public class SemesterProfile {
         semesterProfile.removeTask(semesterProfile.getTask("tas"));
         if(semesterProfile.getTask("tas") == null)
             System.out.println("Task not found");
+
+
     }
 
 }

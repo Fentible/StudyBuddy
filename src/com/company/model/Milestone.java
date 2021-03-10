@@ -16,4 +16,6 @@ public class Milestone {
 
     public ArrayList<Task> getRequiredTasks() { return requiredTasks; }
     public Deadline getEvent() { return event; }
+
+
 }

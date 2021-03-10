@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  */
 public class Exam extends Deadline {
 
-    public Exam(LocalDateTime dueDate, String title) {
+    public Exam(String title, String dueDate) {
         super(dueDate, title);
     }
 
