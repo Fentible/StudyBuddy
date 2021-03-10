@@ -12,4 +12,6 @@ public class Deadline {
         this.title = title;
     }
 
+    public LocalDateTime getDueDate() { return dueDate; }
+    public String getTitle() { return title; }
 }

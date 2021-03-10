@@ -11,4 +11,5 @@ public class Exam extends Deadline {
     public Exam(LocalDateTime dueDate, String title) {
         super(dueDate, title);
     }
+
 }
