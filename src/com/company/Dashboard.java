@@ -1,16 +1,16 @@
 package com.company;
 
 import javafx.application.Application;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 
 public class Dashboard extends Application {
 
@@ -18,7 +18,7 @@ public class Dashboard extends Application {
     Stage window;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         window = stage;
         window.setTitle("StudyBuddy - Dashboard");
@@ -51,7 +51,7 @@ public class Dashboard extends Application {
         Button[] sideButtons = new Button[8];
         for(int i = 0; i < buttons.length; i++) {
             buttons[i] = new Button("Button " + i);
-            vbox.getChildren().add(buttons[i]);
+            vbox.getChildren().add(sideButtons[i]);
         }
 
         // Menu bar
