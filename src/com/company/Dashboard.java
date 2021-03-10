@@ -49,8 +49,8 @@ public class Dashboard extends Application {
         vbox.setSpacing(8);
         // Only for testing
         Button[] sideButtons = new Button[8];
-        for(int i = 0; i < buttons.length; i++) {
-            buttons[i] = new Button("Button " + i);
+        for(int i = 0; i < sideButtons.length; i++) {
+            sideButtons[i] = new Button("Button " + i);
             vbox.getChildren().add(sideButtons[i]);
         }
 
