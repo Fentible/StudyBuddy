@@ -4,13 +4,11 @@ import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import javax.swing.text.DateFormatter;
@@ -48,25 +46,37 @@ public class Dashboard extends Application {
         ScrollPane box = new ScrollPane();
         box.setPrefViewportHeight(100);
         VBox container = new VBox();
+        box.setMinWidth(170);
+        box.setMinHeight(170);
         for(Task task : tasks) {
             VBox vbox = new VBox();
+            vbox.setMinWidth(150);
             vbox.setStyle(layout);
             Label title = new Label(task.getTitle());
             Label time = new Label(task.getEnd().toLocalTime().toString());
             Button edit = new Button("Edit");
+            // edit.setOnAction(e -> openEditWindow);
+            vbox.setAlignment(Pos.CENTER);
+            VBox.setMargin(vbox, new Insets(5, 5, 0, 5));
+            vbox.setSpacing(5);
             vbox.getChildren().addAll(title, time, edit);
             vBoxes.add(vbox);
         }
+        container.setAlignment(Pos.CENTER);
         dateLabel = new Label(date.toString());
+        container.getChildren().add(dateLabel);
         for(VBox vbox : vBoxes) {
             container.getChildren().add(vbox);
         }
-        container.getChildren().add(dateLabel);
+        dateLabel.setPadding(new Insets(5, 5, 5, 5));
+        box.setFitToWidth(true);
+
         box.setContent(container);
         return box;
     }
 
     private TilePane populateCalender(TilePane tile, int month, int year) {
+
 
         LocalDate start = LocalDate.of(year, month, 1);
         LocalDate end = LocalDate.of(year, month, start.lengthOfMonth());
@@ -93,7 +103,6 @@ public class Dashboard extends Application {
 
 
         // TilePane for calender
-
         tile.setPadding(new Insets(10, 5, 5, 5));
         tile.setVgap(4);
         tile.setHgap(4);
@@ -105,10 +114,14 @@ public class Dashboard extends Application {
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
+        vbox.setAlignment(Pos.CENTER);
         // Only for testing
         Button[] sideButtons = new Button[8];
         for(int i = 0; i < sideButtons.length; i++) {
-            sideButtons[i] = new Button("Button " + i);
+            Button button = new Button("Button " + i);
+            button.setMinWidth(200);
+            button.setMinHeight(75);
+            sideButtons[i] = button;
             vbox.getChildren().add(sideButtons[i]);
         }
 
@@ -124,6 +137,8 @@ public class Dashboard extends Application {
         Button next = new Button("Next ->");
         Button prev = new Button("<- Prev ");
         HBox options = new HBox();
+        options.setAlignment(Pos.TOP_CENTER);
+        options.setPadding(new Insets(0, 0, 10, 0));
         options.getChildren().addAll(prev, next);
 
         year = LocalDate.now().getYear();
@@ -152,7 +167,6 @@ public class Dashboard extends Application {
                 populateCalender(tile, this.month, this.year);
             }
         });
-
 
         borderPane.setBottom(options);
         borderPane.setTop(menuVBox);
