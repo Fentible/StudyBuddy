@@ -53,7 +53,7 @@ public class SemesterProfile {
                 }
                 case "E" -> {
                     title = readLine.next();
-                    Exam exam = new Exam(readLine.next(), title);
+                    Exam exam = new Exam(title, readLine.next());
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
                     System.out.println("Adding exam: " + title);
@@ -151,8 +151,8 @@ public class SemesterProfile {
             System.out.println(" Code " + module.getType());
         }
         // Add, get, remove
-        semesterProfile.addTask(new Task("task1", null, null, 0, "This be notes", null,
-                null, null, null, null));
+        semesterProfile.addTask(new Task("task1", "18-04-2021 16:00", "18-04-2021 16:00", 0,
+                "This be notes", null, null, null, null, null));
         System.out.println(semesterProfile.getTask("tas").getNotes());
         semesterProfile.removeTask(semesterProfile.getTask("tas"));
         if(semesterProfile.getTask("tas") == null)
