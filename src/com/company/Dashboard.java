@@ -132,10 +132,11 @@ public class Dashboard extends Application {
         next.setOnAction(actionEvent -> {
             tile.getChildren().clear();
             if(this.month + 1 != 13) {
-                populateCalender(tile, this.month++, this.year);
+                this.month = this.month + 1;
+                populateCalender(tile, this.month, this.year);
             } else {
                 this.month = 1;
-                this.year++;
+                this.year = this.year + 1;
                 populateCalender(tile, this.month, this.year);
             }
         });
@@ -143,10 +144,11 @@ public class Dashboard extends Application {
         prev.setOnAction(actionEvent -> {
             tile.getChildren().clear();
             if(this.month - 1 != 0) {
-                populateCalender(tile, this.month--, this.year);
+                this.month = this.month - 1;
+                populateCalender(tile, this.month, this.year);
             } else {
                 this.month = 12;
-                this.year--;
+                this.year = this.year - 1;
                 populateCalender(tile, this.month, this.year);
             }
         });
