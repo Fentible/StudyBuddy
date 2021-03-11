@@ -1,11 +1,16 @@
 package com.company.model;
 
+import com.company.Dashboard;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.InvalidParameterException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,6 +108,16 @@ public class SemesterProfile {
         return null;
     }
 
+    public ArrayList<Task> getTasksFromDate(LocalDate date) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for(Task task : this.tasks) {
+            if(task.getEnd().toLocalDate().compareTo(date) == 0) {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
     public Module getModule(String code) {
         Pattern pattern = Pattern.compile(code, Pattern.CASE_INSENSITIVE);
         for(Module mod : modules) {
@@ -153,11 +168,18 @@ public class SemesterProfile {
         // Add, get, remove
         semesterProfile.addTask(new Task("task1", "18-04-2021 16:00", "18-04-2021 16:00", 0,
                 "This be notes", null, null, null, null, null));
+
         System.out.println(semesterProfile.getTask("tas").getNotes());
-        semesterProfile.removeTask(semesterProfile.getTask("tas"));
+        // semesterProfile.removeTask(semesterProfile.getTask("tas"));
         if(semesterProfile.getTask("tas") == null)
             System.out.println("Task not found");
+        Dashboard dashboard = new Dashboard(semesterProfile);
+        List<LocalDate> dates = dashboard.getDates(LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 19));
 
+       ArrayList<Task> tasks = semesterProfile.getTasksFromDate(dates.get(dates.size() - 1));
+       for(Task task : tasks) {
+           System.out.println(task.getTitle());
+       }
 
     }
 

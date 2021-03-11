@@ -28,7 +28,7 @@ public class Task {
                 Exam exam, Assignment assignment, Module module, List<Task> tasks, List<Milestone> milestones) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         this.start = LocalDateTime.parse(start, formatter);
-        this.start = LocalDateTime.parse(end, formatter);
+        this.end = LocalDateTime.parse(end, formatter);
         this.title = title; this.progress = progress; this.module = module; this.exam = exam;
         this.assignment = assignment; this.dependencies = tasks; this.milestones = milestones; this.notes = notes;
         /* How to handle nulls?
