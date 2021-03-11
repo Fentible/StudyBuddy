@@ -15,6 +15,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        stage.setHeight(1000);
+        stage.setWidth(1500);
+        stage.setResizable(false);
         File file = new File("src/com/company/model/test_semester_profile"); // construct profile
         SemesterProfile semesterProfile = new SemesterProfile(file);
         semesterProfile.addTask(new Task("Title", "15-04-2021 16:00", "15-04-2021 16:00",
