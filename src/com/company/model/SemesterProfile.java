@@ -2,16 +2,12 @@ package com.company.model;
 
 import com.company.Dashboard;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
+import java.io.*;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,10 +28,12 @@ public class SemesterProfile implements Serializable {
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
+    private String saveFileLocation = "src/com/company/model/";
+    private Properties properties = new Properties();
 
 
     // Constructors
-    public SemesterProfile(File profile) throws FileNotFoundException, InvalidParameterException {
+    public SemesterProfile(File profile, Properties properties) throws IOException, InvalidParameterException {
         /* Will create the semester profile from the file
          * adding the modules, exams, assignments and deadlines provided.
          * file explanation:
@@ -46,7 +44,7 @@ public class SemesterProfile implements Serializable {
         String line, type, title;
         String code = null;
         Scanner read = new Scanner(profile);
-
+        this.properties = properties;
         while(read.hasNextLine()) {
             line = read.nextLine();
             Scanner readLine = new Scanner(line);
@@ -95,6 +93,7 @@ public class SemesterProfile implements Serializable {
     public ArrayList<Deadline> getDeadlines() { return this.deadlines; }
     public ArrayList<Activity> getActivities() { return this.activities; }
     public ArrayList<Module> getModules() { return this.modules; }
+    public String getSaveFileLocation() { return this.saveFileLocation; }
 
     /* Collection of functions for finding  from a list given a filter
      * e.g. find all tasks that have a specific date
@@ -187,14 +186,55 @@ public class SemesterProfile implements Serializable {
     private boolean removeTask(Task task) { return this.tasks.remove(task); }
 
     // Helpers
-    public void saveFile() {}
+    public void saveFile() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/com/company/model/profile.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+            this.saveFileLocation = "src/com/company/model";
+            this.properties.setProperty("location", "src/com/company/model/profile.ser");
+            updatePropertiesFile();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    public void saveFile(String location) {
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(location + "\\profile.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+            this.saveFileLocation = location;
+            this.properties.setProperty("location", location + "\\profile.ser");
+            updatePropertiesFile();
+        } catch (IOException i) {
+            System.out.println("Save failed!");
+            i.printStackTrace();
+        }
+    }
+
+    public void updatePropertiesFile() throws FileNotFoundException {
+        try (OutputStream outputStream = new FileOutputStream("src/com/company/model/config.properties")) {
+            this.properties.store(outputStream, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-    public static void main(String[] args) throws FileNotFoundException {
+
+    public static void main(String[] args) throws IOException {
         // test harness
         // File reading and construction
         File file = new File("src/com/company/model/test_semester_profile"); // construct profile
-        SemesterProfile semesterProfile = new SemesterProfile(file);
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("src/com/company/model/config.properties"));
+        SemesterProfile semesterProfile = new SemesterProfile(file, properties);
         for(Module module : semesterProfile.getModules()) { // check file is read and inputted correctly
             System.out.println("Type " + module.getCode());
             System.out.println(" Code " + module.getType());

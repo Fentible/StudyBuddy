@@ -3,6 +3,7 @@ package com.company;
 import com.company.model.CalenderDisplayType;
 import com.company.model.CalenderModelClass;
 import com.company.model.SemesterProfile;
+import com.sun.marlin.FloatArrayCache;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class Dashboard extends Application {
     }
 
     /*
-     * Generates a calender box with date and items. Each item is in a vbox which are added to a scrollpane
+     * Generates a calender box with date and items. Each item is in a vbox which are added to a scrollPane
      */
     public ScrollPane getCalenderBox(ArrayList<CalenderModelClass> displayItems, LocalDate date) {
         String layout = "-fx-border-color: gray;\n" +
@@ -56,7 +58,7 @@ public class Dashboard extends Application {
         ScrollPane box = new ScrollPane();
         box.setPrefViewportHeight(100);
         VBox container = new VBox();
-        box.setMinWidth(170);
+        box.setMinWidth(200);
         box.setMinHeight(170);
         for(CalenderModelClass items : displayItems) {
             VBox vbox = new VBox();
@@ -106,18 +108,15 @@ public class Dashboard extends Application {
      * Alert box to confirm and to select to save or not?
      * Save is currently only serialising
      */
-    public void closeProgram() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("src/com/company/model/profile.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this.semesterProfile);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
+    public void saveOption() throws IOException {
+        SaveDialogBox saveDialogBox = new SaveDialogBox();
+        saveDialogBox.Display("Save", "Do you want to save?");
+        if(SaveDialogBox.location != null) {
+            semesterProfile.saveFile(SaveDialogBox.location);
         }
-        window.close();
     }
+
+
 
     @Override
     public void start(Stage stage) {
@@ -125,8 +124,7 @@ public class Dashboard extends Application {
         // Default calender view
         displayOption = CalenderDisplayType.TASKS;
         window.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
+            semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
         });
 
         window.setTitle("StudyBuddy - Dashboard");
@@ -195,10 +193,18 @@ public class Dashboard extends Application {
         // Menu bar
         MenuBar menuBar = new MenuBar();
         Menu file = new Menu("File");
-        MenuItem openFile = new MenuItem("Open File");
+        MenuItem openFile = new MenuItem("Load File");
+        MenuItem saveFile = new MenuItem("Save File");
+        saveFile.setOnAction(e -> {
+            try {
+                saveOption();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         Menu displayMenu = new Menu("Display");
         displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
-        file.getItems().add(openFile);
+        file.getItems().addAll(openFile, saveFile);
         menuBar.getMenus().addAll(file, displayMenu);
         VBox menuVBox= new VBox(menuBar);
 

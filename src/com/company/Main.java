@@ -7,9 +7,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Properties;
 
 public class Main extends Application {
 
+
+    private Properties getFileProperties() throws IOException {
+
+        try (InputStream input = new FileInputStream("src/com/company/model/config.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            return prop;
+        } catch (IOException ex) {
+            Properties properties = new Properties();
+            properties.setProperty("location", "src/com/company/model/profile.ser");
+            properties.store(new FileWriter("src/com/company/model/config.properties"), "Default file not found, one created");
+            return null;
+        }
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -17,10 +32,16 @@ public class Main extends Application {
         stage.setWidth(1500);
         stage.setResizable(false);
         SemesterProfile semesterProfile = null;
-        File inFile = new File("src/com/company/model/profile.ser");
+        Properties properties = getFileProperties();
+        File inFile;
+        if(properties != null) {
+            inFile = new File(properties.getProperty("location"));
+        } else {
+            inFile = new File("src/com/company/model/profile.ser");
+        }
         if(inFile.exists()) {
             try {
-                FileInputStream fileIn = new FileInputStream("src/com/company/model/profile.ser");
+                FileInputStream fileIn = new FileInputStream(inFile);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 semesterProfile = (SemesterProfile) in.readObject();
                 in.close();
@@ -36,7 +57,7 @@ public class Main extends Application {
         } else { // If not save is found, try to find semester profile
             // Will allow user to load file and specify location from dashboard or splash screen eventually
             File newFile = new File("src/com/company/model/test_semester_profile"); // construct profile
-            semesterProfile = new SemesterProfile(newFile);
+            semesterProfile = new SemesterProfile(newFile, properties);
             semesterProfile.addTask(new Task("Title", "15-04-2021 16:00", "15-04-2021 16:00",
                     0, "", null, null, null, null, null));
             semesterProfile.addTask(new Task("Title", "16-04-2021 16:00", "16-04-2021 16:00",
@@ -46,6 +67,8 @@ public class Main extends Application {
         dashboard.start(stage);
 
     }
+
+
 
     public static void main(String[] args) throws FileNotFoundException { launch(args); }
 }
