@@ -151,11 +151,11 @@ public class Dashboard extends Application {
         vbox.setSpacing(8);
         vbox.setAlignment(Pos.CENTER);
         // Only for testing
-        Button[] sideButtons = new Button[8];
+        Button[] sideButtons = new Button[4];
         for(int i = 0; i < sideButtons.length; i++) {
             Button button = new Button("Button " + i);
             button.setMinWidth(200);
-            button.setMinHeight(75);
+            button.setMinHeight(150);
             sideButtons[i] = button;
             vbox.getChildren().add(sideButtons[i]);
         }
