@@ -204,13 +204,13 @@ public class SemesterProfile implements Serializable {
     public void saveFile(String location) {
 
         try {
-            FileOutputStream fileOut = new FileOutputStream(location + "\\profile.ser");
+            FileOutputStream fileOut = new FileOutputStream(location);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
             fileOut.close();
             this.saveFileLocation = location;
-            this.properties.setProperty("location", location + "\\profile.ser");
+            this.properties.setProperty("location", location);
             updatePropertiesFile();
         } catch (IOException i) {
             System.out.println("Save failed!");
