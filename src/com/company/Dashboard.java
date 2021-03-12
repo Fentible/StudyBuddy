@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,7 +73,8 @@ public class Dashboard extends Application {
             vBoxes.add(vbox);
         }
         container.setAlignment(Pos.CENTER);
-        dateLabel = new Label(date.toString());
+
+        dateLabel = new Label(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         container.getChildren().add(dateLabel);
         for(VBox vbox : vBoxes) {
             container.getChildren().add(vbox);
