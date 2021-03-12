@@ -1,11 +1,14 @@
 package com.company.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Milestone {
+public class Milestone implements CalenderModelClass {
 
     private ArrayList<Task> requiredTasks = new ArrayList<>();
     private Deadline event; // what the milestone is working towards
+    String title;
+    LocalDateTime end;
 
     // Constructors
     public Milestone(Deadline event) { this.event = event; }
@@ -18,4 +21,9 @@ public class Milestone {
     public Deadline getEvent() { return event; }
 
 
+    @Override
+    public String getTitle() { return title; }
+
+    @Override
+    public LocalDateTime getEnd() { return end; }
 }

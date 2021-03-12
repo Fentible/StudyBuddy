@@ -24,12 +24,14 @@ public class SemesterProfile {
     // private ArrayList<Reminder> reminders = new ArrayList<>();
     private ArrayList<Activity> activities = new ArrayList<>();
     private ArrayList<Module> modules = new ArrayList<>();
+    private ArrayList<Milestone> milestones = new ArrayList<>();
     /* although exam and assignments extends deadlines it may be beneficial to store them separately
      * from generic deadlines for the purpose of searching and displaying them
      */
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
+
 
     // Constructors
     public SemesterProfile(File profile) throws FileNotFoundException, InvalidParameterException {
@@ -116,6 +118,39 @@ public class SemesterProfile {
             }
         }
         return tasks;
+    }
+
+    /*
+     * Probably a better way of doing this
+     */
+    public ArrayList<CalenderModelClass> getItemsFromDate(LocalDate date, CalenderDisplayType type) {
+        ArrayList<CalenderModelClass> items = new ArrayList<>();
+        if(type == CalenderDisplayType.ACTIVITIES) {
+            for (Activity temp : this.activities) {
+                if (temp.getEnd().toLocalDate().compareTo(date) == 0) {
+                    items.add(temp);
+                }
+            }
+        } else if(type == CalenderDisplayType.DEADLINES) {
+            for (Deadline temp : this.deadlines) {
+                if (temp.getEnd().toLocalDate().compareTo(date) == 0) {
+                    items.add(temp);
+                }
+            }
+        } else if(type == CalenderDisplayType.MILESTONES) {
+            for (Milestone temp : this.milestones) {
+                if (temp.getEnd().toLocalDate().compareTo(date) == 0) {
+                    items.add(temp);
+                }
+            }
+        } else if(type == CalenderDisplayType.TASKS){
+            for (Task temp : this.tasks) {
+                if (temp.getEnd().toLocalDate().compareTo(date) == 0) {
+                    items.add(temp);
+                }
+            }
+        }
+        return items;
     }
 
     public Module getModule(String code) {

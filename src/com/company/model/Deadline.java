@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Deadline {
+public class Deadline implements CalenderModelClass {
 
     protected LocalDateTime dueDate;
     protected String title;
@@ -17,4 +17,7 @@ public class Deadline {
 
     public LocalDateTime getDueDate() { return dueDate; }
     public String getTitle() { return title; }
+
+    @Override
+    public LocalDateTime getEnd() { return dueDate; }
 }

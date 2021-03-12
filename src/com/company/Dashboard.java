@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.model.CalenderDisplayType;
+import com.company.model.CalenderModelClass;
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.application.Application;
@@ -25,9 +27,11 @@ import java.util.stream.Collectors;
 public class Dashboard extends Application {
 
 
-    SemesterProfile semesterProfile;
-    int year, month;
-    TilePane tile = new TilePane();
+    private CalenderDisplayType displayOption;
+    private SemesterProfile semesterProfile;
+    private int year, month;
+    private TilePane tile = new TilePane();
+
 
     public Dashboard(SemesterProfile semesterProfile) { this.semesterProfile = semesterProfile; }
 
@@ -36,7 +40,7 @@ public class Dashboard extends Application {
                 .collect(Collectors.toList());
     }
 
-    public ScrollPane getCalenderBox(ArrayList<Task> tasks, LocalDate date) {
+    public ScrollPane getCalenderBox(ArrayList<CalenderModelClass> displayItems, LocalDate date) {
         String layout = "-fx-border-color: gray;\n" +
                 "-fx-border-insets: 1;\n" +
                 "-fx-border-width: 1;\n" +
@@ -48,12 +52,12 @@ public class Dashboard extends Application {
         VBox container = new VBox();
         box.setMinWidth(170);
         box.setMinHeight(170);
-        for(Task task : tasks) {
+        for(CalenderModelClass items : displayItems) {
             VBox vbox = new VBox();
             vbox.setMinWidth(150);
             vbox.setStyle(layout);
-            Label title = new Label(task.getTitle());
-            Label time = new Label(task.getEnd().toLocalTime().toString());
+            Label title = new Label(items.getTitle());
+            Label time = new Label(items.getEnd().toLocalTime().toString());
             Button edit = new Button("Edit");
             // edit.setOnAction(e -> openEditWindow);
             vbox.setAlignment(Pos.CENTER);
@@ -75,24 +79,24 @@ public class Dashboard extends Application {
         return box;
     }
 
-    private TilePane populateCalender(TilePane tile, int month, int year) {
-
+    private void populateCalender(TilePane tile, int month, int year) {
 
         LocalDate start = LocalDate.of(year, month, 1);
         LocalDate end = LocalDate.of(year, month, start.lengthOfMonth());
         List<LocalDate> dates = this.getDates(start, end);
         ScrollPane[] calenderBoxes = new ScrollPane[dates.size()];
         for(int i = 0; i < calenderBoxes.length; i++) {
-            calenderBoxes[i] = getCalenderBox(semesterProfile.getTasksFromDate(dates.get(i)), dates.get(i));
+            calenderBoxes[i] = getCalenderBox(semesterProfile.getItemsFromDate(dates.get(i), displayOption), dates.get(i));
             tile.getChildren().add(calenderBoxes[i]);
         }
-        return tile;
+        return;
 
     }
 
     @Override
     public void start(Stage stage) {
-
+        // Default calender view
+        displayOption = CalenderDisplayType.TASKS;
 
         stage.setTitle("StudyBuddy - Dashboard");
         stage.setMinWidth(1000);
@@ -125,13 +129,49 @@ public class Dashboard extends Application {
             vbox.getChildren().add(sideButtons[i]);
         }
 
+        // View type toggle buttons
+        ToggleGroup toggleGroup = new ToggleGroup();
+        RadioMenuItem activitiesButton = new RadioMenuItem("Activities");
+        activitiesButton.setOnAction(actionEvent -> {
+            tile.getChildren().clear();
+            displayOption = CalenderDisplayType.ACTIVITIES;
+            populateCalender(tile, this.month, this.year);
+        });
+        activitiesButton.setToggleGroup(toggleGroup);
+        RadioMenuItem tasksButton = new RadioMenuItem("Tasks");
+        tasksButton.setOnAction(actionEvent -> {
+            tile.getChildren().clear();
+            displayOption = CalenderDisplayType.TASKS;
+            populateCalender(tile, this.month, this.year);
+        });
+        tasksButton.setToggleGroup(toggleGroup);
+        RadioMenuItem milestonesButton = new RadioMenuItem("Milestones");
+        milestonesButton.setOnAction(actionEvent -> {
+            tile.getChildren().clear();
+            displayOption = CalenderDisplayType.MILESTONES;
+            populateCalender(tile, this.month, this.year);
+        });
+        milestonesButton.setToggleGroup(toggleGroup);
+        RadioMenuItem deadlinesButton = new RadioMenuItem("Deadlines");
+        deadlinesButton.setOnAction(actionEvent -> {
+            tile.getChildren().clear();
+            displayOption = CalenderDisplayType.DEADLINES;
+            populateCalender(tile, this.month, this.year);
+        });
+        tasksButton.setSelected(true);
+        deadlinesButton.setToggleGroup(toggleGroup);
+
         // Menu bar
         MenuBar menuBar = new MenuBar();
         Menu file = new Menu("File");
         MenuItem openFile = new MenuItem("Open File");
+        Menu displayMenu = new Menu("Display");
+        displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
         file.getItems().add(openFile);
-        menuBar.getMenus().add(file);
+        menuBar.getMenus().addAll(file, displayMenu);
         VBox menuVBox= new VBox(menuBar);
+
+
 
         // Change calender
         Button next = new Button("Next ->");
@@ -143,7 +183,7 @@ public class Dashboard extends Application {
 
         year = LocalDate.now().getYear();
         month = LocalDate.now().getMonthValue();
-        tile = populateCalender(tile, month, year);
+        populateCalender(tile, month, year);
         next.setOnAction(actionEvent -> {
             tile.getChildren().clear();
             if(this.month + 1 != 13) {

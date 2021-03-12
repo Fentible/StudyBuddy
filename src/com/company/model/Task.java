@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task {
+public class Task implements CalenderModelClass {
 
     // 'Generic' attributes
     private String title;
