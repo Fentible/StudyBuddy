@@ -13,9 +13,10 @@ Software Engineering Coursework - Study Planner
     - Type (M, E or A), Title (e.g. SoftwareEngineering),  Additional info {Due date, course code, etc}
     - deadlines (exams and assigments) come after the module line so that associated them is done easily in the constructor
   - exams and assignments now extend deadline, generic/user made deadlines may be required later on
-Displaying the Gantt chart :: could use JFreeChart? 
 + Task 4 :: implementation of sketch designs (layouts, window, parent windows)
 + Task 5 :: create dashboard
   - basic layout so far
+  - functionality to choose between viewing tasks, activites, milestones or deadlines
 + Task 6 :: create profile class
   - basics implemented, will find more methods needed as other tasks progress
+  - saving and loading is currently done with basic serialising for testing
