@@ -4,6 +4,7 @@ import com.company.Dashboard;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 /* primarily for handling and storing data, no view or controller is necessary
  * other classes shall query, insert and delete data then provide views appropriately
  */
-public class SemesterProfile {
+public class SemesterProfile implements Serializable {
 
     private ArrayList<Task> tasks = new ArrayList<>();
     // private ArrayList<Reminder> reminders = new ArrayList<>();
@@ -166,8 +167,6 @@ public class SemesterProfile {
     }
 
 
-
-
     // Setters/Adders
     /* Adding an element to the appropriate list */
     public void addDeadline(Deadline deadline) { deadlines.add(deadline); }
@@ -188,7 +187,7 @@ public class SemesterProfile {
     private boolean removeTask(Task task) { return this.tasks.remove(task); }
 
     // Helpers
-
+    public void saveFile() {}
 
 
     public static void main(String[] args) throws FileNotFoundException {

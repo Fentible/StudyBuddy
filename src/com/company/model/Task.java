@@ -1,12 +1,13 @@
 package com.company.model;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task implements CalenderModelClass {
+public class Task implements CalenderModelClass, Serializable {
 
     // 'Generic' attributes
     private String title;

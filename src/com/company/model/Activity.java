@@ -1,9 +1,10 @@
 package com.company.model;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Activity implements CalenderModelClass {
+public class Activity implements CalenderModelClass, Serializable {
 
     ActivityType type;
     int contribution;

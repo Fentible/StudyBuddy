@@ -1,8 +1,9 @@
 package com.company.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Module {
+public class Module implements Serializable {
 
 
     private String type;

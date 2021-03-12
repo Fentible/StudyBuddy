@@ -1,9 +1,10 @@
 package com.company.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Milestone implements CalenderModelClass {
+public class Milestone implements CalenderModelClass, Serializable {
 
     private ArrayList<Task> requiredTasks = new ArrayList<>();
     private Deadline event; // what the milestone is working towards
