@@ -62,8 +62,10 @@ public class Dashboard extends Application {
             Label title = new Label(items.getTitle());
             Label time = new Label(items.getEnd().toLocalTime().toString());
             Button edit = new Button("Edit");
+
             // edit.setOnAction(e -> openEditWindow);
             vbox.setAlignment(Pos.CENTER);
+            vbox.setPadding(new Insets(0,0,5,0));
             VBox.setMargin(vbox, new Insets(5, 5, 0, 5));
             vbox.setSpacing(5);
             vbox.getChildren().addAll(title, time, edit);
