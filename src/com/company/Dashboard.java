@@ -36,7 +36,7 @@ public class Dashboard extends Application {
 
 
     public List<LocalDate> getDates(LocalDate start, LocalDate end) {
-        return start.datesUntil(end)
+        return start.datesUntil(end.plusDays(1))
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +53,7 @@ public class Dashboard extends Application {
         ScrollPane box = new ScrollPane();
         box.setPrefViewportHeight(100);
         VBox container = new VBox();
-        box.setMinWidth(200);
+        box.setMinWidth(175);
         box.setMinHeight(170);
         for(CalenderModelClass items : displayItems) {
             VBox vbox = new VBox();
