@@ -1,5 +1,6 @@
 package com.company;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class SaveDialogBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);
+        window.setMinHeight(200);
         Label label = new Label(message);
 
         Button saveButton = new Button("Save");
@@ -53,10 +55,12 @@ public class SaveDialogBox {
             window.close();
         });
 
-        VBox layout = new VBox(10);
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(cancelButton, saveButton, directorySelect);
-        layout.getChildren().addAll(label, inputLocation, hBox);
+        VBox layout = new VBox(20);
+        HBox buttons = new HBox(10);
+        buttons.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5,10,5,10));
+        buttons.getChildren().addAll(cancelButton, saveButton, directorySelect);
+        layout.getChildren().addAll(label, inputLocation, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
