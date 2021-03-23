@@ -22,5 +22,4 @@ Software Engineering Coursework - Study Planner
   - saving and loading is currently done with basic serialising for testing
 + Task 7 :: create 'add' classes
   - add Task class - basic blank checking, needs more incorrect input checking (+ error messages/alerts)
-  - allows task to be assigned to an exam in one module but assigned to a different module i.e. assigned to maths module but assigned to the
-  electronics exam. need way to restrict or filter these sections once one has been selected.
+  - module must be selected before choosing related assignment and/or exam
