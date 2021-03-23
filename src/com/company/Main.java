@@ -41,6 +41,7 @@ public class Main extends Application {
         }
         if(inFile.exists()) {
             try {
+                System.out.println("Loading saved file");
                 FileInputStream fileIn = new FileInputStream(inFile);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 semesterProfile = (SemesterProfile) in.readObject();
@@ -56,6 +57,7 @@ public class Main extends Application {
             }
         } else { // If not save is found, try to find semester profile
             // Will allow user to load file and specify location from dashboard or splash screen eventually
+            System.out.println("New File Being Created");
             File newFile = new File("src/com/company/model/test_semester_profile"); // construct profile
             semesterProfile = new SemesterProfile(newFile, properties);
             semesterProfile.addTask(new Task("Title", "15-04-2021 16:00", "15-04-2021 16:00",

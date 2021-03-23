@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Module implements Serializable {
 
 
-    private String type;
+    private String title;
     private String code;
     private ArrayList<Task> tasks = new ArrayList<>();
     private ArrayList<Milestone> milestones = new ArrayList<>();
@@ -14,13 +14,13 @@ public class Module implements Serializable {
 
     /* Constructor used when reading in the file */
     public Module(String type, String code) {
-        this.type = type;
+        this.title = type;
         this.code = code;
     }
 
     public Module(String type, String code, ArrayList<Task> tasks,
                   ArrayList<Milestone> milestones, ArrayList<Deadline> deadlines) {
-        this.type = type; this.code = code; this.tasks = tasks;
+        this.title = type; this.code = code; this.tasks = tasks;
         this.milestones = milestones; this.deadlines = deadlines;
     }
 
@@ -28,7 +28,7 @@ public class Module implements Serializable {
     public void addMilestone(Milestone milestone) { milestones.add(milestone); }
     public void addDeadline(Deadline deadline) { deadlines.add(deadline); }
 
-    public String getType() { return this.type; }
+    public String getTitle() { return this.title; }
     public String getCode() { return this.code; }
     /* displayGantt() */
     public ArrayList<Task> getTasks() { return tasks; }

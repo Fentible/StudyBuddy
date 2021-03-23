@@ -30,6 +30,7 @@ public class SemesterProfile implements Serializable {
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/";
     private Properties properties = new Properties();
+    private static final long serialVersionUID = 6529685098267757690L;
 
 
     // Constructors
@@ -90,6 +91,9 @@ public class SemesterProfile implements Serializable {
      * Generic getters for retrieving attributes
      */
     public ArrayList<Task> getTasks() { return this.tasks; }
+    public ArrayList<Milestone> getMilestones() { return this.milestones; }
+    public ArrayList<Exam> getExams() { return this.exams; }
+    public ArrayList<Assignment> getAssignments() { return assignments; }
     public ArrayList<Deadline> getDeadlines() { return this.deadlines; }
     public ArrayList<Activity> getActivities() { return this.activities; }
     public ArrayList<Module> getModules() { return this.modules; }
@@ -213,7 +217,7 @@ public class SemesterProfile implements Serializable {
             this.properties.setProperty("location", location);
             updatePropertiesFile();
         } catch (IOException i) {
-            System.out.println("Save failed!");
+            System.out.println("Save failed!" + " : " + location);
             i.printStackTrace();
         }
     }
@@ -237,7 +241,7 @@ public class SemesterProfile implements Serializable {
         SemesterProfile semesterProfile = new SemesterProfile(file, properties);
         for(Module module : semesterProfile.getModules()) { // check file is read and inputted correctly
             System.out.println("Type " + module.getCode());
-            System.out.println(" Code " + module.getType());
+            System.out.println(" Code " + module.getTitle());
         }
         // Add, get, remove
         semesterProfile.addTask(new Task("task1", "18-04-2021 16:00", "18-04-2021 16:00", 0,

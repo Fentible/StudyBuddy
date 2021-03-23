@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.add.AddTask;
 import com.company.model.CalenderDisplayType;
 import com.company.model.CalenderModelClass;
 import com.company.model.SemesterProfile;
@@ -121,7 +122,7 @@ public class Dashboard extends Application {
         // Default calender view
         displayOption = CalenderDisplayType.TASKS;
         window.setOnCloseRequest(e -> {
-            semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
+            semesterProfile.saveFile(semesterProfile.getSaveFileLocation() + "\\profile.ser");
         });
 
         window.setTitle("StudyBuddy - Dashboard");
@@ -202,7 +203,13 @@ public class Dashboard extends Application {
         Menu displayMenu = new Menu("Display");
         displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
         file.getItems().addAll(openFile, saveFile);
-        menuBar.getMenus().addAll(file, displayMenu);
+        Menu addMenu = new Menu("Add");
+        MenuItem addTask = new MenuItem("Add Task");
+        addTask.setOnAction(e -> {
+                AddTask.Display(semesterProfile);
+        });
+        addMenu.getItems().addAll(addTask);
+        menuBar.getMenus().addAll(file, displayMenu, addMenu);
         VBox menuVBox= new VBox(menuBar);
 
 
