@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Task implements CalenderModelClass, Serializable {
 
     // 'Generic' attributes

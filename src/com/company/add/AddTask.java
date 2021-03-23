@@ -24,6 +24,9 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -57,6 +60,10 @@ public class AddTask  {
         Slider progressSlider = new Slider(0, 100, 0);
         TextArea notes = new TextArea();
         notes.setPromptText("Notes: ");
+        TextField startTime = new TextField();
+        startTime.setPromptText("HH:MM");
+        TextField endTime = new TextField();
+        endTime.setPromptText("HH:MM");
 
         progressSlider.setValue(0);
 
@@ -80,7 +87,10 @@ public class AddTask  {
         selectableElements.getChildren().addAll(topLabel, title, inputStartDate, inputEndDate, progressSlider,
                 notes, examButton, assignmentsButton, modulesButton, dependenciesButton, milestonesButton);
         selectableElements.setAlignment(Pos.CENTER);*/
-
+        HBox startTimeBox = new HBox(8);
+        HBox endTimeBox = new HBox(8);
+        startTimeBox.getChildren().addAll(inputStartDate, startTime);
+        endTimeBox.getChildren().addAll(inputEndDate, endTime);
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
@@ -90,9 +100,9 @@ public class AddTask  {
         gridpane.add(new Label("Title: "), 0, 1);
         gridpane.add(title, 1, 1);
         gridpane.add(new Label("Start Date: "), 0, 2);
-        gridpane.add(inputStartDate, 1, 2);
+        gridpane.add(startTimeBox, 1, 2);
         gridpane.add(new Label("End Date: "), 0, 3);
-        gridpane.add(inputEndDate, 1, 3);
+        gridpane.add(endTimeBox, 1, 3);
         Label progressLabel = new Label("Progress: " + displayProgress);
         gridpane.add(progressLabel, 0 ,4);
         gridpane.add(progressSlider, 1, 4);
@@ -126,10 +136,13 @@ public class AddTask  {
 
         /* Basic field checking for testing purposes, will improve later */
         saveButton.setOnAction(e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
             if(title.getText().trim().isEmpty() || exam == null || assignment == null || module == null) {
                 System.out.println("Some required elements are empty");
             } else {
-                task = new Task(title.getText(), inputStartDate.getValue().toString(), inputEndDate.getValue().toString(),
+                task = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
+                        formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
                         (int) progressSlider.getValue(), notes.getText(), exam, assignment,
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
