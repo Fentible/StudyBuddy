@@ -122,7 +122,7 @@ public class Dashboard extends Application {
         // Default calender view
         displayOption = CalenderDisplayType.TASKS;
         window.setOnCloseRequest(e -> {
-            semesterProfile.saveFile(semesterProfile.getSaveFileLocation() + "\\profile.ser");
+            semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
         });
 
         window.setTitle("StudyBuddy - Dashboard");
@@ -206,7 +206,10 @@ public class Dashboard extends Application {
         Menu addMenu = new Menu("Add");
         MenuItem addTask = new MenuItem("Add Task");
         addTask.setOnAction(e -> {
-                AddTask.Display(semesterProfile);
+                if(AddTask.Display(semesterProfile)) {
+                    tile.getChildren().clear();
+                    populateCalender(tile, this.month, this.year);
+                }
         });
         addMenu.getItems().addAll(addTask);
         menuBar.getMenus().addAll(file, displayMenu, addMenu);

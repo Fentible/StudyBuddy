@@ -40,10 +40,9 @@ public class AddTask  {
     static ArrayList<Task> dependenciesList;
     static Assignment assignment;
     static int displayProgress;
+    static boolean save;
 
-
-
-    public static void Display(SemesterProfile semesterProfile)  {
+    public static boolean Display(SemesterProfile semesterProfile)  {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -147,14 +146,18 @@ public class AddTask  {
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
             }
+            save = true;
+            window.close();
         });
 
-        cancelButton.setOnAction(e -> window.close());
-
+        cancelButton.setOnAction(e -> {
+            save = false;
+            window.close();
+        });
 
         window.setScene(new Scene(gridpane));
         window.showAndWait();
 
-        return;
+        return save;
     }
 }
