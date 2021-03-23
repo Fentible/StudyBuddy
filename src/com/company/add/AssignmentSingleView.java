@@ -2,6 +2,7 @@ package com.company.add;
 
 import com.company.model.Assignment;
 import com.company.model.Exam;
+import com.company.model.Module;
 import com.company.model.SemesterProfile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,7 @@ public class AssignmentSingleView {
         window.setMinHeight(400);
         ObservableList<Assignment> assignmentList = FXCollections.observableArrayList();
 
-        assignmentList.addAll(semesterProfile.getAssignments());
+        assignmentList.addAll(ModuleSingleView.module.getAssignments());
         ListView<Assignment> listOfAssignment = new ListView<>(assignmentList);
         listOfAssignment.setCellFactory(param -> new ListCell<Assignment>() {
             @Override

@@ -1,5 +1,6 @@
 package com.company.add;
 
+import com.company.AlertBox;
 import com.company.model.*;
 import com.company.model.Module;
 import javafx.beans.value.ChangeListener;
@@ -121,10 +122,18 @@ public class AddTask  {
             module = ModuleSingleView.DisplayModules(semesterProfile);
         });
         examButton.setOnAction(e -> {
-            exam = ExamSingleView.DisplayExams(semesterProfile);
+            if(ModuleSingleView.module == null) {
+                AlertBox.Display("Error", "Please select a module first");
+            } else {
+                exam = ExamSingleView.DisplayExams(semesterProfile);
+            }
         });
         assignmentsButton.setOnAction(e -> {
+            if(ModuleSingleView.module == null) {
+                AlertBox.Display("Error", "Please select a module first");
+            } else {
             assignment = AssignmentSingleView.DisplayAssignments(semesterProfile);
+            }
         });
         progressSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override

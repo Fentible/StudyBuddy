@@ -26,7 +26,7 @@ public class ExamSingleView {
         window.setMinHeight(400);
         ObservableList<Exam> examList = FXCollections.observableArrayList();
 
-        examList.addAll(semesterProfile.getExams());
+        examList.addAll(ModuleSingleView.module.getExams());
         ListView<Exam> listOfExam = new ListView<>(examList);
         listOfExam.setCellFactory(param -> new ListCell<Exam>() {
             @Override

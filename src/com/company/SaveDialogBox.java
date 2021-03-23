@@ -48,7 +48,7 @@ public class SaveDialogBox {
         });
         directorySelect.setOnAction(event -> {
             File selected = directoryChooser.showDialog(window);
-            inputLocation.setText(selected.getAbsolutePath());
+            inputLocation.setText(selected.getAbsolutePath() + "\\profile.ser");
         });
         saveButton.setOnAction(event -> {
             location = inputLocation.getText();

@@ -34,6 +34,24 @@ public class Module implements Serializable {
     public ArrayList<Task> getTasks() { return tasks; }
     public ArrayList<Milestone> getMilestones() { return milestones; }
     public ArrayList<Deadline> getDeadlines() { return deadlines; }
+    public ArrayList<Exam> getExams() {
+        ArrayList<Exam> exams = new ArrayList<>();
+        for(Deadline deadline : deadlines) {
+            if(deadline instanceof Exam) {
+                exams.add((Exam) deadline);
+            }
+        }
+        return exams;
+    }
+    public ArrayList<Assignment> getAssignments() {
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        for(Deadline deadline : deadlines) {
+            if(deadline instanceof Assignment) {
+                assignments.add((Assignment) deadline);
+            }
+        }
+        return assignments;
+    }
 
 
 }

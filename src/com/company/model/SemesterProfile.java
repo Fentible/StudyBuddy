@@ -28,7 +28,7 @@ public class SemesterProfile implements Serializable {
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
-    private String saveFileLocation = "src/com/company/model/";
+    private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
     private static final long serialVersionUID = 6529685098267757690L;
 
@@ -124,6 +124,34 @@ public class SemesterProfile implements Serializable {
         return tasks;
     }
 
+    public ArrayList<Deadline> getModuleDeadlines(Module module) {
+        for(Module module1 : modules) {
+            if(module == module1) {
+                return module1.getDeadlines();
+            }
+        }
+        return null;
+    }
+    public ArrayList<Exam> getModuleExams(Module module) {
+        for(Module module1 : modules) {
+            if(module == module1) {
+                return module1.getExams();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Assignment> getModuleAssignments(Module module) {
+        for(Module module1 : modules) {
+            if(module == module1) {
+                return module1.getAssignments();
+            }
+        }
+        return null;
+    }
+
+
+
     /*
      * Probably a better way of doing this
      */
@@ -208,6 +236,7 @@ public class SemesterProfile implements Serializable {
     public void saveFile(String location) {
 
         try {
+            System.out.println(location);
             FileOutputStream fileOut = new FileOutputStream(location);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);

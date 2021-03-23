@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
  * Loaded in from the semester file
  * not described much on our documentation
  */
-public class Assignment extends  Deadline {
+public class Assignment extends Deadline {
+
 
 
     public Assignment(String title, String dueDate) { super(dueDate, title); }
