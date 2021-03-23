@@ -5,6 +5,7 @@ import com.company.model.CalenderDisplayType;
 import com.company.model.CalenderModelClass;
 import com.company.model.SemesterProfile;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -189,6 +190,8 @@ public class Dashboard extends Application {
         Menu file = new Menu("File");
         MenuItem openFile = new MenuItem("Load File");
         MenuItem saveFile = new MenuItem("Save File");
+        MenuItem exit = new MenuItem("Exit");
+        exit.setOnAction(e -> Platform.exit());
         saveFile.setOnAction(e -> {
             try {
                 saveOption();
@@ -198,7 +201,7 @@ public class Dashboard extends Application {
         });
         Menu displayMenu = new Menu("Display");
         displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
-        file.getItems().addAll(openFile, saveFile);
+        file.getItems().addAll(openFile, saveFile, exit);
         Menu addMenu = new Menu("Add");
         MenuItem addTask = new MenuItem("Add Task");
         addTask.setOnAction(e -> {
