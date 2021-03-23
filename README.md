@@ -20,3 +20,7 @@ Software Engineering Coursework - Study Planner
 + Task 6 :: create profile class
   - basics implemented, will find more methods needed as other tasks progress
   - saving and loading is currently done with basic serialising for testing
++ Task 7 :: create 'add' classes
+  - add Task class - basic blank checking, needs more incorrect input checking (+ error messages/alerts)
+  - allows task to be assigned to an exam in one module but assigned to a different module i.e. assigned to maths module but assigned to the
+  electronics exam. need way to restrict or filter these sections once one has been selected.
