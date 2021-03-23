@@ -39,6 +39,11 @@ public class MilestoneListView {
                 }
             }
         });
+        if(milestones != null) {
+            for(Milestone milestone : milestones) {
+                listOfMilestones.getSelectionModel().select(milestone);
+            }
+        }
         listOfMilestones.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {

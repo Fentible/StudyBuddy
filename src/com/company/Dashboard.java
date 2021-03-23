@@ -32,9 +32,7 @@ public class Dashboard extends Application {
     private TilePane tile = new TilePane();
     private Stage window;
 
-
     public Dashboard(SemesterProfile semesterProfile) { this.semesterProfile = semesterProfile; }
-
 
     public List<LocalDate> getDates(LocalDate start, LocalDate end) {
         return start.datesUntil(end.plusDays(1))
@@ -99,8 +97,6 @@ public class Dashboard extends Application {
             calenderBoxes[i] = getCalenderBox(semesterProfile.getItemsFromDate(dates.get(i), displayOption), dates.get(i));
             tile.getChildren().add(calenderBoxes[i]);
         }
-        return;
-
     }
     /*
      * Alert box to confirm and to select to save or not?

@@ -1,5 +1,6 @@
 package com.company.add;
 
+import com.company.model.Milestone;
 import com.company.model.SemesterProfile;
 import com.company.model.Module;
 import javafx.collections.FXCollections;
@@ -40,6 +41,9 @@ public class ModuleSingleView {
                 }
             }
         });
+        if(module!= null) {
+                listOfModule.getSelectionModel().select(module);
+        }
         listOfModule.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {

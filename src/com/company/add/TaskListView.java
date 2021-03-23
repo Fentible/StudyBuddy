@@ -1,5 +1,6 @@
 package com.company.add;
 
+import com.company.model.Milestone;
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.collections.FXCollections;
@@ -39,6 +40,11 @@ public class TaskListView {
                 }
             }
         });
+        if(tasks != null) {
+            for(Task task : tasks) {
+                listOfTasks.getSelectionModel().select(task);
+            }
+        }
         listOfTasks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {

@@ -39,6 +39,9 @@ public class ExamSingleView {
                 }
             }
         });
+        if(exam != null) {
+            listOfExam.getSelectionModel().select(exam);
+        }
         listOfExam.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {

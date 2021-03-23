@@ -39,6 +39,9 @@ public class AssignmentSingleView {
                 }
             }
         });
+        if(assignment != null) {
+            listOfAssignment.getSelectionModel().select(assignment);
+        }
         listOfAssignment.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {
