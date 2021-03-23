@@ -67,7 +67,7 @@ public class AddTask  {
 
         progressSlider.setValue(0);
 
-        Label topLabel = new Label("Select items to add task");
+        Label topLabel = new Label("Select items to add to the task");
         Button examButton = new Button("Add exam");
         Button assignmentsButton = new Button("Add Assignment");
         Button modulesButton = new Button("Assign module");
@@ -96,7 +96,7 @@ public class AddTask  {
         gridpane.setPadding(new Insets(15,15,15,15));
         gridpane.setHgap(25);
         gridpane.setVgap(10);
-        gridpane.add(topLabel, 0, 0);
+        gridpane.add(topLabel, 1, 0);
         gridpane.add(new Label("Title: "), 0, 1);
         gridpane.add(title, 1, 1);
         gridpane.add(new Label("Start Date: "), 0, 2);
