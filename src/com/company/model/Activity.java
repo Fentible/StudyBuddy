@@ -47,5 +47,4 @@ public class Activity implements CalenderModelClass, Serializable {
     @Override
     public LocalDateTime getEnd() { return end; }
 
-
 }
