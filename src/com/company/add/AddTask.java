@@ -51,6 +51,7 @@ public class AddTask  {
         window.setMinWidth(750);
         window.setMinHeight(400);
 
+
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
@@ -74,19 +75,14 @@ public class AddTask  {
         Button dependenciesButton = new Button("Add dependencies");
         Button milestonesButton = new Button("Add milestones");
 
-        /* Layouts for testing */
         HBox bottomButtons = new HBox(10);
         bottomButtons.setAlignment(Pos.CENTER);
         bottomButtons.getChildren().addAll(examButton, assignmentsButton,
                 modulesButton, dependenciesButton, milestonesButton);
         HBox confirmButtons = new HBox(10);
-        //confirmButtons.setAlignment(Pos.CENTER);
         confirmButtons.getChildren().addAll(cancelButton, saveButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
-        /*HBox selectableElements = new HBox(10);
-        selectableElements.getChildren().addAll(topLabel, title, inputStartDate, inputEndDate, progressSlider,
-                notes, examButton, assignmentsButton, modulesButton, dependenciesButton, milestonesButton);
-        selectableElements.setAlignment(Pos.CENTER);*/
+
         HBox startTimeBox = new HBox(8);
         HBox endTimeBox = new HBox(8);
         startTimeBox.getChildren().addAll(inputStartDate, startTime);

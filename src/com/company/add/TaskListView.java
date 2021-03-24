@@ -1,6 +1,5 @@
 package com.company.add;
 
-import com.company.model.Milestone;
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.collections.FXCollections;
@@ -25,8 +24,8 @@ public class TaskListView {
         window.setTitle("Add Task");
         window.setMinWidth(750);
         window.setMinHeight(400);
-        ObservableList<Task> taskList = FXCollections.observableArrayList();
 
+        ObservableList<Task> taskList = FXCollections.observableArrayList();
         taskList.addAll(semesterProfile.getTasks());
         javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
         listOfTasks.setCellFactory(param -> new ListCell<Task>() {

@@ -21,12 +21,13 @@ public class Task implements CalenderModelClass, Serializable {
     private Exam exam;
     private Assignment assignment;
     private Module module;
-    private List<Task> dependencies;
-    private List<Milestone> milestones;
+    private ArrayList<Task> dependencies;
+    private ArrayList<Activity> relatedActivities;
+    private ArrayList<Milestone> milestones;
 
     // Constructors
     public Task(String title, String start, String end, int progress, String notes,
-                Exam exam, Assignment assignment, Module module, List<Task> tasks, List<Milestone> milestones) {
+                Exam exam, Assignment assignment, Module module, ArrayList<Task> tasks, ArrayList<Milestone> milestones) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         this.start = LocalDateTime.parse(start, formatter);
         this.end = LocalDateTime.parse(end, formatter);
@@ -72,6 +73,12 @@ public class Task implements CalenderModelClass, Serializable {
     public void addMilestones(ArrayList<Milestone> milestones) {this.milestones.addAll(milestones); }
     public void addDependency(Task dependency) { this.dependencies.add(dependency); }
     public void addMilestone(Milestone milestone) { this.milestones.add(milestone); }
+
+    public void updateProgress() {
+        for(Activity activity : relatedActivities) {
+            this.progress =+ activity.getContribution();
+        }
+    }
 
     public static void main(String[] args) {
         // test harness

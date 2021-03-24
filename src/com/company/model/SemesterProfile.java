@@ -25,11 +25,13 @@ public class SemesterProfile implements Serializable {
     /* although exam and assignments extends deadlines it may be beneficial to store them separately
      * from generic deadlines for the purpose of searching and displaying them
      */
+    // exams and assignments are subclasses of deadline
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
+    @Serial
     private static final long serialVersionUID = 6529685098267757690L;
 
 
