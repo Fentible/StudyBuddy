@@ -22,9 +22,7 @@ public class Activity implements CalenderModelClass, Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         this.end = LocalDateTime.parse(endDate, formatter);
         this.relatedTasks = tasks;
-        for(Task task : tasks) {
-            task.updateProgress();
-        }
+
     }
 
     public ActivityType getType() { return type; }

@@ -27,7 +27,8 @@ public class Task implements CalenderModelClass, Serializable {
 
     // Constructors
     public Task(String title, String start, String end, int progress, String notes,
-                Exam exam, Assignment assignment, Module module, ArrayList<Task> tasks, ArrayList<Milestone> milestones) {
+                Exam exam, Assignment assignment, Module module, ArrayList<Task> tasks,
+                ArrayList<Milestone> milestones) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         this.start = LocalDateTime.parse(start, formatter);
         this.end = LocalDateTime.parse(end, formatter);
@@ -73,6 +74,13 @@ public class Task implements CalenderModelClass, Serializable {
     public void addMilestones(ArrayList<Milestone> milestones) {this.milestones.addAll(milestones); }
     public void addDependency(Task dependency) { this.dependencies.add(dependency); }
     public void addMilestone(Milestone milestone) { this.milestones.add(milestone); }
+    public void addActivity(Activity activity) {
+        if(this.relatedActivities == null) {
+            this.relatedActivities = new ArrayList<>();
+        }
+        this.relatedActivities.add(activity);
+        this.updateProgress();
+    }
 
     public void updateProgress() {
         for(Activity activity : relatedActivities) {

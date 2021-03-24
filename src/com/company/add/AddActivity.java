@@ -119,6 +119,9 @@ public class AddActivity {
             } else {
                  activity = new Activity(activityTypeComboBox.getValue(), (int)contributionSlider.getValue(), (int)timeSpentSlider.getValue(), notes.getText(), title.getText(), formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
                         tasks);
+                for(Task task : tasks) {
+                    task.addActivity(activity);
+                }
                 semesterProfile.addActivity(activity);
             }
             save = true;
