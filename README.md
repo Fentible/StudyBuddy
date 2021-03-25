@@ -23,3 +23,6 @@ Software Engineering Coursework - Study Planner
 + Task 7 :: create 'add' classes
   - add Task class - basic blank checking, needs more incorrect input checking (+ error messages/alerts)
   - module must be selected before choosing related assignment and/or exam
+  - select module to view tasks, deadlines, etc
+    - show completion of these tasks and deadlines
+    - colour code modules - display colour on dashboard
