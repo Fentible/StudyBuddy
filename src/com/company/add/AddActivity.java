@@ -23,12 +23,7 @@ import java.util.ArrayList;
 
 public class AddActivity {
 
-    static ActivityType type;
-    static int contribution;
-    static int timeSpent;
-    static String notes;//
-    static String title;//
-    static String end;//
+
     static ArrayList<Task> tasks;
     static Activity activity;
     static boolean save;
@@ -81,6 +76,9 @@ public class AddActivity {
         gridpane.add(new Label("Date: "), 0, 2);
         gridpane.add(endTimeBox, 1, 2);
 
+        /*
+         * Multiple tasks can be linked but currently do have an individual contribution slider
+         */
         Label progressLabel = new Label("Progress: " + timeSpentSlider.getValue());
         gridpane.add(progressLabel, 0 ,4);
         gridpane.add(timeSpentSlider, 1, 4);
