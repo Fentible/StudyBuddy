@@ -20,6 +20,7 @@ public class AssignmentSingleView {
     static Assignment assignment;
 
     public static Assignment DisplayAssignments(SemesterProfile semesterProfile) {
+        assignment = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Select Exam");

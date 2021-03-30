@@ -19,6 +19,7 @@ public class TaskListView {
     static ArrayList<Task> tasks;
 
     public static ArrayList<Task> DisplayTasks(SemesterProfile semesterProfile) {
+        tasks = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add Task");

@@ -21,6 +21,7 @@ public class ModuleSingleView {
     static Module module;
 
     public static Module DisplayModules(SemesterProfile semesterProfile) {
+        module = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Select Module");

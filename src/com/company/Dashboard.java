@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.add.AddActivity;
+import com.company.add.AddMilestone;
 import com.company.add.AddTask;
 import com.company.model.CalenderDisplayType;
 import com.company.model.CalenderModelClass;
@@ -54,7 +55,8 @@ public class Dashboard extends Application {
         ScrollPane box = new ScrollPane();
         box.setPrefViewportHeight(100);
         VBox container = new VBox();
-        box.setMinWidth(175);
+        box.setMinWidth(170);
+        box.setMaxWidth(170);
         box.setMinHeight(170);
         for(CalenderModelClass items : displayItems) {
             VBox vbox = new VBox();
@@ -207,6 +209,7 @@ public class Dashboard extends Application {
         Menu addMenu = new Menu("Add");
         MenuItem addTask = new MenuItem("Add Task");
         MenuItem addActivity = new MenuItem("Add Activity");
+        MenuItem addMilestone = new MenuItem("Add Milestone");
         addTask.setOnAction(e -> {
                 if(AddTask.Display(semesterProfile)) {
                     tile.getChildren().clear();
@@ -219,8 +222,14 @@ public class Dashboard extends Application {
                 populateCalender(tile, this.month, this.year);
             }
         });
+        addMilestone.setOnAction(e -> {
+            if(AddMilestone.Display(semesterProfile)) {
+                tile.getChildren().clear();
+                populateCalender(tile, this.month, this.year);
+            }
+        });
 
-        addMenu.getItems().addAll(addTask, addActivity);
+        addMenu.getItems().addAll(addTask, addActivity, addMilestone);
         menuBar.getMenus().addAll(file, displayMenu, addMenu);
         VBox menuVBox= new VBox(menuBar);
 

@@ -86,12 +86,15 @@ public class Task implements CalenderModelClass, Serializable {
         /* Does this for all related activities when adding one (doesn't ensure all total to 100 yet)
            Will need to show current % when adding task and preventing over 100
          */
+        progress = 0;
         for(Activity activity : relatedActivities) {
             int percentageComplete = activity.getTimeSpent() / 100; // e.g. (30 / 100 = 0.3) 30% complete
             int percentageContribution = activity.getContribution() * percentageComplete; // 30% of the contribution
             this.progress =+ percentageContribution;
         }
     }
+
+    public boolean isComplete() { return this.progress == 100; }
 
     public static void main(String[] args) {
         // test harness

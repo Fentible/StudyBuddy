@@ -19,6 +19,7 @@ public class ExamSingleView {
     static Exam exam;
 
     public static Exam DisplayExams(SemesterProfile semesterProfile) {
+        exam = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Select Exam");

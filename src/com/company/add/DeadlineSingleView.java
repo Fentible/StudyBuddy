@@ -19,6 +19,7 @@ public class DeadlineSingleView {
     static Deadline deadline;
 
     public static Deadline DisplayDeadlines(SemesterProfile semesterProfile) {
+        deadline = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Select Exam");

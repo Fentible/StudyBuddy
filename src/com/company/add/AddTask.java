@@ -21,13 +21,13 @@ import java.util.ArrayList;
 
 public class AddTask  {
 
-    static Task task;
-    static Exam exam;
-    static ArrayList<Milestone> milestonesList;
-    static Module module;
-    static ArrayList<Task> dependenciesList;
-    static Assignment assignment;
-    static int displayProgress;
+    private static Task task;
+    private static Exam exam;
+    private static ArrayList<Milestone> milestonesList;
+    private static Module module;
+    private static ArrayList<Task> dependenciesList;
+    private static Assignment assignment;
+    private static int displayProgress;
     static boolean save;
 
     public static boolean Display(SemesterProfile semesterProfile)  {

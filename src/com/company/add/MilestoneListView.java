@@ -19,6 +19,7 @@ public class MilestoneListView {
     static ArrayList<Milestone> milestones;
 
     public static ArrayList<Milestone> DisplayMilestones(SemesterProfile semesterProfile) {
+        milestones = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add Task");

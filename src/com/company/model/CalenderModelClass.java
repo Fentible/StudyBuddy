@@ -10,4 +10,5 @@ public interface CalenderModelClass {
 
     String getTitle();
     LocalDateTime getEnd();
+
 }

@@ -5,12 +5,11 @@ import com.company.Dashboard;
 import java.io.*;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /* primarily for handling and storing data, no view or controller is necessary
  * other classes shall query, insert and delete data then provide views appropriately
@@ -26,9 +25,10 @@ public class SemesterProfile implements Serializable {
      * from generic deadlines for the purpose of searching and displaying them
      */
     // exams and assignments are subclasses of deadline
-    private ArrayList<Deadline> deadlines = new ArrayList<>();
+
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
+    private ArrayList<Deadline> deadlines = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
     @Serial
@@ -96,7 +96,11 @@ public class SemesterProfile implements Serializable {
     public ArrayList<Milestone> getMilestones() { return this.milestones; }
     public ArrayList<Exam> getExams() { return this.exams; }
     public ArrayList<Assignment> getAssignments() { return assignments; }
-    public ArrayList<Deadline> getDeadlines() { return this.deadlines; }
+    public ArrayList<Deadline> getDeadlines() {
+            deadlines = (ArrayList<Deadline>) Stream.concat(exams.stream(), assignments.stream()).collect(Collectors.toList());
+        System.out.println(deadlines);
+        return deadlines;
+    }
     public ArrayList<Activity> getActivities() { return this.activities; }
     public ArrayList<Module> getModules() { return this.modules; }
     public String getSaveFileLocation() { return this.saveFileLocation; }
@@ -166,7 +170,7 @@ public class SemesterProfile implements Serializable {
                 }
             }
         } else if(type == CalenderDisplayType.DEADLINES) {
-            for (Deadline temp : this.deadlines) {
+            for (Deadline temp : this.getDeadlines()) {
                 if (temp.getEnd().toLocalDate().compareTo(date) == 0) {
                     items.add(temp);
                 }
@@ -205,6 +209,7 @@ public class SemesterProfile implements Serializable {
     public void addDeadline(Deadline deadline) { deadlines.add(deadline); }
     public void addActivity(Activity activity) { activities.add(activity); }
     public void addTask(Task task) { tasks.add(task); }
+    public void addMilestone(Milestone milestone) { milestones.add(milestone); }
 
     /* Possibly only used when constructing -
      * should user be able to add new exams, wouldn't the hub know and provide all of them

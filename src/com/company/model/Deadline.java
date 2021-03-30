@@ -3,7 +3,6 @@ package com.company.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class Deadline implements CalenderModelClass, Serializable {
 
