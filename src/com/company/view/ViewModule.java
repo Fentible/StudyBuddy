@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -91,7 +92,10 @@ public class ViewModule {
         back.setOnAction(e -> {
             window.setScene(Dashboard.getScene());
         });
-        container.getChildren().addAll(listOfMilestones, listOfDeadline, listOfTasks, back);
+
+        container.getChildren().addAll(new Label("List of Milestones: "), listOfMilestones,
+                new Label("List of Deadlines: "), listOfDeadline,
+                new Label("List of Tasks: "), listOfTasks, back);
         scene = new Scene(container);
         window.setScene(scene);
         window.show();
