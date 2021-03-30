@@ -31,7 +31,7 @@ public class ViewModule {
 
         window.setMinWidth(750);
         window.setMinHeight(400);
-
+        // Basic setup
         window.setTitle(module.getTitle() + " : " + module.getCode());
         VBox container = new VBox();
         container.setSpacing(20);
@@ -39,6 +39,7 @@ public class ViewModule {
         container.setPadding(new Insets(20, 20, 20, 20));
         Button back = new Button("Return");
 
+        // List views for all of the content...
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
         milestonesList.addAll(module.getMilestones());
         javafx.scene.control.ListView<Milestone> listOfMilestones = new javafx.scene.control.ListView<>(milestonesList);
@@ -54,7 +55,7 @@ public class ViewModule {
                 }
             }
         });
-
+        //...
         ObservableList<Task> taskList = FXCollections.observableArrayList();
         taskList.addAll(module.getTasks());
         javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
@@ -70,7 +71,7 @@ public class ViewModule {
                 }
             }
         });
-
+        //...
         ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
         deadlineList.addAll(module.getDeadlines());
         ListView<Deadline> listOfDeadline = new ListView<>(deadlineList);
@@ -86,6 +87,7 @@ public class ViewModule {
                 }
             }
         });
+        // return to dashboard
         back.setOnAction(e -> {
             window.setScene(Dashboard.getScene());
         });

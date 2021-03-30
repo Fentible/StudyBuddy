@@ -53,7 +53,8 @@ public class Dashboard extends Application {
     public static Scene getScene() { return scene; }
 
     /*
-     * Generates a calender box with date and items. Each item is in a vbox which are added to a scrollPane
+     * Generates a calender box with date and items.
+     * Each item is in a vbox which are added to a scrollPane with the date
      */
     public ScrollPane getCalenderBox(ArrayList<CalenderModelClass> displayItems, LocalDate date) {
         String layout = "-fx-border-color: gray;\n" +
@@ -99,7 +100,7 @@ public class Dashboard extends Application {
     }
 
     /*
-     * Generates all calender boxes and adds them
+     * Generates all calender boxes for the month and adds them
      */
     private void populateCalender(TilePane tile, int month, int year) {
 

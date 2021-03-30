@@ -11,7 +11,10 @@ import java.util.Properties;
 
 public class Main extends Application {
 
-
+    /*
+     * Get stored properties such as the file location from config.properties
+     * If one is not found then create a new one and set the default save location
+     */
     private Properties getFileProperties() throws IOException {
 
         try (InputStream input = new FileInputStream("src/com/company/model/config.properties")) {
@@ -34,6 +37,7 @@ public class Main extends Application {
         SemesterProfile semesterProfile = null;
         Properties properties = getFileProperties();
         File inFile;
+        // Check for save file using store file location - see 'getFileProperties'
         if(properties != null) {
             inFile = new File(properties.getProperty("location"));
         } else {
