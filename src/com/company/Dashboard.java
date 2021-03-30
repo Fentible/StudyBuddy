@@ -43,11 +43,13 @@ public class Dashboard extends Application {
 
     public Dashboard(SemesterProfile semesterProfile) { this.semesterProfile = semesterProfile; }
 
+    // Gets the dates for the month to display on the calender
     public List<LocalDate> getDates(LocalDate start, LocalDate end) {
         return start.datesUntil(end.plusDays(1))
                 .collect(Collectors.toList());
     }
 
+    // When switching back from another window (not opening another) uses this to set the scene again
     public static Scene getScene() { return scene; }
 
     /*

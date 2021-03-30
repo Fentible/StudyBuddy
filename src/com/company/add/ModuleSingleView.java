@@ -20,6 +20,9 @@ public class ModuleSingleView {
 
     static Module module;
 
+    /*
+     * See 'AssignmentSingleView' for notes as it is similar
+     */
     public static Module DisplayModules(SemesterProfile semesterProfile) {
         module = null;
         Stage window = new Stage();

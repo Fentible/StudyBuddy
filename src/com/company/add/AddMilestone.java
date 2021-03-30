@@ -28,6 +28,9 @@ public class AddMilestone {
     private static Milestone milestone;
     static boolean save;
 
+    /*
+     * See 'AddActivity' for notes as this class is very similar
+     */
     public static boolean Display(SemesterProfile semesterProfile) {
 
         Stage window = new Stage();

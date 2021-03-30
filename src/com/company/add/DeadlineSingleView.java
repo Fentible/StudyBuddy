@@ -18,6 +18,9 @@ public class DeadlineSingleView {
 
     static Deadline deadline;
 
+    /*
+     * See 'AssignmentSingleView' for notes as it is similar
+     */
     public static Deadline DisplayDeadlines(SemesterProfile semesterProfile) {
         deadline = null;
         Stage window = new Stage();

@@ -28,13 +28,18 @@ public class AddActivity {
     static Activity activity;
     static boolean save;
 
+    /*
+     * Function to display window to user when adding an activity
+     */
     public static boolean Display(SemesterProfile semesterProfile)  {
+        // General window setup
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add Task");
         window.setMinWidth(750);
         window.setMinHeight(400);
 
+        // Buttons, labels, fileds, etc.
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
@@ -65,6 +70,7 @@ public class AddActivity {
         HBox endTimeBox = new HBox(8);
         endTimeBox.getChildren().addAll(inputEndDate, endTime);
 
+        // All previous boxes and elements will be setup onto the GridPane
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
@@ -96,12 +102,14 @@ public class AddActivity {
         tasksButton.setOnAction(e -> {
             tasks = TaskListView.DisplayTasks(semesterProfile);
         });
+        // Updates sliders...
         contributionSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 contributionLabel.textProperty().setValue(String.valueOf("Total Contribution: " + (int)contributionSlider.getValue()));
             }
         });
+        // ...
         timeSpentSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
@@ -111,7 +119,7 @@ public class AddActivity {
 
         saveButton.setOnAction(e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
+            // Basic error checking, **need to add a label for an error box**
             if(title.getText().trim().isEmpty() || activityTypeComboBox.getValue() == null || tasks == null || tasks.isEmpty()) {
                 System.out.println("Some required elements are empty");
             } else {

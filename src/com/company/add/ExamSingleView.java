@@ -18,6 +18,9 @@ public class ExamSingleView {
 
     static Exam exam;
 
+    /*
+     * See 'AssignmentSingleView' for notes as it is similar
+     */
     public static Exam DisplayExams(SemesterProfile semesterProfile) {
         exam = null;
         Stage window = new Stage();

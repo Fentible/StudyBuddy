@@ -18,6 +18,9 @@ public class TaskListView {
 
     static ArrayList<Task> tasks;
 
+    /*
+     * See 'AssignmentSingleView' for notes as it is similar
+     */
     public static ArrayList<Task> DisplayTasks(SemesterProfile semesterProfile) {
         tasks = null;
         Stage window = new Stage();

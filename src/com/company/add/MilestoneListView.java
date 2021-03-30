@@ -18,6 +18,9 @@ public class MilestoneListView {
 
     static ArrayList<Milestone> milestones;
 
+    /*
+     * See 'AssignmentSingleView' for notes as it is similar
+     */
     public static ArrayList<Milestone> DisplayMilestones(SemesterProfile semesterProfile) {
         milestones = null;
         Stage window = new Stage();
