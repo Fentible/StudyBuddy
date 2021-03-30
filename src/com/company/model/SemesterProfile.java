@@ -97,9 +97,7 @@ public class SemesterProfile implements Serializable {
     public ArrayList<Exam> getExams() { return this.exams; }
     public ArrayList<Assignment> getAssignments() { return assignments; }
     public ArrayList<Deadline> getDeadlines() {
-            deadlines = (ArrayList<Deadline>) Stream.concat(exams.stream(), assignments.stream()).collect(Collectors.toList());
-        System.out.println(deadlines);
-        return deadlines;
+            return (ArrayList<Deadline>) Stream.concat(exams.stream(), assignments.stream()).collect(Collectors.toList());
     }
     public ArrayList<Activity> getActivities() { return this.activities; }
     public ArrayList<Module> getModules() { return this.modules; }
