@@ -26,3 +26,11 @@ Software Engineering Coursework - Study Planner
   - select module to view tasks, deadlines, etc
     - show completion of these tasks and deadlines
     - colour code modules - display colour on dashboard
+
+**Notes:**
++ Need to be able to edit deadlines as well as tasks
++ Deadlines and milestones linked to tasks
+  - Show completetion of this deadline/milestone based on how much the tasks have been completed
++ Milestones must be linked to a deadline
++ assignments and exams are stored seperately along with a list called 'deadlines' 
+  - deadlines doesnt directly store anything at the moment but is used to return a list of the above two
