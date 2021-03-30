@@ -27,6 +27,10 @@ Software Engineering Coursework - Study Planner
     - show completion of these tasks and deadlines
     - colour code modules - display colour on dashboard
 
++ View module class: 
+
+
+
 **Notes:**
 + Need to be able to edit deadlines as well as tasks
 + Deadlines and milestones linked to tasks
@@ -34,3 +38,4 @@ Software Engineering Coursework - Study Planner
 + Milestones must be linked to a deadline
 + assignments and exams are stored seperately along with a list called 'deadlines' 
   - deadlines doesnt directly store anything at the moment but is used to return a list of the above two
++ **Currently using static methods and variables to return and set scene when switching windows, as features is supposedly more important in this coursework than code quality. If anyone is familiar with JavaFX and knows a better way (perhaps a FXML controller?) let me know**
