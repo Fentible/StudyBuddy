@@ -3,9 +3,12 @@ package com.company;
 import com.company.add.AddActivity;
 import com.company.add.AddMilestone;
 import com.company.add.AddTask;
+import com.company.add.ModuleSingleView;
 import com.company.model.CalenderDisplayType;
 import com.company.model.CalenderModelClass;
+import com.company.model.Module;
 import com.company.model.SemesterProfile;
+import com.company.view.ViewModule;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -18,6 +21,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.text.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +37,9 @@ public class Dashboard extends Application {
     private SemesterProfile semesterProfile;
     private int year, month;
     private TilePane tile = new TilePane();
-    private Stage window;
+    private static Stage window;
+    private static Module viewModule;
+    private static Scene scene;
 
     public Dashboard(SemesterProfile semesterProfile) { this.semesterProfile = semesterProfile; }
 
@@ -41,6 +47,8 @@ public class Dashboard extends Application {
         return start.datesUntil(end.plusDays(1))
                 .collect(Collectors.toList());
     }
+
+    public static Scene getScene() { return scene; }
 
     /*
      * Generates a calender box with date and items. Each item is in a vbox which are added to a scrollPane
@@ -149,6 +157,8 @@ public class Dashboard extends Application {
         // Only for testing
         String[] buttonTitles = {"Modules", "Export", "Button 3", "Button 4"};
         Button[] sideButtons = new Button[4];
+
+
         for(int i = 0; i < sideButtons.length; i++) {
             Button button = new Button(buttonTitles[i]);
             button.setMinWidth(200);
@@ -156,7 +166,10 @@ public class Dashboard extends Application {
             sideButtons[i] = button;
             vbox.getChildren().add(sideButtons[i]);
         }
-
+        sideButtons[0].setOnAction(e -> {
+            viewModule = ModuleSingleView.DisplayModules(semesterProfile);
+            window.setScene(ViewModule.getScene(viewModule, window));
+        });
         // View type toggle buttons
         ToggleGroup toggleGroup = new ToggleGroup();
         RadioMenuItem activitiesButton = new RadioMenuItem("Activities");
@@ -274,7 +287,7 @@ public class Dashboard extends Application {
         borderPane.setTop(menuVBox);
         borderPane.setLeft(vbox);
         borderPane.setCenter(tile);
-        Scene scene = new Scene(borderPane);
+        scene = new Scene(borderPane);
         window.setScene(scene);
         window.show();
 
