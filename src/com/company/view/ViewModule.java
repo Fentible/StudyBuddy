@@ -1,23 +1,20 @@
 package com.company.view;
 
 import com.company.Dashboard;
-import com.company.model.Deadline;
-import com.company.model.Milestone;
-import com.company.model.Task;
+import com.company.model.*;
 import com.company.model.Module;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewModule {
 
@@ -28,7 +25,7 @@ public class ViewModule {
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private static Scene scene;
 
-    public static Scene getScene(Module module, Stage window)  {
+    public static Scene getScene(Module module, Stage window, SemesterProfile semesterProfile)  {
 
         window.setMinWidth(750);
         window.setMinHeight(400);
@@ -42,64 +39,64 @@ public class ViewModule {
 
         // List views for all of the content...
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
-        milestonesList.addAll(module.getMilestones());
-        javafx.scene.control.ListView<Milestone> listOfMilestones = new javafx.scene.control.ListView<>(milestonesList);
-        listOfMilestones.setMaxWidth(window.getWidth() / 2);
-        listOfMilestones.setCellFactory(param -> new ListCell<Milestone>() {
-            @Override
-            protected void updateItem(Milestone milestone, boolean empty) {
-                super.updateItem(milestone, empty);
-                if(empty || milestone == null) {
-                    setText(null);
-                } else {
-                    setText(milestone.getTitle());
-                }
-            }
-        });
+        milestonesList.addAll(semesterProfile.getMilestones());
+        TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
+        TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
+        TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
+        TableColumn<Milestone, String> milestoneDateColumn = new TableColumn<>("Due Date");
+        milestoneNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        milestoneCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getCompletion())));
+        milestoneDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toString()));
+        tableOfMilestones.setMaxWidth(window.getWidth() / 2);
+        milestoneDateColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneCompletionColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
+
+
         //...
         ObservableList<Task> taskList = FXCollections.observableArrayList();
-        taskList.addAll(module.getTasks());
-        javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
-        listOfTasks.setMaxWidth(window.getWidth() / 2);
-        listOfTasks.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if(empty || task == null) {
-                    setText(null);
-                } else {
-                    setText(task.getTitle());
-                }
-            }
-        });
+        taskList.addAll(semesterProfile.getTasks());
+        TableView<Task> tableOfTasks = new TableView<>(taskList);
+        TableColumn<Task, String> taskNameColumn = new TableColumn<>("Name");
+        TableColumn<Task, String> taskProgressColumn = new TableColumn<>("Progress");
+        TableColumn<Task, String> taskDateColumn = new TableColumn<>("Date");
+        taskNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        taskProgressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getProgress())));
+        taskDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toString()));
+        taskDateColumn.prefWidthProperty().bind(tableOfTasks.widthProperty().divide(3));
+        taskNameColumn.prefWidthProperty().bind(tableOfTasks.widthProperty().divide(3));
+        taskProgressColumn.prefWidthProperty().bind(tableOfTasks.widthProperty().divide(3));
+        tableOfTasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfTasks.getColumns().addAll(taskNameColumn, taskProgressColumn, taskDateColumn);
+        tableOfTasks.setMaxWidth(window.getWidth() / 2);
+
         //...
         ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
-        deadlineList.addAll(module.getDeadlines());
-        ListView<Deadline> listOfDeadline = new ListView<>(deadlineList);
-        listOfDeadline.setMaxWidth(window.getWidth() / 2);
-        listOfDeadline.setCellFactory(param -> new ListCell<Deadline>() {
-            @Override
-            protected void updateItem(Deadline deadline, boolean empty) {
-                super.updateItem(deadline, empty);
-                if(empty || deadline == null) {
-                    setText(null);
-                } else {
-                    setText(deadline.getTitle());
-                }
-            }
-        });
+        deadlineList.addAll(semesterProfile.getDeadlines());
+        TableView<Deadline> tableOfDeadlines = new TableView<>(deadlineList);
+        TableColumn<Deadline, String> deadlineNameColumn = new TableColumn<>("Name");
+        TableColumn<Deadline, String> deadlineDateColumn = new TableColumn<>("Due Date");
+        deadlineNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        deadlineDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDueDate().toString()));
+        deadlineDateColumn.prefWidthProperty().bind(tableOfDeadlines.widthProperty().divide(2));
+        deadlineNameColumn.prefWidthProperty().bind(tableOfDeadlines.widthProperty().divide(2));
+        tableOfDeadlines.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfDeadlines.getColumns().addAll(deadlineNameColumn, deadlineDateColumn);
+        tableOfDeadlines.setMaxWidth(window.getWidth() / 2);
+
         // return to dashboard
         back.setOnAction(e -> {
             window.setScene(Dashboard.getScene());
         });
 
-        container.getChildren().addAll(new Label("List of Milestones: "), listOfMilestones,
-                new Label("List of Deadlines: "), listOfDeadline,
-                new Label("List of Tasks: "), listOfTasks, back);
+        container.getChildren().addAll(new Label("List of Milestones: "), tableOfMilestones,
+                new Label("List of Deadlines: "), tableOfDeadlines,
+                new Label("List of Tasks: "), tableOfTasks, back);
         scene = new Scene(container);
         window.setScene(scene);
         window.show();
-
 
         return scene;
     }

@@ -15,13 +15,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -135,7 +135,7 @@ public class Dashboard extends Application {
         window.setOnCloseRequest(e -> {
             semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
         });
-
+        stage.getIcons().add(new Image("file:src/com/icon.png"));
         window.setTitle("StudyBuddy - Dashboard");
         window.setMinWidth(1000);
         window.setMinHeight(500);
@@ -171,7 +171,7 @@ public class Dashboard extends Application {
         }
         sideButtons[0].setOnAction(e -> {
             viewModule = ModuleSingleView.DisplayModules(semesterProfile);
-            window.setScene(ViewModule.getScene(viewModule, window));
+            window.setScene(ViewModule.getScene(viewModule, window, semesterProfile));
         });
         // View type toggle buttons
         ToggleGroup toggleGroup = new ToggleGroup();
