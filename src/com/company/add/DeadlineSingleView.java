@@ -3,6 +3,7 @@ package com.company.add;
 import com.company.model.Assignment;
 import com.company.model.Deadline;
 import com.company.model.SemesterProfile;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ public class DeadlineSingleView {
         deadline = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Select Exam");
+        window.setTitle("Select Deadline");
         window.setMinWidth(750);
         window.setMinHeight(400);
         ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
@@ -43,10 +44,14 @@ public class DeadlineSingleView {
                 }
             }
         });
-        if(deadline != null) {
-            listOfDeadline.getSelectionModel().select(deadline);
-        }
         listOfDeadline.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        if(deadline != null) {
+            Platform.runLater(() -> {
+                listOfDeadline.requestFocus();
+                listOfDeadline.getSelectionModel().select(deadline);
+            });
+        }
+
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {
             deadline = listOfDeadline.getSelectionModel().getSelectedItem();

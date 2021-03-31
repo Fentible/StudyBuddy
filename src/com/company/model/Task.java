@@ -52,22 +52,41 @@ public class Task implements CalenderModelClass, Serializable {
     public Exam getExam() { return exam; }
     public Assignment getAssignment() { return assignment; }
     public Module getModule() { return module; }
-    public List<Task> getDependencies() { return dependencies; }
-    public List<Milestone> getMilestones() { return milestones; }
+    public ArrayList<Task> getDependencies() { return dependencies; }
+    public ArrayList<Milestone> getMilestones() { return milestones; }
+    public ArrayList<Activity> getActivities() { return relatedActivities; }
 
     // Setters
     /* User may make mistake when creating it the first time
      * should be altered or current one destroyed and a new one inserted instead?
      */
-    public void setTitle(String title) { this.title = title; }
-    public void setStart(LocalDateTime start) { this.start = start; }
-    public void setEnd(LocalDateTime end) { this.end = end; }
-    public void setProgress(int progress) { this.progress = progress; }
-    public void setNotes(String notes) { this.notes = notes; }
-    public void appendNotes(String notes) { this.notes = this.notes + notes; }
-    public void setExam(Exam exam) { this.exam = exam; }
-    public void setAssignment(Assignment assignment) { this.assignment = assignment; }
-    public void setModule(Module module) { this.module = module; }
+    private void setTitle(String title) { this.title = title; }
+    private void setStart(LocalDateTime start) { this.start = start; }
+    private void setEnd(LocalDateTime end) { this.end = end; }
+    private void setProgress(int progress) { this.progress = progress; }
+    private void setNotes(String notes) { this.notes = notes; }
+    private void appendNotes(String notes) { this.notes = this.notes + notes; }
+    private void setExam(Exam exam) { this.exam = exam; }
+    private void setAssignment(Assignment assignment) { this.assignment = assignment; }
+    private void setDependencies(ArrayList<Task> dependencies) { this.dependencies = dependencies; }
+    private void setRelatedActivities(ArrayList<Activity> relatedActivities) { this.relatedActivities = relatedActivities; }
+    private void setMilestones(ArrayList<Milestone> milestones) { this.milestones = milestones; }
+
+    private void setModule(Module module) { this.module = module; }
+    public void updateTask(Task task) {
+        this.setTitle(task.getTitle());
+        this.setStart(task.getStart());
+        this.setEnd(task.getEnd());
+        this.setProgress(task.getProgress());
+        this.setNotes(task.getNotes());
+        this.setNotes(task.getNotes());
+        this.setExam(task.getExam());
+        this.setAssignment(task.getAssignment());
+        this.setModule(task.getModule());
+        this.setDependencies(task.getDependencies());
+        this.setRelatedActivities(task.getActivities());
+        this.setMilestones(task.getMilestones());
+    }
 
     // Add to lists
     public void addDependencies(ArrayList<Task> dependencies) { this.dependencies.addAll(dependencies); }

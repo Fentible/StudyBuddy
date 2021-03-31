@@ -2,6 +2,7 @@ package com.company.add;
 
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ public class TaskListView {
         tasks = null;
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add Task");
+        window.setTitle("Select Tasks");
         window.setMinWidth(750);
         window.setMinHeight(400);
 
@@ -62,5 +63,61 @@ public class TaskListView {
         return tasks;
 
     }
+
+    public static ArrayList<Task> DisplayTasks(SemesterProfile semesterProfile, Task passedTask) {
+        tasks = passedTask.getDependencies();
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Select Tasks");
+        window.setMinWidth(750);
+        window.setMinHeight(400);
+
+        ObservableList<Task> taskList = FXCollections.observableArrayList();
+        taskList.addAll(semesterProfile.getTasks());
+
+        javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
+        listOfTasks.setCellFactory(param -> new ListCell<Task>() {
+            @Override
+            protected void updateItem(Task task, boolean empty) {
+                super.updateItem(task, empty);
+                if(empty || task == null) {
+                    setText(null);
+                } else {
+                    setText(task.getTitle());
+                }
+            }
+        });
+        listOfTasks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        if(passedTask.getDependencies() != null && !passedTask.getDependencies().isEmpty()) {
+            Platform.runLater(() -> {
+                listOfTasks.requestFocus();
+                for (Task task : passedTask.getDependencies()) {
+                    listOfTasks.getSelectionModel().select(task);
+                }
+            });
+        }
+
+
+        if(tasks != null) {
+            for(Task task : tasks) {
+                listOfTasks.getSelectionModel().select(task);
+            }
+        }
+
+        Button confirm = new Button("Confirm");
+        confirm.setOnAction(e -> {
+            tasks = new ArrayList<Task>(listOfTasks.getSelectionModel().getSelectedItems());
+            window.close();
+        });
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(listOfTasks, confirm);
+        window.setScene(new Scene(vbox));
+        window.showAndWait();
+
+        return tasks;
+
+    }
+
+
 
 }

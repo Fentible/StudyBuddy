@@ -3,6 +3,8 @@ package com.company.add;
 import com.company.model.Exam;
 import com.company.model.Module;
 import com.company.model.SemesterProfile;
+import com.company.model.Task;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -43,6 +45,51 @@ public class ExamSingleView {
                 }
             }
         });
+        listOfExam.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        if(exam != null) {
+                Platform.runLater(() -> {
+                    listOfExam.requestFocus();
+                    listOfExam.getSelectionModel().select(exam);
+                });
+        }
+
+        Button confirm = new Button("Confirm");
+        confirm.setOnAction(e -> {
+            exam = listOfExam.getSelectionModel().getSelectedItem();
+            window.close();
+        });
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(listOfExam, confirm);
+        window.setScene(new Scene(vbox));
+        window.showAndWait();
+
+        return exam;
+
+    }
+
+    public static Exam DisplayExams(SemesterProfile semesterProfile, Task passedTask) {
+        exam = passedTask.getExam();
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Select Exam");
+        window.setMinWidth(750);
+        window.setMinHeight(400);
+        ObservableList<Exam> examList = FXCollections.observableArrayList();
+
+        examList.addAll(semesterProfile.getExams());
+        ListView<Exam> listOfExam = new ListView<>(examList);
+        listOfExam.setCellFactory(param -> new ListCell<Exam>() {
+            @Override
+            protected void updateItem(Exam exam, boolean empty) {
+                super.updateItem(exam, empty);
+                if(empty || exam == null) {
+                    setText(null);
+                } else {
+                    setText(exam.getTitle());
+                }
+            }
+        });
+        listOfExam.getSelectionModel().select(passedTask.getExam());
         if(exam != null) {
             listOfExam.getSelectionModel().select(exam);
         }

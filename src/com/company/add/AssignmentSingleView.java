@@ -1,9 +1,8 @@
 package com.company.add;
 
-import com.company.model.Assignment;
-import com.company.model.Exam;
+import com.company.model.*;
 import com.company.model.Module;
-import com.company.model.SemesterProfile;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -64,5 +63,51 @@ public class AssignmentSingleView {
         return assignment;
 
     }
+    public static Assignment DisplayAssignments(SemesterProfile semesterProfile, Task passedTask) {
+        assignment = passedTask.getAssignment();
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Select Exam");
+        window.setMinWidth(750);
+        window.setMinHeight(400);
+
+        // List view of the elements
+        ObservableList<Assignment> assignmentList = FXCollections.observableArrayList();
+        assignmentList.addAll(semesterProfile.getAssignments());
+        ListView<Assignment> listOfAssignment = new ListView<>(assignmentList);
+        listOfAssignment.setCellFactory(param -> new ListCell<Assignment>() {
+            @Override
+            protected void updateItem(Assignment assignment, boolean empty) {
+                super.updateItem(assignment, empty);
+                if(empty || assignment == null) {
+                    setText(null);
+                } else {
+                    setText(assignment.getTitle());
+                }
+            }
+        });
+        listOfAssignment.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listOfAssignment.getSelectionModel().select(passedTask.getAssignment());
+        if(assignment != null) {
+            Platform.runLater(() -> {
+                listOfAssignment.requestFocus();
+                listOfAssignment.getSelectionModel().select(assignment);
+            });
+        }
+
+        Button confirm = new Button("Confirm");
+        confirm.setOnAction(e -> {
+            assignment = listOfAssignment.getSelectionModel().getSelectedItem();
+            window.close();
+        });
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(listOfAssignment, confirm);
+        window.setScene(new Scene(vbox));
+        window.showAndWait();
+
+        return assignment;
+
+    }
+
 
 }

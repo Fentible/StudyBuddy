@@ -4,10 +4,9 @@ import com.company.add.AddActivity;
 import com.company.add.AddMilestone;
 import com.company.add.AddTask;
 import com.company.add.ModuleSingleView;
-import com.company.model.CalenderDisplayType;
-import com.company.model.CalenderModelClass;
+import com.company.edit.EditTask;
+import com.company.model.*;
 import com.company.model.Module;
-import com.company.model.SemesterProfile;
 import com.company.view.ViewModule;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -76,8 +75,15 @@ public class Dashboard extends Application {
             Label title = new Label(items.getTitle());
             Label time = new Label(items.getEnd().toLocalTime().toString());
             Button edit = new Button("Edit");
-
-            // edit.setOnAction(e -> openEditWindow);
+            if(items instanceof Task) {
+                edit.setOnAction(e -> {
+                    if(EditTask.Display(semesterProfile, (Task) items)) {
+                        tile.getChildren().clear();
+                        displayOption = CalenderDisplayType.TASKS;
+                        populateCalender(tile, this.month, this.year);
+                    }
+                });
+            }
             vbox.setAlignment(Pos.CENTER);
             vbox.setPadding(new Insets(0,0,5,0));
             VBox.setMargin(vbox, new Insets(5, 5, 0, 5));
@@ -171,7 +177,9 @@ public class Dashboard extends Application {
         }
         sideButtons[0].setOnAction(e -> {
             viewModule = ModuleSingleView.DisplayModules(semesterProfile);
-            window.setScene(ViewModule.getScene(viewModule, window, semesterProfile));
+            if(viewModule != null) {
+                window.setScene(ViewModule.getScene(viewModule, window, semesterProfile));
+            }
         });
         // View type toggle buttons
         ToggleGroup toggleGroup = new ToggleGroup();
