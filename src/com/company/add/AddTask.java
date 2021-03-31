@@ -41,7 +41,7 @@ public class AddTask  {
         window.setMinWidth(750);
         window.setMinHeight(400);
 
-
+        Label errorMessage = new Label();
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
@@ -70,7 +70,7 @@ public class AddTask  {
         bottomButtons.getChildren().addAll(examButton, assignmentsButton,
                 modulesButton, dependenciesButton, milestonesButton);
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, saveButton);
+        confirmButtons.getChildren().addAll(errorMessage, cancelButton, saveButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         HBox startTimeBox = new HBox(8);
@@ -133,16 +133,17 @@ public class AddTask  {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             if(title.getText().trim().isEmpty() || exam == null || assignment == null || module == null) {
-                System.out.println("Some required elements are empty");
+                errorMessage.setText("Some required elements are empty");
             } else {
                 task = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
                         (int) progressSlider.getValue(), notes.getText(), exam, assignment,
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
+                save = true;
+                window.close();
             }
-            save = true;
-            window.close();
+
         });
 
         cancelButton.setOnAction(e -> {

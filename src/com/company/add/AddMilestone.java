@@ -39,7 +39,7 @@ public class AddMilestone {
         window.setMinWidth(750);
         window.setMinHeight(400);
 
-
+        Label errorMessage = new Label();
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
@@ -59,7 +59,7 @@ public class AddMilestone {
         bottomButtons.getChildren().addAll(deadlineButton,
                 tasksButton);
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, saveButton);
+        confirmButtons.getChildren().addAll(errorMessage, cancelButton, saveButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         HBox endTimeBox = new HBox(8);
@@ -91,14 +91,15 @@ public class AddMilestone {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             if(title.getText().trim().isEmpty() || event == null || requiredTasks == null) {
-                System.out.println("Some required elements are empty");
+                errorMessage.setText("Some required elements are empty");
             } else {
                 milestone = new Milestone(requiredTasks, event, title.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText());
                 semesterProfile.addMilestone(milestone);
+                save = true;
+                window.close();
             }
-            save = true;
-            window.close();
+
         });
 
         cancelButton.setOnAction(e -> {

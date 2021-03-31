@@ -40,6 +40,7 @@ public class AddActivity {
         window.setMinHeight(400);
 
         // Buttons, labels, fileds, etc.
+        Label errorMessage = new Label();
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
@@ -64,7 +65,7 @@ public class AddActivity {
         bottomButtons.setAlignment(Pos.CENTER);
         bottomButtons.getChildren().addAll(tasksButton);
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, saveButton);
+        confirmButtons.getChildren().addAll(errorMessage, cancelButton, saveButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         HBox endTimeBox = new HBox(8);
@@ -121,7 +122,7 @@ public class AddActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             // Basic error checking, **need to add a label for an error box**
             if(title.getText().trim().isEmpty() || activityTypeComboBox.getValue() == null || tasks == null || tasks.isEmpty()) {
-                System.out.println("Some required elements are empty");
+                errorMessage.setText("Some required elements are empty");
             } else {
                  activity = new Activity(activityTypeComboBox.getValue(), (int)contributionSlider.getValue(), (int)timeSpentSlider.getValue(), notes.getText(), title.getText(), formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
                         tasks);
@@ -129,9 +130,10 @@ public class AddActivity {
                     task.addActivity(activity);
                 }
                 semesterProfile.addActivity(activity);
+                save = true;
+                window.close();
             }
-            save = true;
-            window.close();
+
         });
 
         cancelButton.setOnAction(e -> {
