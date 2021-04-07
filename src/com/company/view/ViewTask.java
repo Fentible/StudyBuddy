@@ -78,12 +78,12 @@ public class ViewTask {
         deadline.setEditable(false);
 
         TextField module = new TextField();
-        module.setText(task.getModule().getTitle());
+        module.setText(task.getModule() == null ? "Not found " : task.getModule().getTitle());
         module.setEditable(false);
 
 
         ObservableList<Activity> activityList = FXCollections.observableArrayList();
-        activityList.addAll(task.getActivities());
+        Optional.ofNullable(task.getActivities()).ifPresent(activityList::addAll);
         TableView<Activity> tableOfActivities = new TableView<>(activityList);
         TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
         TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Due Date");
@@ -99,7 +99,7 @@ public class ViewTask {
 
 
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
-        milestonesList.addAll(semesterProfile.getMilestones());
+        Optional.ofNullable(task.getMilestones()).ifPresent(milestonesList::addAll);
         TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
         TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
         TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
@@ -116,7 +116,7 @@ public class ViewTask {
 
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
-        dependenciesList.addAll(task.getDependencies());
+        Optional.ofNullable(task.getDependencies()).ifPresent(dependenciesList::addAll);
         TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
         TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
         TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");
