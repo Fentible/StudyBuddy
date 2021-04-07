@@ -8,6 +8,7 @@ import com.company.edit.EditTask;
 import com.company.model.*;
 import com.company.model.Module;
 import com.company.view.ViewModule;
+import com.company.view.ViewTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -21,6 +22,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.text.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -74,14 +76,13 @@ public class Dashboard extends Application {
             vbox.setStyle(layout);
             Label title = new Label(items.getTitle());
             Label time = new Label(items.getEnd().toLocalTime().toString());
-            Button edit = new Button("Edit");
+            Button edit = new Button("Select");
             if(items instanceof Task) {
                 edit.setOnAction(e -> {
-                    if(EditTask.Display(semesterProfile, (Task) items)) {
-                        tile.getChildren().clear();
-                        displayOption = CalenderDisplayType.TASKS;
-                        populateCalender(tile, this.month, this.year);
-                    }
+                    ViewTask.Display(semesterProfile, (Task) items);
+                    tile.getChildren().clear();
+                    displayOption = CalenderDisplayType.TASKS;
+                    populateCalender(tile, this.month, this.year);
                 });
             }
             vbox.setAlignment(Pos.CENTER);

@@ -4,6 +4,7 @@ import com.company.AlertBox;
 import com.company.add.*;
 import com.company.model.*;
 import com.company.model.Module;
+import com.company.view.ViewTask;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.text.View;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,11 +34,14 @@ public class EditTask {
     private static Assignment assignment;
     private static int displayProgress;
     static boolean save;
+    private static Scene scene;
+
+    public static Scene getScene() { return scene; }
 
     /*
      * See 'AddActivity' for notes as this class is very similar
      */
-    public static boolean Display(SemesterProfile semesterProfile, Task passedTask)  {
+    public static boolean Display(SemesterProfile semesterProfile, Task passedTask, Stage window)  {
 
         task = passedTask;
         exam = passedTask.getExam();
@@ -45,8 +50,7 @@ public class EditTask {
         dependenciesList = passedTask.getDependencies();
         displayProgress = passedTask.getProgress();
 
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
+        //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Task");
         window.setMinWidth(750);
         window.setMinHeight(400);
@@ -140,16 +144,17 @@ public class EditTask {
             task.updateTask(temp);
 
             save = true;
-            window.close();
+            ViewTask.Display(semesterProfile, task, window);
+            window.setScene(ViewTask.getScene());
         });
 
         cancelButton.setOnAction(e -> {
             save = false;
-            window.close();
+            ViewTask.Display(semesterProfile, task, window);
+            window.setScene(ViewTask.getScene());
         });
-
-        window.setScene(new Scene(gridpane));
-        window.showAndWait();
+        scene = new Scene(gridpane);
+        window.setScene(scene);
 
         return save;
     }

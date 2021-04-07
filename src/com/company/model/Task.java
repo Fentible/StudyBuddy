@@ -21,9 +21,9 @@ public class Task implements CalenderModelClass, Serializable {
     private Exam exam;
     private Assignment assignment;
     private Module module;
-    private ArrayList<Task> dependencies;
-    private ArrayList<Activity> relatedActivities;
-    private ArrayList<Milestone> milestones;
+    private ArrayList<Task> dependencies = new ArrayList<>();
+    private ArrayList<Activity> relatedActivities = new ArrayList<>();
+    private ArrayList<Milestone> milestones = new ArrayList<>();
 
     // Constructors
     public Task(String title, String start, String end, int progress, String notes,
