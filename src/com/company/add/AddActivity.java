@@ -35,7 +35,7 @@ public class AddActivity {
         // General window setup
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add Task");
+        window.setTitle("Add Activity");
         window.setMinWidth(750);
         window.setMinHeight(400);
 
