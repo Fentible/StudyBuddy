@@ -31,7 +31,7 @@ public class AddMilestone {
     /*
      * See 'AddActivity' for notes as this class is very similar
      */
-    public static boolean Display(SemesterProfile semesterProfile) {
+    public static boolean Display(SemesterProfile semesterProfile, LocalDate date) {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -45,7 +45,7 @@ public class AddMilestone {
         TextField title = new TextField();
         title.setPromptText("Title: ");
 
-        DatePicker inputEndDate = new DatePicker(LocalDate.now());
+        DatePicker inputEndDate = new DatePicker(date == null ? LocalDate.now() : date);
         TextField endTime = new TextField();
         endTime.setPromptText("HH:MM");
 

@@ -115,8 +115,20 @@ public class Dashboard extends Application {
         LocalDate end = LocalDate.of(year, month, start.lengthOfMonth());
         List<LocalDate> dates = this.getDates(start, end);
         ScrollPane[] calenderBoxes = new ScrollPane[dates.size()];
+
         for(int i = 0; i < calenderBoxes.length; i++) {
             calenderBoxes[i] = getCalenderBox(semesterProfile.getItemsFromDate(dates.get(i), displayOption), dates.get(i));
+            int finalI = i;
+            calenderBoxes[i].setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    switch (displayOption) {
+                        case TASKS -> AddTask.Display(semesterProfile, dates.get(finalI));
+                        case MILESTONES -> AddMilestone.Display(semesterProfile, dates.get(finalI));
+                        case ACTIVITIES -> AddActivity.Display(semesterProfile, dates.get(finalI));
+                    }
+
+                }
+            });
             tile.getChildren().add(calenderBoxes[i]);
         }
     }
@@ -236,19 +248,19 @@ public class Dashboard extends Application {
         MenuItem addActivity = new MenuItem("Add Activity");
         MenuItem addMilestone = new MenuItem("Add Milestone");
         addTask.setOnAction(e -> {
-                if(AddTask.Display(semesterProfile)) {
+                if(AddTask.Display(semesterProfile, null)) { // null or LocalDate.now()
                     tile.getChildren().clear();
                     populateCalender(tile, this.month, this.year);
                 }
         });
         addActivity.setOnAction(e -> {
-            if(AddActivity.Display(semesterProfile)) {
+            if(AddActivity.Display(semesterProfile, null)) {
                 tile.getChildren().clear();
                 populateCalender(tile, this.month, this.year);
             }
         });
         addMilestone.setOnAction(e -> {
-            if(AddMilestone.Display(semesterProfile)) {
+            if(AddMilestone.Display(semesterProfile, null)) {
                 tile.getChildren().clear();
                 populateCalender(tile, this.month, this.year);
             }

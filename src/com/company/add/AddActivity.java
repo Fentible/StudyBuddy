@@ -31,7 +31,7 @@ public class AddActivity {
     /*
      * Function to display window to user when adding an activity
      */
-    public static boolean Display(SemesterProfile semesterProfile)  {
+    public static boolean Display(SemesterProfile semesterProfile, LocalDate date)  {
         // General window setup
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -45,7 +45,7 @@ public class AddActivity {
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
         title.setPromptText("Title: ");
-        DatePicker inputEndDate = new DatePicker(LocalDate.now());
+        DatePicker inputEndDate = new DatePicker(date == null ? LocalDate.now() : date);
         TextArea notes = new TextArea();
         notes.setPromptText("Notes: ");
         TextField endTime = new TextField();
