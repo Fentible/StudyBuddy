@@ -1,12 +1,11 @@
 package com.company.view;
 
 import com.company.edit.EditTask;
-import com.company.model.Activity;
-import com.company.model.Milestone;
-import com.company.model.SemesterProfile;
-import com.company.model.Task;
+import com.company.model.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,9 +25,6 @@ public class ViewTask {
     private static Scene scene;
 
     public static Scene getScene() { return scene; }
-    public static void updateTask(Task task) {
-
-    }
 
     public static void Display(SemesterProfile semesterProfile, Task task) {
 
@@ -36,9 +32,9 @@ public class ViewTask {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + task.getTitle());
-        window.setMinWidth(750);
-        window.setMinHeight(400);
-
+        window.setMinWidth(1000);
+        window.setMinHeight(875);
+        window.setHeight(875);
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
         HBox confirmButtons = new HBox(10);
@@ -85,54 +81,64 @@ public class ViewTask {
         module.setText(task.getModule().getTitle());
         module.setEditable(false);
 
-        ObservableList<Task> taskList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getDependencies()).ifPresent(taskList::addAll);
-        javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
-        listOfTasks.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if (empty || task == null) {
-                    setText(null);
-                } else {
-                    setText(task.getTitle());
-                }
-            }
-        });
 
         ObservableList<Activity> activityList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getActivities()).ifPresent(activityList::addAll);
-        javafx.scene.control.ListView<Activity> listOfActivities = new javafx.scene.control.ListView<>(activityList);
-        listOfActivities.setCellFactory(param -> new ListCell<Activity>() {
-            @Override
-            protected void updateItem(Activity activity, boolean empty) {
-                super.updateItem(activity, empty);
-                if (empty || activity == null) {
-                    setText(null);
-                } else {
-                    setText(activity.getTitle());
-                }
-            }
-        });
+        activityList.addAll(task.getActivities());
+        TableView<Activity> tableOfActivities = new TableView<>(activityList);
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
+        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Due Date");
+        TableColumn<Activity, String> activityProgressColumn = new TableColumn<>("Completion");
+        activityNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        activityDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        activityProgressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getTimeSpent())));
+        activityDateColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        activityNameColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        activityProgressColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        tableOfActivities.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfActivities.getColumns().addAll(activityNameColumn, activityProgressColumn, activityDateColumn);
 
-        ObservableList<Milestone> milestoneList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getMilestones()).ifPresent(milestoneList::addAll);
-        javafx.scene.control.ListView<Milestone> listOfMilestones = new javafx.scene.control.ListView<>(milestoneList);
-        listOfMilestones.setCellFactory(param -> new ListCell<Milestone>() {
-            @Override
-            protected void updateItem(Milestone milestone, boolean empty) {
-                super.updateItem(milestone, empty);
-                if (empty || milestone == null) {
-                    setText(null);
-                } else {
-                    setText(milestone.getTitle());
-                }
-            }
-        });
 
-        HBox timeBox = new HBox(8);
+        ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
+        milestonesList.addAll(semesterProfile.getMilestones());
+        TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
+        TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
+        TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
+        TableColumn<Milestone, String> milestoneDateColumn = new TableColumn<>("Due Date");
+        milestoneNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        milestoneCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getCompletion())));
+        milestoneDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        //tableOfMilestones.setMaxWidth(window.getWidth() / 3);
+        milestoneDateColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneCompletionColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
+
+
+        ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
+        dependenciesList.addAll(task.getDependencies());
+        TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
+        TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
+        TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");
+        TableColumn<Task, String> dependencyDateColumn = new TableColumn<>("Due Date");
+        dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
+        dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        //tableOfDependencies.setMaxWidth(window.getWidth() / 3);
+        dependencyDateColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        dependencyCompletionColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        dependencyNameColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
+
+
+
+        HBox timeBox = new HBox(8); // dates HBox
         timeBox.getChildren().addAll(startDate, endDate);
-        GridPane gridpane = new GridPane();
+
+        GridPane gridpane = new GridPane(); // GridPane for most of the elements
+        gridpane.prefWidthProperty().bind(window.widthProperty());
+
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
         gridpane.setHgap(25);
@@ -145,16 +151,25 @@ public class ViewTask {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
-        gridpane.add(notes, 0, 5, 2, 2);
-        GridPane.setHalignment(confirmButtons, HPos.RIGHT);
-        gridpane.add(confirmButtons, 1, 15);
+        gridpane.add(notes, 0, 4, 2, 2);
 
-        HBox hbox = new HBox(8);
-        hbox.getChildren().addAll(listOfTasks, listOfActivities, listOfMilestones);
-        gridpane.add(hbox, 0, 11, 2, 2);
-        ScrollPane container = new ScrollPane();
-        container.setContent(gridpane);
-        scene = new Scene(container);
+        HBox tables = new HBox(8);
+        tables.getChildren().addAll(tableOfDependencies, tableOfActivities, tableOfMilestones);
+        tables.setPadding(new Insets(15,15,15,15));
+        tables.setMaxWidth(950);
+
+        VBox container = new VBox(8);
+        confirmButtons.setAlignment(Pos.CENTER);
+        tables.setAlignment(Pos.CENTER);
+        container.getChildren().addAll(gridpane, tables, confirmButtons);
+        container.setPadding(new Insets(15,15,15,15));
+
+        ScrollPane sp = new ScrollPane();
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        sp.setContent(container);
+        scene = new Scene(sp);
         window.setScene(scene);
         window.showAndWait();
 
@@ -162,12 +177,11 @@ public class ViewTask {
 
     public static void Display(SemesterProfile semesterProfile, Task task, Stage window) {
 
-
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + task.getTitle());
-        window.setMinWidth(750);
-        window.setMinHeight(400);
-
+        window.setMinWidth(1000);
+        window.setMinHeight(875);
+        window.setHeight(875);
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
         HBox confirmButtons = new HBox(10);
@@ -214,54 +228,64 @@ public class ViewTask {
         module.setText(task.getModule().getTitle());
         module.setEditable(false);
 
-        ObservableList<Task> taskList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getDependencies()).ifPresent(taskList::addAll);
-        javafx.scene.control.ListView<Task> listOfTasks = new javafx.scene.control.ListView<>(taskList);
-        listOfTasks.setCellFactory(param -> new ListCell<Task>() {
-            @Override
-            protected void updateItem(Task task, boolean empty) {
-                super.updateItem(task, empty);
-                if (empty || task == null) {
-                    setText(null);
-                } else {
-                    setText(task.getTitle());
-                }
-            }
-        });
 
         ObservableList<Activity> activityList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getActivities()).ifPresent(activityList::addAll);
-        javafx.scene.control.ListView<Activity> listOfActivities = new javafx.scene.control.ListView<>(activityList);
-        listOfActivities.setCellFactory(param -> new ListCell<Activity>() {
-            @Override
-            protected void updateItem(Activity activity, boolean empty) {
-                super.updateItem(activity, empty);
-                if (empty || activity == null) {
-                    setText(null);
-                } else {
-                    setText(activity.getTitle());
-                }
-            }
-        });
+        activityList.addAll(task.getActivities());
+        TableView<Activity> tableOfActivities = new TableView<>(activityList);
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
+        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Due Date");
+        TableColumn<Activity, String> activityProgressColumn = new TableColumn<>("Completion");
+        activityNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        activityDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        activityProgressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getTimeSpent())));
+        activityDateColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        activityNameColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        activityProgressColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        tableOfActivities.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfActivities.getColumns().addAll(activityNameColumn, activityProgressColumn, activityDateColumn);
 
-        ObservableList<Milestone> milestoneList = FXCollections.observableArrayList();
-        Optional.ofNullable(task.getMilestones()).ifPresent(milestoneList::addAll);
-        javafx.scene.control.ListView<Milestone> listOfMilestones = new javafx.scene.control.ListView<>(milestoneList);
-        listOfMilestones.setCellFactory(param -> new ListCell<Milestone>() {
-            @Override
-            protected void updateItem(Milestone milestone, boolean empty) {
-                super.updateItem(milestone, empty);
-                if (empty || milestone == null) {
-                    setText(null);
-                } else {
-                    setText(milestone.getTitle());
-                }
-            }
-        });
 
-        HBox timeBox = new HBox(8);
+        ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
+        milestonesList.addAll(semesterProfile.getMilestones());
+        TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
+        TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
+        TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
+        TableColumn<Milestone, String> milestoneDateColumn = new TableColumn<>("Due Date");
+        milestoneNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        milestoneCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getCompletion())));
+        milestoneDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        //tableOfMilestones.setMaxWidth(window.getWidth() / 3);
+        milestoneDateColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneCompletionColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
+
+
+        ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
+        dependenciesList.addAll(task.getDependencies());
+        TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
+        TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
+        TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");
+        TableColumn<Task, String> dependencyDateColumn = new TableColumn<>("Due Date");
+        dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
+        dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        //tableOfDependencies.setMaxWidth(window.getWidth() / 3);
+        dependencyDateColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        dependencyCompletionColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        dependencyNameColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
+
+
+
+        HBox timeBox = new HBox(8); // dates HBox
         timeBox.getChildren().addAll(startDate, endDate);
-        GridPane gridpane = new GridPane();
+
+        GridPane gridpane = new GridPane(); // GridPane for most of the elements
+        gridpane.prefWidthProperty().bind(window.widthProperty());
+
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
         gridpane.setHgap(25);
@@ -274,16 +298,25 @@ public class ViewTask {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
-        gridpane.add(notes, 0, 5, 2, 2);
-        GridPane.setHalignment(confirmButtons, HPos.RIGHT);
-        gridpane.add(confirmButtons, 1, 15);
+        gridpane.add(notes, 0, 4, 2, 2);
 
-        HBox hbox = new HBox(8);
-        hbox.getChildren().addAll(listOfTasks, listOfActivities, listOfMilestones);
-        gridpane.add(hbox, 0, 11, 2, 2);
-        ScrollPane container = new ScrollPane();
-        container.setContent(gridpane);
-        scene = new Scene(container);
+        HBox tables = new HBox(8);
+        tables.getChildren().addAll(tableOfDependencies, tableOfActivities, tableOfMilestones);
+        tables.setPadding(new Insets(15,15,15,15));
+        tables.setMaxWidth(950);
+
+        VBox container = new VBox(8);
+        confirmButtons.setAlignment(Pos.CENTER);
+        tables.setAlignment(Pos.CENTER);
+        container.getChildren().addAll(gridpane, tables, confirmButtons);
+        container.setPadding(new Insets(15,15,15,15));
+
+        ScrollPane sp = new ScrollPane();
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        sp.setContent(container);
+        scene = new Scene(sp);
         window.setScene(scene);
         //window.showAndWait();
 

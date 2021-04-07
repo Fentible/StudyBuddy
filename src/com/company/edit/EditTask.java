@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.w3c.dom.events.Event;
 
 import javax.swing.text.View;
 import java.time.LocalDate;
@@ -53,9 +54,13 @@ public class EditTask {
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Task");
         window.setMinWidth(750);
-        window.setMinHeight(400);
-
-
+        window.setMinHeight(500);
+        window.setMaxWidth(750);
+        window.setMaxHeight(500);
+        window.setHeight(500);
+        window.setWidth(750);
+        // switching from edit and view windows messed with the sizing a bit
+        // so that's why theres so many width and height setting
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
