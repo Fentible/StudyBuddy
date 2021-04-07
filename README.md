@@ -26,6 +26,8 @@ Software Engineering Coursework - Study Planner
   - select module to view tasks, deadlines, etc
     - show completion of these tasks and deadlines
     - colour code modules - display colour on dashboard
+  - now views task from dashboard and can edit from selected button - adding milestones, deadlines, etc options soon
+    - not the best implementation but works anyway
 
 + View module class: 
 
