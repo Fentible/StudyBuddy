@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ViewModule {
 
@@ -39,7 +40,8 @@ public class ViewModule {
 
         // List views for all of the content...
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
-        milestonesList.addAll(semesterProfile.getMilestones());
+        milestonesList.addAll(module.getMilestones());
+        Optional.ofNullable(module.getMilestones()).ifPresent(milestonesList::addAll);
         TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
         TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
         TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
@@ -57,7 +59,7 @@ public class ViewModule {
 
         //...
         ObservableList<Task> taskList = FXCollections.observableArrayList();
-        taskList.addAll(semesterProfile.getTasks());
+        Optional.ofNullable(module.getTasks()).ifPresent(taskList::addAll);
         TableView<Task> tableOfTasks = new TableView<>(taskList);
         TableColumn<Task, String> taskNameColumn = new TableColumn<>("Name");
         TableColumn<Task, String> taskProgressColumn = new TableColumn<>("Progress");
@@ -74,7 +76,7 @@ public class ViewModule {
 
         //...
         ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
-        deadlineList.addAll(semesterProfile.getDeadlines());
+        Optional.ofNullable(module.getDeadlines()).ifPresent(deadlineList::addAll);
         TableView<Deadline> tableOfDeadlines = new TableView<>(deadlineList);
         TableColumn<Deadline, String> deadlineNameColumn = new TableColumn<>("Name");
         TableColumn<Deadline, String> deadlineDateColumn = new TableColumn<>("Due Date");
