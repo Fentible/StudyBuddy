@@ -2,10 +2,14 @@ package com.company.view;
 
 import com.company.edit.EditTask;
 import com.company.model.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,8 +20,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ViewTask {
@@ -34,7 +41,25 @@ public class ViewTask {
         window.setTitle("View: " + task.getTitle());
         window.setMinWidth(1000);
         window.setMinHeight(875);
-        window.setHeight(875);
+        window.setHeight(579);
+        window.setWidth(700);
+        System.out.println("Starting: " + window.getHeight() + " : " + window.getWidth());
+        Timeline tl = new Timeline();
+        tl.setCycleCount(Timeline.INDEFINITE);
+        tl.getKeyFrames().add(
+                new KeyFrame(new Duration(3), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        window.setWidth(window.getWidth() + 5);
+                        window.setHeight(window.getHeight() + 5);
+                        if(window.getWidth() >= 1000 || window.getHeight() >= 875) {
+                            System.out.println(window.getHeight() + " : " + window.getWidth());
+                            tl.stop();
+                        }
+                    }
+                })
+        );
+        tl.play();
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
         HBox confirmButtons = new HBox(10);
@@ -46,7 +71,7 @@ public class ViewTask {
         });
 
         editButton.setOnAction(e -> {
-            EditTask.Display(semesterProfile, task, window);
+                EditTask.Display(semesterProfile, task, window);
         });
 
         Label title = new Label(task.getTitle());
@@ -181,7 +206,24 @@ public class ViewTask {
         window.setTitle("View: " + task.getTitle());
         window.setMinWidth(1000);
         window.setMinHeight(875);
-        window.setHeight(875);
+        //window.setHeight(875);
+        System.out.println("Second: " + window.getHeight() + " : " + window.getWidth());
+        Timeline tl = new Timeline();
+        tl.setCycleCount(Timeline.INDEFINITE);
+        tl.getKeyFrames().add(
+                new KeyFrame(new Duration(3), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        window.setWidth(window.getWidth() + 5);
+                        window.setHeight(window.getHeight() + 5);
+                        if(window.getWidth() >= 1000 && window.getHeight() >= 879) {
+                            System.out.println(window.getHeight() + " : " + window.getWidth());
+                            tl.stop();
+                        }
+                    }
+                })
+        );
+        tl.play();
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
         HBox confirmButtons = new HBox(10);
@@ -193,7 +235,7 @@ public class ViewTask {
         });
 
         editButton.setOnAction(e -> {
-            EditTask.Display(semesterProfile, task, window);
+                EditTask.Display(semesterProfile, task, window);
         });
 
         Label title = new Label(task.getTitle());
@@ -230,7 +272,7 @@ public class ViewTask {
 
 
         ObservableList<Activity> activityList = FXCollections.observableArrayList();
-        activityList.addAll(task.getActivities());
+        Optional.ofNullable(task.getActivities()).ifPresent(activityList::addAll);
         TableView<Activity> tableOfActivities = new TableView<>(activityList);
         TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
         TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Due Date");
@@ -246,7 +288,7 @@ public class ViewTask {
 
 
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
-        milestonesList.addAll(semesterProfile.getMilestones());
+        Optional.ofNullable(task.getMilestones()).ifPresent(milestonesList::addAll);
         TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
         TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
         TableColumn<Milestone, String> milestoneCompletionColumn = new TableColumn<>("Completed");
@@ -263,7 +305,7 @@ public class ViewTask {
 
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
-        dependenciesList.addAll(task.getDependencies());
+        Optional.ofNullable(task.getDependencies()).ifPresent(dependenciesList::addAll);
         TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
         TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
         TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");

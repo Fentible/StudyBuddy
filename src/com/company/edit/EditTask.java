@@ -1,14 +1,15 @@
 package com.company.edit;
 
-import com.company.AlertBox;
 import com.company.add.*;
 import com.company.model.*;
 import com.company.model.Module;
 import com.company.view.ViewTask;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,12 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import org.w3c.dom.events.Event;
 
-import javax.swing.text.View;
-import java.time.LocalDate;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -51,14 +50,31 @@ public class EditTask {
         dependenciesList = passedTask.getDependencies();
         displayProgress = passedTask.getProgress();
 
+
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Task");
-        window.setMinWidth(750);
-        window.setMinHeight(500);
-        window.setMaxWidth(750);
-        window.setMaxHeight(500);
-        window.setHeight(500);
-        window.setWidth(750);
+        //window.setMinWidth(750);
+        //window.setMinHeight(500);
+        //window.setMaxWidth(750);
+        //window.setMaxHeight(500);
+        //window.setWidth(750);
+        //window.setHeight(500);
+        Timeline tl = new Timeline();
+        tl.setCycleCount(Timeline.INDEFINITE);
+        tl.getKeyFrames().add(
+                new KeyFrame(new Duration(3), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        window.setWidth(window.getWidth() - 5);
+                        window.setHeight(window.getHeight() - 5);
+                        if(window.getWidth() <= 700 && window.getHeight() <= 650) {
+                            tl.stop();
+                        }
+                    }
+                })
+        );
+        tl.play();
+
         // switching from edit and view windows messed with the sizing a bit
         // so that's why theres so many width and height setting
         Button saveButton = new Button("Save");
