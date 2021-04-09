@@ -43,7 +43,6 @@ public class ViewTask {
         window.setMinHeight(875);
         window.setHeight(579);
         window.setWidth(700);
-        System.out.println("Starting: " + window.getHeight() + " : " + window.getWidth());
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -53,7 +52,6 @@ public class ViewTask {
                         window.setWidth(window.getWidth() + 5);
                         window.setHeight(window.getHeight() + 5);
                         if(window.getWidth() >= 1000 || window.getHeight() >= 875) {
-                            System.out.println(window.getHeight() + " : " + window.getWidth());
                             tl.stop();
                         }
                     }
@@ -207,7 +205,6 @@ public class ViewTask {
         window.setMinWidth(1000);
         window.setMinHeight(875);
         //window.setHeight(875);
-        System.out.println("Second: " + window.getHeight() + " : " + window.getWidth());
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -217,7 +214,6 @@ public class ViewTask {
                         window.setWidth(window.getWidth() + 5);
                         window.setHeight(window.getHeight() + 5);
                         if(window.getWidth() >= 1000 && window.getHeight() >= 879) {
-                            System.out.println(window.getHeight() + " : " + window.getWidth());
                             tl.stop();
                         }
                     }
