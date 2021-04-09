@@ -8,23 +8,27 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 
 public class ViewTask {
@@ -37,12 +41,23 @@ public class ViewTask {
 
 
         Stage window = new Stage();
+
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + task.getTitle());
-        window.setMinWidth(1000);
-        window.setMinHeight(875);
         window.setHeight(579);
         window.setWidth(700);
+        // Opens window slightly offset from the current one
+        List<Window> open = Stage.getWindows();
+        double xPos = 0;
+        double yPos = 0;
+        for(Window window1: open) {
+            if(window1.getX() > xPos) {
+                xPos = window1.getX();
+                yPos = window1.getY();
+            }
+        }
+        window.setX(xPos + 50);
+        window.setY(yPos + 50);
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -51,7 +66,7 @@ public class ViewTask {
                     public void handle(ActionEvent actionEvent) {
                         window.setWidth(window.getWidth() + 5);
                         window.setHeight(window.getHeight() + 5);
-                        if(window.getWidth() >= 1000 || window.getHeight() >= 875) {
+                        if(window.getWidth() >= 1000 && window.getHeight() >= 875) {
                             tl.stop();
                         }
                     }
@@ -114,9 +129,7 @@ public class ViewTask {
         activityNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         activityDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
         activityProgressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getTimeSpent())));
-        activityDateColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
-        activityNameColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
-        activityProgressColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
+        tableOfActivities.setPrefWidth(300);
         tableOfActivities.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfActivities.getColumns().addAll(activityNameColumn, activityProgressColumn, activityDateColumn);
 
@@ -130,10 +143,7 @@ public class ViewTask {
         milestoneNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         milestoneCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getCompletion())));
         milestoneDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        //tableOfMilestones.setMaxWidth(window.getWidth() / 3);
-        milestoneDateColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
-        milestoneCompletionColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
-        milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        tableOfMilestones.setPrefWidth(300);
         tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
 
@@ -147,14 +157,20 @@ public class ViewTask {
         dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
         dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        //tableOfDependencies.setMaxWidth(window.getWidth() / 3);
-        dependencyDateColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
-        dependencyCompletionColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
-        dependencyNameColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        tableOfDependencies.setPrefWidth(300);
         tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfDependencies.setRowFactory(e -> {
+            TableRow<Task> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        ViewTask.Display(semesterProfile, row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
         tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
-
-
 
         HBox timeBox = new HBox(8); // dates HBox
         timeBox.getChildren().addAll(startDate, endDate);
@@ -194,16 +210,18 @@ public class ViewTask {
         sp.setContent(container);
         scene = new Scene(sp);
         window.setScene(scene);
-        window.showAndWait();
+        window.show();
+
 
     }
 
     public static void Display(SemesterProfile semesterProfile, Task task, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);
+
         window.setTitle("View: " + task.getTitle());
-        window.setMinWidth(1000);
-        window.setMinHeight(875);
+        window.setHeight(579);
+        window.setWidth(700);
         //window.setHeight(875);
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
@@ -276,10 +294,8 @@ public class ViewTask {
         activityNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         activityDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
         activityProgressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getTimeSpent())));
-        activityDateColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
-        activityNameColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
-        activityProgressColumn.prefWidthProperty().bind(tableOfActivities.widthProperty().divide(3));
         tableOfActivities.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfActivities.setPrefWidth(300);
         tableOfActivities.getColumns().addAll(activityNameColumn, activityProgressColumn, activityDateColumn);
 
 
@@ -292,10 +308,7 @@ public class ViewTask {
         milestoneNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         milestoneCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getCompletion())));
         milestoneDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        //tableOfMilestones.setMaxWidth(window.getWidth() / 3);
-        milestoneDateColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
-        milestoneCompletionColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
-        milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
+        tableOfMilestones.setPrefWidth(300);
         tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
 
@@ -309,11 +322,18 @@ public class ViewTask {
         dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
         dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        //tableOfDependencies.setMaxWidth(window.getWidth() / 3);
-        dependencyDateColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
-        dependencyCompletionColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
-        dependencyNameColumn.prefWidthProperty().bind(tableOfDependencies.widthProperty().divide(3));
+        tableOfDependencies.setMaxWidth(300);
         tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableOfDependencies.setRowFactory(e -> {
+            TableRow<Task> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null)
+                        ViewTask.Display(semesterProfile, row.getItem());
+                }
+            });
+            return row;
+        });
         tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
 
 
