@@ -281,7 +281,7 @@ public class ViewTask {
         deadline.setEditable(false);
 
         TextField module = new TextField();
-        module.setText(task.getModule().getTitle());
+        module.setText(task.getMilestones() != null ? task.getModule().getTitle() : "");
         module.setEditable(false);
 
 
