@@ -7,6 +7,7 @@ import com.company.add.ModuleSingleView;
 import com.company.edit.EditTask;
 import com.company.model.*;
 import com.company.model.Module;
+import com.company.view.ViewDeadline;
 import com.company.view.ViewModule;
 import com.company.view.ViewTask;
 import javafx.application.Application;
@@ -82,6 +83,13 @@ public class Dashboard extends Application {
                     ViewTask.Display(semesterProfile, (Task) items);
                     tile.getChildren().clear();
                     displayOption = CalenderDisplayType.TASKS;
+                    populateCalender(tile, this.month, this.year);
+                });
+            } else if(items instanceof Deadline) {
+                edit.setOnAction(e -> {
+                    ViewDeadline.Display(semesterProfile, (Deadline) items);
+                    tile.getChildren().clear();
+                    displayOption = CalenderDisplayType.DEADLINES;
                     populateCalender(tile, this.month, this.year);
                 });
             }

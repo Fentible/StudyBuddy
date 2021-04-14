@@ -4,6 +4,7 @@ import com.company.edit.EditTask;
 import com.company.model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -172,6 +173,10 @@ public class ViewTask {
         });
         tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
 
+        tableOfActivities.setPlaceholder(new Label("Table of Activities"));
+        tableOfDependencies.setPlaceholder(new Label("Table of Dependencies"));
+        tableOfMilestones.setPlaceholder(new Label("Table of Milestones"));
+
         HBox timeBox = new HBox(8); // dates HBox
         timeBox.getChildren().addAll(startDate, endDate);
 
@@ -336,7 +341,9 @@ public class ViewTask {
         });
         tableOfDependencies.getColumns().addAll(dependencyNameColumn, dependencyCompletionColumn, dependencyDateColumn);
 
-
+        tableOfActivities.setPlaceholder(new Label("Table of Activities"));
+        tableOfDependencies.setPlaceholder(new Label("Table of Dependencies"));
+        tableOfMilestones.setPlaceholder(new Label("Table of Milestones"));
 
         HBox timeBox = new HBox(8); // dates HBox
         timeBox.getChildren().addAll(startDate, endDate);

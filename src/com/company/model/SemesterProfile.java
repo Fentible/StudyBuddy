@@ -47,6 +47,7 @@ public class SemesterProfile implements Serializable {
         String line, type, title;
         String code = null;
         Scanner read = new Scanner(profile);
+        Module module = null;
         this.properties = properties;
         while(read.hasNextLine()) {
             line = read.nextLine();
@@ -57,19 +58,20 @@ public class SemesterProfile implements Serializable {
                 case "M" -> {
                     title = readLine.next();
                     code = readLine.next();
-                    this.addModule(new Module(title, code));
+                    module = new Module(title, code);
+                    this.addModule(module);
                     System.out.println("Adding module: " + title);
                 }
                 case "E" -> {
                     title = readLine.next();
-                    Exam exam = new Exam(title, readLine.next());
+                    Exam exam = new Exam(title, readLine.next(), module);
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
                     System.out.println("Adding exam: " + title);
                 }
                 case "A" -> {
                     title = readLine.next();
-                    Assignment assignment = new Assignment(title, readLine.next());
+                    Assignment assignment = new Assignment(title, readLine.next(), module);
                     this.addAssignment(assignment);
                     this.getModule(code).addDeadline(assignment);
                     System.out.println("Adding assignment: " + title);
@@ -152,6 +154,18 @@ public class SemesterProfile implements Serializable {
             }
         }
         return null;
+    }
+
+    public ArrayList<Task> getAssignedTasks(Deadline deadline) {
+        ArrayList<Task> taskList = new ArrayList<>();
+        for(Task task : tasks) {
+            if(deadline instanceof Assignment && task.getAssignment() == (Assignment) deadline) {
+                taskList.add(task);
+            } else if(deadline instanceof Exam && task.getExam() == (Exam) deadline) {
+                taskList.add(task);
+            }
+        }
+        return taskList;
     }
 
 

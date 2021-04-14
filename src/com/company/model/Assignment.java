@@ -11,11 +11,11 @@ public class Assignment extends Deadline {
 
 
 
-    public Assignment(String title, String dueDate) { super(dueDate, title); }
+    public Assignment(String title, String dueDate, Module module) { super(dueDate, title, module); }
     public static void main(String[] args) {
 
-        Assignment assignment = new Assignment("SoftEng Report", "13-06-2021 12:00");
-        System.out.println(assignment.getDueDate());
+        //Assignment assignment = new Assignment("SoftEng Report", "13-06-2021 12:00");
+        //System.out.println(assignment.getDueDate());
     }
 
 }
