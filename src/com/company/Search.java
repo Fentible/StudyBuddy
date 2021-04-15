@@ -86,23 +86,25 @@ public class Search {
                     }
                 }
             }
-        } else if(title == null && date == null) {
-            Optional.ofNullable(semesterProfile.getAll()).ifPresent(modelList::addAll);
         } else {
-            Optional.ofNullable(semesterProfile.getAll()).ifPresent(modelList::addAll);
+            System.out.println("eee");
+            modelList.addAll(semesterProfile.getAll());
             if (date != null) {
-                modelList.addAll(semesterProfile.getActivitiesFromDate(date));
-                modelList.addAll(semesterProfile.getTasksFromDate(date));
-                modelList.addAll(semesterProfile.getMilestonesFromDate(date));
-                modelList.addAll(semesterProfile.getDeadlinesFromDate(date));
+                System.out.println("ggg");
+                modelList.retainAll(semesterProfile.getActivitiesFromDate(date));
+                modelList.retainAll(semesterProfile.getTasksFromDate(date));
+                modelList.retainAll(semesterProfile.getMilestonesFromDate(date));
+                modelList.retainAll(semesterProfile.getDeadlinesFromDate(date));
             }
-            if (title != null) {
-                modelList.addAll(semesterProfile.getActivities(title));
-                modelList.addAll(semesterProfile.getTask(title));
-                modelList.addAll(semesterProfile.getDeadlines(title));
-                modelList.addAll(semesterProfile.getMilestones(title));
+            if (title != null && !title.equals("")) {
+                System.out.println("ffff");
+                modelList.retainAll(semesterProfile.getActivities(title));
+                modelList.retainAll(semesterProfile.getTask(title));
+                modelList.retainAll(semesterProfile.getDeadlines(title));
+                modelList.retainAll(semesterProfile.getMilestones(title));
             }
         }
+
 
         return modelList;
     }
@@ -191,6 +193,9 @@ public class Search {
                 type = CalenderDisplayType.TASKS;
             } else {
                 type = null;
+            }
+            if(searchDate.getEditor().getText().equals("")) {
+                searchDate.setValue(null);
             }
             modelList.clear();
             modelList.addAll(populateList(semesterProfile, searchInput.getText(), searchDate.getValue(), type));

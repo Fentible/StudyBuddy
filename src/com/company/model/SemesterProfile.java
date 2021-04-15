@@ -123,7 +123,7 @@ public class SemesterProfile implements Serializable {
     public ArrayList<CalenderModelClass> getAll() {
         ArrayList<CalenderModelClass> calenderModelClasses = new ArrayList<>();
         calenderModelClasses.addAll(this.activities);
-        calenderModelClasses.addAll(this.deadlines);
+        calenderModelClasses.addAll(this.getDeadlines());
         calenderModelClasses.addAll(this.milestones);
         calenderModelClasses.addAll(this.tasks);
         return calenderModelClasses;
