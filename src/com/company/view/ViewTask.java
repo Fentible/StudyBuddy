@@ -2,9 +2,9 @@ package com.company.view;
 
 import com.company.edit.EditTask;
 import com.company.model.*;
+import com.sun.javafx.scene.control.InputField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,11 +75,15 @@ public class ViewTask {
                 })
         );
         tl.play();
+
+
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
         HBox confirmButtons = new HBox(10);
         confirmButtons.getChildren().addAll(cancelButton, editButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
+
+
 
         cancelButton.setOnAction(e -> {
             window.close();

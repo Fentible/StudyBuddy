@@ -185,7 +185,7 @@ public class Dashboard extends Application {
         vbox.setSpacing(8);
         vbox.setAlignment(Pos.CENTER);
         // Only for testing
-        String[] buttonTitles = {"Modules", "Export", "Button 3", "Button 4"};
+        String[] buttonTitles = {"Modules", "Export", "Search", "Button 4"};
         Button[] sideButtons = new Button[4];
 
 
@@ -202,6 +202,11 @@ public class Dashboard extends Application {
                 window.setScene(ViewModule.getScene(viewModule, window, semesterProfile));
             }
         });
+
+        sideButtons[2].setOnAction(e -> {
+            window.setScene(Search.Display(semesterProfile, window));
+        });
+
         // View type toggle buttons
         ToggleGroup toggleGroup = new ToggleGroup();
         RadioMenuItem activitiesButton = new RadioMenuItem("Activities");

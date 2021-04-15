@@ -120,6 +120,66 @@ public class SemesterProfile implements Serializable {
         return null;
     }
 
+    public ArrayList<CalenderModelClass> getAll() {
+        ArrayList<CalenderModelClass> calenderModelClasses = new ArrayList<>();
+        calenderModelClasses.addAll(this.activities);
+        calenderModelClasses.addAll(this.deadlines);
+        calenderModelClasses.addAll(this.milestones);
+        calenderModelClasses.addAll(this.tasks);
+        return calenderModelClasses;
+    }
+    public ArrayList<Task> getTasks(String title) {
+        Pattern pattern = Pattern.compile(title, Pattern.CASE_INSENSITIVE);
+        ArrayList<Task> tasks = new ArrayList<>();
+        for(Task task : this.tasks) {
+            Matcher matcher = pattern.matcher(task.getTitle());
+            boolean found = matcher.find();
+            if(found) {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
+    public ArrayList<Milestone> getMilestones(String title) {
+        Pattern pattern = Pattern.compile(title, Pattern.CASE_INSENSITIVE);
+        ArrayList<Milestone> milestones = new ArrayList<>();
+        for(Milestone milestone: this.milestones) {
+            Matcher matcher = pattern.matcher(milestone.getTitle());
+            boolean found = matcher.find();
+            if(found) {
+                milestones.add(milestone);
+            }
+        }
+        return milestones;
+    }
+
+    public ArrayList<Deadline> getDeadlines(String title) {
+        Pattern pattern = Pattern.compile(title, Pattern.CASE_INSENSITIVE);
+        ArrayList<Deadline> deadlines = new ArrayList<>();
+        for(Deadline deadline : this.getDeadlines()) {
+            Matcher matcher = pattern.matcher(deadline.getTitle());
+            boolean found = matcher.find();
+            if(found) {
+                deadlines.add(deadline);
+            }
+        }
+        return deadlines;
+    }
+
+    public ArrayList<Activity> getActivities(String title) {
+        Pattern pattern = Pattern.compile(title, Pattern.CASE_INSENSITIVE);
+        ArrayList<Activity> activities = new ArrayList<>();
+        for(Activity activity : this.activities) {
+            Matcher matcher = pattern.matcher(activity.getTitle());
+            boolean found = matcher.find();
+            if(found) {
+                activities.add(activity);
+            }
+        }
+        return activities;
+    }
+
     public ArrayList<Task> getTasksFromDate(LocalDate date) {
         ArrayList<Task> tasks = new ArrayList<>();
         for(Task task : this.tasks) {
@@ -128,6 +188,36 @@ public class SemesterProfile implements Serializable {
             }
         }
         return tasks;
+    }
+
+    public ArrayList<Deadline> getDeadlinesFromDate(LocalDate date) {
+        ArrayList<Deadline> deadlines = new ArrayList<>();
+        for(Deadline deadline : this.getDeadlines()) {
+            if(deadline.getEnd().toLocalDate().compareTo(date) == 0) {
+                deadlines.add(deadline);
+            }
+        }
+        return deadlines;
+    }
+
+    public ArrayList<Milestone> getMilestonesFromDate(LocalDate date) {
+        ArrayList<Milestone> milestones = new ArrayList<>();
+        for(Milestone milestone : this.milestones) {
+            if(milestone.getEnd().toLocalDate().compareTo(date) == 0) {
+                milestones.add(milestone);
+            }
+        }
+        return milestones;
+    }
+
+    public ArrayList<Activity> getActivitiesFromDate(LocalDate date) {
+        ArrayList<Activity> activities = new ArrayList<>();
+        for(Activity activity : this.activities) {
+            if(activity.getEnd().toLocalDate().compareTo(date) == 0) {
+                activities.add(activity);
+            }
+        }
+        return activities;
     }
 
     public ArrayList<Deadline> getModuleDeadlines(Module module) {
