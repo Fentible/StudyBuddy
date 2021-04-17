@@ -73,6 +73,17 @@ public class ViewModule {
         tableOfTasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfTasks.getColumns().addAll(taskNameColumn, taskProgressColumn, taskDateColumn);
         tableOfTasks.setMaxWidth(window.getWidth() / 2);
+        tableOfTasks.setRowFactory(e -> {
+            TableRow<Task> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        ViewTask.Display(semesterProfile, row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
 
         //...
         ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
@@ -87,6 +98,17 @@ public class ViewModule {
         tableOfDeadlines.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfDeadlines.getColumns().addAll(deadlineNameColumn, deadlineDateColumn);
         tableOfDeadlines.setMaxWidth(window.getWidth() / 2);
+        tableOfDeadlines.setRowFactory(e -> {
+            TableRow<Deadline> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        ViewDeadline.Display(semesterProfile, row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
 
         // return to dashboard
         back.setOnAction(e -> {
