@@ -180,6 +180,46 @@ public class SemesterProfile implements Serializable {
         return activities;
     }
 
+    public ArrayList<Task> getTasksFromDate(LocalDate start, LocalDate end) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for(Task task : this.tasks) {
+            if(task.getEnd().toLocalDate().isAfter(start) && task.getEnd().toLocalDate().isBefore(end)) {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
+    public ArrayList<Deadline> getDeadlinesFromDate(LocalDate start, LocalDate end) {
+        ArrayList<Deadline> deadlines = new ArrayList<>();
+        for(Deadline deadline : this.getDeadlines()) {
+            if(deadline.getEnd().toLocalDate().isAfter(start) && deadline.getEnd().toLocalDate().isBefore(end)) {
+                deadlines.add(deadline);
+            }
+        }
+        return deadlines;
+    }
+
+    public ArrayList<Milestone> getMilestonesFromDate(LocalDate start, LocalDate end) {
+        ArrayList<Milestone> milestones = new ArrayList<>();
+        for(Milestone milestone : this.milestones) {
+            if(milestone.getEnd().toLocalDate().isAfter(start) && milestone.getEnd().toLocalDate().isBefore(end)) {
+                milestones.add(milestone);
+            }
+        }
+        return milestones;
+    }
+
+    public ArrayList<Activity> getActivitiesFromDate(LocalDate start, LocalDate end) {
+        ArrayList<Activity> activities = new ArrayList<>();
+        for(Activity activity : this.activities) {
+            if(activity.getEnd().toLocalDate().isAfter(start) && activity.getEnd().toLocalDate().isBefore(end)) {
+                activities.add(activity);
+            }
+        }
+        return activities;
+    }
+
     public ArrayList<Task> getTasksFromDate(LocalDate date) {
         ArrayList<Task> tasks = new ArrayList<>();
         for(Task task : this.tasks) {

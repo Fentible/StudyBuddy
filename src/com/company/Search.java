@@ -44,15 +44,16 @@ public class Search {
         return;
     }
 
-    public static ObservableList<CalenderModelClass> populateList(SemesterProfile semesterProfile, String title, LocalDate date, CalenderDisplayType type) {
+    public static ObservableList<CalenderModelClass> populateList(SemesterProfile semesterProfile, String title,
+                                                                  LocalDate start, LocalDate end, CalenderDisplayType type) {
         ObservableList<CalenderModelClass> modelList = FXCollections.observableArrayList();
         //System.out.println(title + " : " + date.toString());
         if(type != null) {
             switch (type) {
                 case TASKS -> {
                     Optional.ofNullable(semesterProfile.getTasks()).ifPresent(modelList::addAll);
-                    if (date != null) {
-                        modelList.retainAll(semesterProfile.getTasksFromDate(date));
+                    if (start != null) {
+                        modelList.retainAll(semesterProfile.getTasksFromDate(start,  end));
                     }
                     if (title != null) {
                         modelList.retainAll(semesterProfile.getTasks(title));
@@ -60,8 +61,8 @@ public class Search {
                 }
                 case DEADLINES -> {
                     Optional.ofNullable(semesterProfile.getDeadlines()).ifPresent(modelList::addAll);
-                    if (date != null) {
-                        modelList.retainAll(semesterProfile.getDeadlinesFromDate(date));
+                    if (start != null) {
+                        modelList.retainAll(semesterProfile.getDeadlinesFromDate(start, end));
                     }
                     if (title != null) {
                         modelList.retainAll(semesterProfile.getDeadlines(title));
@@ -69,8 +70,8 @@ public class Search {
                 }
                 case MILESTONES -> {
                     Optional.ofNullable(semesterProfile.getMilestones()).ifPresent(modelList::addAll);
-                    if (date != null) {
-                        modelList.retainAll(semesterProfile.getMilestonesFromDate(date));
+                    if (start != null) {
+                        modelList.retainAll(semesterProfile.getMilestonesFromDate(start, end));
                     }
                     if (title != null) {
                         modelList.retainAll(semesterProfile.getMilestones(title));
@@ -78,8 +79,8 @@ public class Search {
                 }
                 case ACTIVITIES -> {
                     Optional.ofNullable(semesterProfile.getActivities()).ifPresent(modelList::addAll);
-                    if (date != null) {
-                        modelList.retainAll(semesterProfile.getActivitiesFromDate(date));
+                    if (start != null) {
+                        modelList.retainAll(semesterProfile.getActivitiesFromDate(start, end));
                     }
                     if (title != null) {
                         modelList.retainAll(semesterProfile.getActivities(title));
@@ -89,19 +90,22 @@ public class Search {
         } else {
             System.out.println("eee");
             modelList.addAll(semesterProfile.getAll());
-            if (date != null) {
-                System.out.println("ggg");
-                modelList.retainAll(semesterProfile.getActivitiesFromDate(date));
-                modelList.retainAll(semesterProfile.getTasksFromDate(date));
-                modelList.retainAll(semesterProfile.getMilestonesFromDate(date));
-                modelList.retainAll(semesterProfile.getDeadlinesFromDate(date));
+
+            if (start != null) {
+                ArrayList<CalenderModelClass> temp = new ArrayList<>();
+                temp.addAll(semesterProfile.getActivitiesFromDate(start, end));
+                temp.addAll(semesterProfile.getTasksFromDate(start, end));
+                temp.addAll(semesterProfile.getMilestonesFromDate(start, end));
+                temp.addAll(semesterProfile.getDeadlinesFromDate(start, end));
+                modelList.retainAll(temp);
             }
             if (title != null && !title.equals("")) {
-                System.out.println("ffff");
-                modelList.retainAll(semesterProfile.getActivities(title));
-                modelList.retainAll(semesterProfile.getTask(title));
-                modelList.retainAll(semesterProfile.getDeadlines(title));
-                modelList.retainAll(semesterProfile.getMilestones(title));
+                ArrayList<CalenderModelClass> temp = new ArrayList<>();
+                temp.addAll(semesterProfile.getActivities(title));
+                temp.addAll(semesterProfile.getTasks(title));
+                temp.addAll(semesterProfile.getDeadlines(title));
+                temp.addAll(semesterProfile.getMilestones(title));
+                modelList.retainAll(temp);
             }
         }
 
@@ -125,8 +129,11 @@ public class Search {
         TextField searchInput = new TextField();
         searchInput.setPromptText("Item's title");
 
-        DatePicker searchDate = new DatePicker();
-        searchDate.setChronology(LocalDate.now().getChronology());
+        DatePicker startDate = new DatePicker();
+        startDate.setChronology(LocalDate.now().getChronology());
+
+        DatePicker endDate = new DatePicker();
+        startDate.setChronology(LocalDate.now().getChronology());
 
         ToggleGroup modelSelection = new ToggleGroup();
         RadioMenuItem tasksOption = new RadioMenuItem("Tasks");
@@ -160,7 +167,7 @@ public class Search {
         allOption.setSelected(true);
 
         HBox searchItems = new HBox(8);
-        searchItems.getChildren().addAll(searchInput, searchDate, searchButton, menuBar);
+        searchItems.getChildren().addAll(searchInput, startDate, endDate, searchButton, menuBar);
         searchItems.setAlignment(Pos.CENTER);
 
         modelList = FXCollections.observableArrayList();
@@ -194,11 +201,11 @@ public class Search {
             } else {
                 type = null;
             }
-            if(searchDate.getEditor().getText().equals("")) {
-                searchDate.setValue(null);
+            if(startDate.getEditor().getText().equals("")) {
+                startDate.setValue(null);
             }
             modelList.clear();
-            modelList.addAll(populateList(semesterProfile, searchInput.getText(), searchDate.getValue(), type));
+            modelList.addAll(populateList(semesterProfile, searchInput.getText(), startDate.getValue(), endDate.getValue(), type));
             System.out.println(Arrays.deepToString(modelList.toArray()));
 
         });
