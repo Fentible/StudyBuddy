@@ -84,7 +84,7 @@ public class ViewMilestone {
         });
 
         editButton.setOnAction(e -> {
-                EditMilestone.Display(semesterProfile, milestone, window);
+            EditMilestone.Display(semesterProfile, milestone, window);
         });
 
         Label title = new Label(milestone.getTitle());

@@ -289,9 +289,9 @@ public class SemesterProfile implements Serializable {
     public ArrayList<Task> getAssignedTasks(Deadline deadline) {
         ArrayList<Task> taskList = new ArrayList<>();
         for(Task task : tasks) {
-            if(deadline instanceof Assignment && task.getAssignment() == (Assignment) deadline) {
+            if(deadline instanceof Assignment && task.getAssignment() == deadline) {
                 taskList.add(task);
-            } else if(deadline instanceof Exam && task.getExam() == (Exam) deadline) {
+            } else if(deadline instanceof Exam && task.getExam() == deadline) {
                 taskList.add(task);
             }
         }

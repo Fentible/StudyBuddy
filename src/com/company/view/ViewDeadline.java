@@ -89,9 +89,6 @@ public class ViewDeadline {
         endDate.setText(deadline.getEnd().toString());
         endDate.setEditable(false);
 
-
-
-
         ObservableList<Task> taskList = FXCollections.observableArrayList();
         Optional.ofNullable(semesterProfile.getAssignedTasks(deadline)).ifPresent(taskList::addAll);
         TableView<Task> tableOfTasks = new TableView<Task>(taskList);

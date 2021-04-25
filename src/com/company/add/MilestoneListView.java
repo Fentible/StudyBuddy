@@ -55,6 +55,7 @@ public class MilestoneListView {
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {
             milestones = new ArrayList<Milestone>(listOfMilestones.getSelectionModel().getSelectedItems());
+            window.close();
         });
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(listOfMilestones, confirm);
@@ -97,7 +98,6 @@ public class MilestoneListView {
                 }
             });
         }
-
 
         Button confirm = new Button("Confirm");
         confirm.setOnAction(e -> {

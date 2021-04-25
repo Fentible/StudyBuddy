@@ -140,6 +140,12 @@ public class AddTask  {
                         (int) progressSlider.getValue(), notes.getText(), exam, assignment,
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
+                task.getModule().addTask(task);
+                if(exam != null) {
+                    //exam.add
+                } else if(assignment != null) {
+                   // assignment.add
+                }
                 save = true;
                 window.close();
             }

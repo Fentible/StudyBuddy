@@ -52,7 +52,7 @@ public class Milestone implements CalenderModelClass, Serializable {
         this.setEvent(milestone.getEvent());
         this.setRequiredTasks(milestone.getRequiredTasks());
         this.module = milestone.getEvent().getModule();
-        updateCompletion();
+        this.updateCompletion();
     }
 
     public int getCompletion() {

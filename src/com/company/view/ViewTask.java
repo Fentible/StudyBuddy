@@ -152,6 +152,17 @@ public class ViewTask {
         tableOfMilestones.setPrefWidth(300);
         tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
+        tableOfMilestones.setRowFactory(e -> {
+            TableRow<Milestone> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        ViewMilestone.Display(semesterProfile, row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
 
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
