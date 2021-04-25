@@ -20,6 +20,10 @@ public class Deadline implements CalenderModelClass, Serializable {
     public LocalDateTime getDueDate() { return dueDate; }
     public String getTitle() { return title; }
 
+    public Module getModule() {
+        return module;
+    }
+
     @Override
     public LocalDateTime getEnd() { return dueDate; }
 }

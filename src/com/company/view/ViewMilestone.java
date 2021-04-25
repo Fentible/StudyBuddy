@@ -79,8 +79,6 @@ public class ViewMilestone {
         confirmButtons.getChildren().addAll(cancelButton, editButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
-
-
         cancelButton.setOnAction(e -> {
             window.close();
         });
@@ -90,7 +88,6 @@ public class ViewMilestone {
         });
 
         Label title = new Label(milestone.getTitle());
-
 
         TextField endDate = new TextField();
         endDate.setText(milestone.getEnd().toString());
@@ -103,6 +100,12 @@ public class ViewMilestone {
         TextField deadline = new TextField();
         deadline.setText(milestone.getEvent().getTitle());
         deadline.setEditable(false);
+
+        Button examButton = new Button();
+        examButton.setText(milestone.getEvent().getTitle());
+        examButton.setOnAction(e -> {
+            ViewDeadline.Display(semesterProfile, milestone.getEvent());
+        });
 
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
@@ -141,7 +144,7 @@ public class ViewMilestone {
         gridpane.setPadding(new Insets(15,15,15,15));
         gridpane.setHgap(25);
         gridpane.setVgap(10);
-        gridpane.add(new Label("View Task: "), 0, 0);
+        gridpane.add(new Label("View Milestone: "), 0, 0);
         gridpane.add(new Label("Title: "), 0, 1);
         gridpane.add(title, 1, 1);
         gridpane.add(new Label("Date range: "), 0, 2);
@@ -149,6 +152,7 @@ public class ViewMilestone {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
+        gridpane.add(examButton, 1, 4);
 
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies);

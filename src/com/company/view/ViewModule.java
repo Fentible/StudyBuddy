@@ -40,7 +40,6 @@ public class ViewModule {
 
         // List views for all of the content...
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
-        milestonesList.addAll(module.getMilestones());
         Optional.ofNullable(module.getMilestones()).ifPresent(milestonesList::addAll);
         TableView<Milestone> tableOfMilestones = new TableView<Milestone>(milestonesList);
         TableColumn<Milestone, String> milestoneNameColumn = new TableColumn<>("Name");
@@ -55,6 +54,17 @@ public class ViewModule {
         milestoneNameColumn.prefWidthProperty().bind(tableOfMilestones.widthProperty().divide(3));
         tableOfMilestones.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfMilestones.getColumns().addAll(milestoneNameColumn, milestoneCompletionColumn, milestoneDateColumn);
+        tableOfMilestones.setRowFactory(e -> {
+            TableRow<Milestone> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        ViewMilestone.Display(semesterProfile, row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
 
 
         //...

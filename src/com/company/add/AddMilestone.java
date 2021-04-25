@@ -96,6 +96,7 @@ public class AddMilestone {
                 milestone = new Milestone(requiredTasks, event, title.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText());
                 semesterProfile.addMilestone(milestone);
+                milestone.getEvent().getModule().addMilestone(milestone);
                 save = true;
                 window.close();
             }

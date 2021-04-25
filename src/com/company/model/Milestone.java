@@ -12,6 +12,7 @@ public class Milestone implements CalenderModelClass, Serializable {
     private String title;
     private LocalDateTime end;
     private int completion;
+    private Module module;
 
     // Constructors
 
@@ -23,6 +24,7 @@ public class Milestone implements CalenderModelClass, Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         this.end = LocalDateTime.parse(end, formatter);
         this.updateCompletion();
+        module = event.getModule();
     }
 
     public ArrayList<Task> getRequiredTasks() { return requiredTasks; }
@@ -49,6 +51,7 @@ public class Milestone implements CalenderModelClass, Serializable {
         this.setEnd(milestone.getEnd());
         this.setEvent(milestone.getEvent());
         this.setRequiredTasks(milestone.getRequiredTasks());
+        this.module = milestone.getEvent().getModule();
         updateCompletion();
     }
 
