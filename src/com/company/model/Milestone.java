@@ -38,6 +38,20 @@ public class Milestone implements CalenderModelClass, Serializable {
         completion = (complete / total) * 100;
     }
 
+    public void setRequiredTasks(ArrayList<Task> requiredTasks) { this.requiredTasks = requiredTasks; }
+    public void setEvent(Deadline event) { this.event = event; }
+    public void setTitle(String title) { this.title = title; }
+    public void setEnd(LocalDateTime end) { this.end = end; }
+    public void setCompletion(int completion) { this.completion = completion; }
+
+    public void updateMilestone(Milestone milestone) {
+        this.setTitle(milestone.getTitle());
+        this.setEnd(milestone.getEnd());
+        this.setEvent(milestone.getEvent());
+        this.setRequiredTasks(milestone.getRequiredTasks());
+        updateCompletion();
+    }
+
     public int getCompletion() {
         return completion;
     }

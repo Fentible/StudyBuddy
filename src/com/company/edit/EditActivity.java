@@ -1,8 +1,8 @@
 package com.company.edit;
 
 import com.company.add.*;
-import com.company.model.*;
 import com.company.model.Module;
+import com.company.model.*;
 import com.company.view.ViewTask;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,14 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class EditTask {
+public class EditActivity {
 
     private static Task task;
     private static Exam exam;
