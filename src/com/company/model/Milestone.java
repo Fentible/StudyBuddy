@@ -29,7 +29,7 @@ public class Milestone implements CalenderModelClass, Serializable {
 
     public ArrayList<Task> getRequiredTasks() { return requiredTasks; }
     public Deadline getEvent() { return event; }
-    private void updateCompletion() {
+    public void updateCompletion() {
         int total = 0, complete = 0;
         for(Task task : requiredTasks) {
             if(task.isComplete()) {

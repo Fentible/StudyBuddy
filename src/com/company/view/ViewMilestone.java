@@ -39,7 +39,7 @@ public class ViewMilestone {
 
 
         Stage window = new Stage();
-
+        milestone.updateCompletion();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + milestone.getTitle());
         window.setHeight(579);
@@ -180,7 +180,7 @@ public class ViewMilestone {
     public static void Display(SemesterProfile semesterProfile, Milestone milestone, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);
-
+        milestone.updateCompletion();
         window.setTitle("View: " + milestone.getTitle());
         window.setHeight(579);
         window.setWidth(700);

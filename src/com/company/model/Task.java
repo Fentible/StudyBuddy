@@ -107,9 +107,9 @@ public class Task implements CalenderModelClass, Serializable {
          */
         progress = 0;
         for(Activity activity : relatedActivities) {
-            int percentageComplete = activity.getTimeSpent() / 100; // e.g. (30 / 100 = 0.3) 30% complete
-            int percentageContribution = activity.getContribution() * percentageComplete; // 30% of the contribution
-            this.progress =+ percentageContribution;
+            double percentageComplete = (double) activity.getTimeSpent() / 100; // e.g. (30 / 100 = 0.3) 30% complete
+            double percentageContribution = activity.getContribution() * percentageComplete; // 30% of the contribution
+            this.progress =+ (int)percentageContribution;
         }
     }
 

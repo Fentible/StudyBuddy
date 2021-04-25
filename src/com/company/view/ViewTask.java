@@ -43,7 +43,7 @@ public class ViewTask {
 
 
         Stage window = new Stage();
-
+        task.updateProgress();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + task.getTitle());
         window.setHeight(579);
@@ -82,8 +82,6 @@ public class ViewTask {
         HBox confirmButtons = new HBox(10);
         confirmButtons.getChildren().addAll(cancelButton, editButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
-
-
 
         cancelButton.setOnAction(e -> {
             window.close();
@@ -239,7 +237,7 @@ public class ViewTask {
     public static void Display(SemesterProfile semesterProfile, Task task, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);
-
+        task.updateProgress();
         window.setTitle("View: " + task.getTitle());
         window.setHeight(579);
         window.setWidth(700);

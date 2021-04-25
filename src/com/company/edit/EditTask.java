@@ -160,7 +160,6 @@ public class EditTask {
                         (int) progressSlider.getValue(), notes.getText(), exam, assignment,
                         module, dependenciesList, milestonesList);
             task.updateTask(temp);
-
             save = true;
             ViewTask.Display(semesterProfile, task, window);
             window.setScene(ViewTask.getScene());
