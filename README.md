@@ -34,10 +34,8 @@ Software Engineering Coursework - Study Planner
 
 
 **Notes:**
-+ Need to be able to edit deadlines as well as tasks
-+ Deadlines and milestones linked to tasks
-  - Show completetion of this deadline/milestone based on how much the tasks have been completed
-+ Milestones must be linked to a deadline
++ Not all windows update after closing the 'Edit' windows. 
++ Completion of tasks and milestones does not update 
 + assignments and exams are stored seperately along with a list called 'deadlines' 
   - deadlines doesnt directly store anything at the moment but is used to return a list of the above two
 + **Currently using static methods and variables to return and set scene when switching windows, as features is supposedly more important in this coursework than code quality. If anyone is familiar with JavaFX and knows a better way (perhaps a FXML controller?) let me know**
