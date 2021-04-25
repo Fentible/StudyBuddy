@@ -34,7 +34,6 @@ Software Engineering Coursework - Study Planner
 
 
 **Notes:**
-+ Not updating task progress
 + Not all windows update after closing the 'Edit' windows. 
 + Milestone completion based on number of completed required tasks 
 + assignments and exams are stored seperately along with a list called 'deadlines' 
