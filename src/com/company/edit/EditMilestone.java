@@ -141,6 +141,8 @@ public class EditMilestone {
             window.setScene(ViewMilestone.getScene());
         });
         scene = new Scene(gridpane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
 
         return save;

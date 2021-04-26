@@ -148,6 +148,8 @@ public class ViewDeadline {
 
         sp.setContent(container);
         scene = new Scene(sp);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
         window.show();
 
@@ -259,6 +261,8 @@ public class ViewDeadline {
 
         sp.setContent(container);
         scene = new Scene(sp);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
         //window.showAndWait();
 

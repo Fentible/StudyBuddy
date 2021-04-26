@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.Properties;
 
+
 public class Main extends Application {
 
     /*
@@ -24,6 +25,7 @@ public class Main extends Application {
         } catch (IOException ex) {
             Properties properties = new Properties();
             properties.setProperty("location", "src/com/company/model/profile.ser");
+            properties.setProperty("style", "default.css");
             properties.store(new FileWriter("src/com/company/model/config.properties"), "Default file not found, one created");
             return null;
         }
@@ -71,7 +73,6 @@ public class Main extends Application {
         }
         Dashboard dashboard = new Dashboard(semesterProfile);
         dashboard.start(stage);
-
     }
 
 

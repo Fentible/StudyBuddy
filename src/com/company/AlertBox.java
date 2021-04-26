@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 
-    public static void Display(String title, String message) {
+    public static void Display(String title, String message, String style) {
 
         Stage window = new Stage();
 
@@ -26,6 +26,8 @@ public class AlertBox {
         layout.getChildren().addAll(label, closeButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add(style);
+        scene.setUserAgentStylesheet(style);
         window.setScene(scene);
         window.showAndWait();
 

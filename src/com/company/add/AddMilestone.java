@@ -107,8 +107,10 @@ public class AddMilestone {
             save = false;
             window.close();
         });
-
-        window.setScene(new Scene(gridpane));
+        Scene scene = new Scene(gridpane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        window.setScene(scene);
         window.showAndWait();
 
         return save;

@@ -4,13 +4,9 @@ import com.company.add.AddActivity;
 import com.company.add.AddMilestone;
 import com.company.add.AddTask;
 import com.company.add.ModuleSingleView;
-import com.company.edit.EditTask;
 import com.company.model.*;
 import com.company.model.Module;
-import com.company.view.ViewDeadline;
-import com.company.view.ViewMilestone;
-import com.company.view.ViewModule;
-import com.company.view.ViewTask;
+import com.company.view.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -24,7 +20,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -50,6 +45,73 @@ public class Dashboard extends Application {
     public List<LocalDate> getDates(LocalDate start, LocalDate end) {
         return start.datesUntil(end.plusDays(1))
                 .collect(Collectors.toList());
+    }
+    private void makeDeleteButton(Button delete, CalenderModelClass items) {
+
+        if(items instanceof Task) {
+            delete.setOnAction(e -> {
+                semesterProfile.removeTask((Task) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.TASKS;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Deadline) {
+            delete.setOnAction(e -> {
+                semesterProfile.removeDeadline((Deadline) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.DEADLINES;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Milestone) {
+            delete.setOnAction(e -> {
+                semesterProfile.removeMilestone((Milestone) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.MILESTONES;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Activity) {
+            delete.setOnAction(e -> {
+                semesterProfile.removeActivity((Activity) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.ACTIVITIES;
+                populateCalender(tile, this.month, this.year);
+            });
+        }
+        return;
+    }
+
+    private void makeEditButton(Button edit, CalenderModelClass items) {
+
+        if(items instanceof Task) {
+            edit.setOnAction(e -> {
+                ViewTask.Display(semesterProfile, (Task) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.TASKS;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Deadline) {
+            edit.setOnAction(e -> {
+                ViewDeadline.Display(semesterProfile, (Deadline) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.DEADLINES;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Milestone) {
+            edit.setOnAction(e -> {
+                ViewMilestone.Display(semesterProfile, (Milestone) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.MILESTONES;
+                populateCalender(tile, this.month, this.year);
+            });
+        } else if(items instanceof Activity) {
+            edit.setOnAction(e -> {
+                ViewActivity.Display(semesterProfile, (Activity) items);
+                tile.getChildren().clear();
+                displayOption = CalenderDisplayType.ACTIVITIES;
+                populateCalender(tile, this.month, this.year);
+            });
+        }
+        return;
     }
 
     // When switching back from another window (not opening another) uses this to set the scene again
@@ -79,33 +141,17 @@ public class Dashboard extends Application {
             Label title = new Label(items.getTitle());
             Label time = new Label(items.getEnd().toLocalTime().toString());
             Button edit = new Button("Select");
-            if(items instanceof Task) {
-                edit.setOnAction(e -> {
-                    ViewTask.Display(semesterProfile, (Task) items);
-                    tile.getChildren().clear();
-                    displayOption = CalenderDisplayType.TASKS;
-                    populateCalender(tile, this.month, this.year);
-                });
-            } else if(items instanceof Deadline) {
-                edit.setOnAction(e -> {
-                    ViewDeadline.Display(semesterProfile, (Deadline) items);
-                    tile.getChildren().clear();
-                    displayOption = CalenderDisplayType.DEADLINES;
-                    populateCalender(tile, this.month, this.year);
-                });
-            } else if(items instanceof Milestone) {
-                edit.setOnAction(e -> {
-                    ViewMilestone.Display(semesterProfile, (Milestone) items);
-                    tile.getChildren().clear();
-                    displayOption = CalenderDisplayType.MILESTONES;
-                    populateCalender(tile, this.month, this.year);
-                });
-            }
+            makeEditButton(edit, items);
+            Button delete = new Button("Delete");
+            makeDeleteButton(delete, items);
+            HBox buttons = new HBox(8);
+            buttons.setAlignment(Pos.CENTER);
+            buttons.getChildren().addAll(edit, delete);
             vbox.setAlignment(Pos.CENTER);
             vbox.setPadding(new Insets(0,0,5,0));
             VBox.setMargin(vbox, new Insets(5, 5, 0, 5));
             vbox.setSpacing(5);
-            vbox.getChildren().addAll(title, time, edit);
+            vbox.getChildren().addAll(title, time, buttons);
             vBoxes.add(vbox);
         }
         container.setAlignment(Pos.CENTER);
@@ -154,7 +200,7 @@ public class Dashboard extends Application {
      */
     public void saveOption() throws IOException {
         SaveDialogBox saveDialogBox = new SaveDialogBox();
-        saveDialogBox.Display("Save", "Do you want to save?");
+        saveDialogBox.Display("Save", "Do you want to save?", semesterProfile.getStyle());
         if(SaveDialogBox.location != null) {
             semesterProfile.saveFile(SaveDialogBox.location);
         }
@@ -286,11 +332,28 @@ public class Dashboard extends Application {
                 populateCalender(tile, this.month, this.year);
             }
         });
+        Menu themeSelect = new Menu("Select Theme");
+        MenuItem defaultTheme = new MenuItem("Default");
+        MenuItem zenburnTheme = new MenuItem("Zenburn");
+        themeSelect.getItems().addAll(defaultTheme, zenburnTheme);
+        defaultTheme.setOnAction(e -> {
+            semesterProfile.setStyle("default.css");
+            scene.getStylesheets().removeAll();
+            scene.getStylesheets().add("default.css");
+            scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        });
+        zenburnTheme.setOnAction(e -> {
+            semesterProfile.setStyle("zenburn.css");
+            scene.getStylesheets().removeAll();
+            scene.getStylesheets().add("zenburn.css");
+            scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        });
 
         addMenu.getItems().addAll(addTask, addActivity, addMilestone);
-        menuBar.getMenus().addAll(file, displayMenu, addMenu);
-        VBox menuVBox= new VBox(menuBar);
+        menuBar.getMenus().addAll(file, displayMenu, addMenu, themeSelect);
 
+
+        VBox menuVBox= new VBox(menuBar);
 
 
         // Change calender
@@ -333,6 +396,8 @@ public class Dashboard extends Application {
         borderPane.setLeft(vbox);
         borderPane.setCenter(tile);
         scene = new Scene(borderPane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
         window.show();
 

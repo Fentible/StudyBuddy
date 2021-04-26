@@ -59,7 +59,10 @@ public class DeadlineSingleView {
         });
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(listOfDeadline, confirm);
-        window.setScene(new Scene(vbox));
+        Scene scene = new Scene(vbox);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        window.setScene(scene);
         window.showAndWait();
 
         return deadline;

@@ -232,6 +232,8 @@ public class Search {
         GridPane.setFillWidth(gridPane, true);
 
         Scene scene = new Scene(gridPane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
         return window.getScene();
     }

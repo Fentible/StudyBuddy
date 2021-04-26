@@ -36,9 +36,53 @@ public class Activity implements CalenderModelClass, Serializable {
         }
     }
 
+
+    public void updateActivity(Activity activity) {
+        this.setTitle(activity.getTitle());
+        this.setContribution(activity.getContribution());
+        this.setEnd(activity.getEnd());
+        this.setNotes(activity.getNotes());
+        this.setNotes(activity.getNotes());
+        this.setTimeSpent(activity.getTimeSpent());
+        this.setType(activity.getType());
+        this.setRelatedTasks(activity.getRelatedTasks());
+    }
+
     public static void main(String[] args) {
         //Activity activity = new Activity(ActivityType.READING, 80, 60);
         //System.out.println(activity.getTimeSpent());
+    }
+
+    public ArrayList<Task> getRelatedTasks() {
+        return relatedTasks;
+    }
+
+    public void setType(ActivityType type) {
+        this.type = type;
+    }
+
+    public void setContribution(int contribution) {
+        this.contribution = contribution;
+    }
+
+    public void setTimeSpent(int timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
+    }
+
+    public void setRelatedTasks(ArrayList<Task> relatedTasks) {
+        this.relatedTasks = relatedTasks;
     }
 
     @Override

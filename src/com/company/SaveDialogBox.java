@@ -23,7 +23,7 @@ public class SaveDialogBox {
 
     static String location;
 
-    public void Display(String title, String message) throws IOException {
+    public void Display(String title, String message, String style) throws IOException {
 
         Stage window = new Stage();
 
@@ -63,6 +63,8 @@ public class SaveDialogBox {
         layout.getChildren().addAll(label, inputLocation, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add(style);
+        scene.setUserAgentStylesheet(style);
         window.setScene(scene);
         window.showAndWait();
 

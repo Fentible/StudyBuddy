@@ -1,6 +1,6 @@
 package com.company.view;
 
-import com.company.edit.EditMilestone;
+import com.company.edit.EditActivity;
 import com.company.edit.EditTask;
 import com.company.model.Activity;
 import com.company.model.Milestone;
@@ -29,19 +29,18 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ViewMilestone {
+public class ViewActivity {
 
     private static Scene scene;
 
     public static Scene getScene() { return scene; }
 
-    public static void Display(SemesterProfile semesterProfile, Milestone milestone) {
+    public static void Display(SemesterProfile semesterProfile, Activity activity) {
 
 
         Stage window = new Stage();
-        milestone.updateCompletion();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("View: " + milestone.getTitle());
+        window.setTitle("View: " + activity.getTitle());
         window.setHeight(579);
         window.setWidth(700);
         // Opens window slightly offset from the current one
@@ -84,32 +83,34 @@ public class ViewMilestone {
         });
 
         editButton.setOnAction(e -> {
-            EditMilestone.Display(semesterProfile, milestone, window);
+            EditActivity.Display(semesterProfile, activity, window);
         });
 
-        Label title = new Label(milestone.getTitle());
+        Label title = new Label(activity.getTitle());
+
+        TextArea notes = new TextArea();
+        notes.setText(activity.getNotes());
+        notes.setEditable(false);
 
         TextField endDate = new TextField();
-        endDate.setText(milestone.getEnd().toString());
+        endDate.setText(activity.getEnd().toString());
         endDate.setEditable(false);
 
         Slider progress = new Slider();
-        progress.setValue(milestone.getCompletion());
+        progress.setValue(activity.getTimeSpent());
         progress.setDisable(true);
 
-        TextField deadline = new TextField();
-        deadline.setText(milestone.getEvent().getTitle());
-        deadline.setEditable(false);
+        Slider contribution = new Slider();
+        contribution.setValue(activity.getContribution());
+        contribution.setDisable(true);
 
-        Button examButton = new Button();
-        examButton.setText(milestone.getEvent().getTitle());
-        examButton.setOnAction(e -> {
-            ViewDeadline.Display(semesterProfile, milestone.getEvent());
-        });
+        Button type = new Button();
+        type.setText(activity.getType().toString());
+
 
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
-        Optional.ofNullable(milestone.getRequiredTasks()).ifPresent(dependenciesList::addAll);
+        Optional.ofNullable(activity.getRelatedTasks()).ifPresent(dependenciesList::addAll);
         TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
         TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
         TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");
@@ -117,7 +118,7 @@ public class ViewMilestone {
         dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
         dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        tableOfDependencies.setPrefWidth(900);
+        tableOfDependencies.setPrefWidth(750);
         tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfDependencies.setRowFactory(e -> {
             TableRow<Task> row = new TableRow<>();
@@ -134,8 +135,9 @@ public class ViewMilestone {
 
         tableOfDependencies.setPlaceholder(new Label("Table of Dependencies"));
 
+
         HBox timeBox = new HBox(8); // dates HBox
-        timeBox.getChildren().addAll(endDate);
+        timeBox.getChildren().addAll(type, endDate);
 
         GridPane gridpane = new GridPane(); // GridPane for most of the elements
         gridpane.prefWidthProperty().bind(window.widthProperty());
@@ -144,7 +146,7 @@ public class ViewMilestone {
         gridpane.setPadding(new Insets(15,15,15,15));
         gridpane.setHgap(25);
         gridpane.setVgap(10);
-        gridpane.add(new Label("View Milestone: "), 0, 0);
+        gridpane.add(new Label("View Task: "), 0, 0);
         gridpane.add(new Label("Title: "), 0, 1);
         gridpane.add(title, 1, 1);
         gridpane.add(new Label("Date range: "), 0, 2);
@@ -152,7 +154,7 @@ public class ViewMilestone {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
-        gridpane.add(examButton, 1, 4);
+        gridpane.add(notes, 0, 4, 2, 2);
 
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies);
@@ -179,11 +181,10 @@ public class ViewMilestone {
 
     }
 
-    public static void Display(SemesterProfile semesterProfile, Milestone milestone, Stage window) {
+    public static void Display(SemesterProfile semesterProfile, Activity activity, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);
-        milestone.updateCompletion();
-        window.setTitle("View: " + milestone.getTitle());
+        window.setTitle("View: " + activity.getTitle());
         window.setHeight(579);
         window.setWidth(700);
         //window.setHeight(875);
@@ -208,34 +209,37 @@ public class ViewMilestone {
         confirmButtons.getChildren().addAll(cancelButton, editButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
-
-
         cancelButton.setOnAction(e -> {
             window.close();
         });
 
         editButton.setOnAction(e -> {
-            EditMilestone.Display(semesterProfile, milestone, window);
+            EditActivity.Display(semesterProfile, activity, window);
         });
 
-        Label title = new Label(milestone.getTitle());
+        Label title = new Label(activity.getTitle());
 
+        TextArea notes = new TextArea();
+        notes.setText(activity.getNotes());
+        notes.setEditable(false);
 
         TextField endDate = new TextField();
-        endDate.setText(milestone.getEnd().toString());
+        endDate.setText(activity.getEnd().toString());
         endDate.setEditable(false);
 
         Slider progress = new Slider();
-        progress.setValue(milestone.getCompletion());
+        progress.setValue(activity.getTimeSpent());
         progress.setDisable(true);
 
-        TextField deadline = new TextField();
-        deadline.setText(milestone.getEvent().getTitle());
-        deadline.setEditable(false);
+        Slider contribution = new Slider();
+        contribution.setValue(activity.getContribution());
+        contribution.setDisable(true);
 
+        Button type = new Button();
+        type.setText(activity.getType().toString());
 
         ObservableList<Task> dependenciesList = FXCollections.observableArrayList();
-        Optional.ofNullable(milestone.getRequiredTasks()).ifPresent(dependenciesList::addAll);
+        Optional.ofNullable(activity.getRelatedTasks()).ifPresent(dependenciesList::addAll);
         TableView<Task> tableOfDependencies = new TableView<Task>(dependenciesList);
         TableColumn<Task, String> dependencyNameColumn = new TableColumn<>("Name");
         TableColumn<Task, String> dependencyCompletionColumn = new TableColumn<>("Completed");
@@ -243,7 +247,7 @@ public class ViewMilestone {
         dependencyNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         dependencyCompletionColumn.setCellValueFactory(cellData  -> new SimpleStringProperty(Integer.toString(cellData .getValue().getProgress())));
         dependencyDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
-        tableOfDependencies.setPrefWidth(900);
+        tableOfDependencies.setPrefWidth(750);
         tableOfDependencies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableOfDependencies.setRowFactory(e -> {
             TableRow<Task> row = new TableRow<>();
@@ -260,8 +264,9 @@ public class ViewMilestone {
 
         tableOfDependencies.setPlaceholder(new Label("Table of Dependencies"));
 
+
         HBox timeBox = new HBox(8); // dates HBox
-        timeBox.getChildren().addAll(endDate);
+        timeBox.getChildren().addAll(type, endDate);
 
         GridPane gridpane = new GridPane(); // GridPane for most of the elements
         gridpane.prefWidthProperty().bind(window.widthProperty());
@@ -278,6 +283,7 @@ public class ViewMilestone {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
+        gridpane.add(notes, 0, 4, 2, 2);
 
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies);

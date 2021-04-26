@@ -86,7 +86,7 @@ public class EditTask {
         TextField startTime = new TextField();
         startTime.setText(task.getStart().toLocalTime().toString());
         TextField endTime = new TextField();
-        endTime.setText(task.getStart().toLocalTime().toString());
+        endTime.setText(task.getEnd().toLocalTime().toString());
 
         progressSlider.setValue(task.getProgress());
 
@@ -171,6 +171,8 @@ public class EditTask {
             window.setScene(ViewTask.getScene());
         });
         scene = new Scene(gridpane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
 
         return save;

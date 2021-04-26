@@ -140,7 +140,10 @@ public class AddActivity {
             window.close();
         });
 
-        window.setScene(new Scene(gridpane));
+        Scene scene = new Scene(gridpane);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        window.setScene(scene);
         window.showAndWait();
 
         return false;

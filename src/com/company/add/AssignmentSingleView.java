@@ -57,7 +57,10 @@ public class AssignmentSingleView {
         });
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(listOfAssignment, confirm);
-        window.setScene(new Scene(vbox));
+        Scene scene = new Scene(vbox);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        window.setScene(scene);
         window.showAndWait();
 
         return assignment;
@@ -102,7 +105,10 @@ public class AssignmentSingleView {
         });
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(listOfAssignment, confirm);
-        window.setScene(new Scene(vbox));
+        Scene scene = new Scene(vbox);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        window.setScene(scene);
         window.showAndWait();
 
         return assignment;

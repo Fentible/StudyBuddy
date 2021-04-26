@@ -128,7 +128,10 @@ public class ViewModule {
                 new Label("List of Deadlines: "), tableOfDeadlines,
                 new Label("List of Tasks: "), tableOfTasks, back);
         scene = new Scene(container);
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
+
         window.show();
 
         return scene;

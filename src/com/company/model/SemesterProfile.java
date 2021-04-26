@@ -31,6 +31,7 @@ public class SemesterProfile implements Serializable {
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
+    private String style;
     @Serial
     private static final long serialVersionUID = 6529685098267757690L;
 
@@ -49,6 +50,7 @@ public class SemesterProfile implements Serializable {
         Scanner read = new Scanner(profile);
         Module module = null;
         this.properties = properties;
+        this.style = properties.getProperty("style");
         while(read.hasNextLine()) {
             line = read.nextLine();
             Scanner readLine = new Scanner(line);
@@ -89,7 +91,8 @@ public class SemesterProfile implements Serializable {
         }
     }
 
-
+    public String getStyle() { return style; }
+    public void setStyle(String theme) { style = theme; }
     // Getters
     /*
      * Generic getters for retrieving attributes
@@ -364,7 +367,18 @@ public class SemesterProfile implements Serializable {
     /* how to implement?
      * currently: user searches for object, selects then asks to delete
      */
-    private boolean removeTask(Task task) { return this.tasks.remove(task); }
+    public void removeTask(Task task) { this.tasks.remove(task); }
+    public void removeActivity(Activity activity) { this.activities.remove(activity); }
+    public void removeMilestone(Milestone milestone) { this.milestones.remove(milestone); }
+    public void removeDeadline(Deadline deadline) {
+        if(deadline instanceof Exam) {
+            this.exams.remove(deadline);
+        } else if(deadline instanceof Assignment) {
+            this.assignments.remove(deadline);
+        } else {
+            this.deadlines.remove(deadline);
+        }
+    }
 
     // Helpers
     public void saveFile() {
@@ -393,6 +407,7 @@ public class SemesterProfile implements Serializable {
             fileOut.close();
             this.saveFileLocation = location;
             this.properties.setProperty("location", location);
+            this.properties.setProperty("style", this.getStyle());
             updatePropertiesFile();
         } catch (IOException i) {
             System.out.println("Save failed!" + " : " + location);

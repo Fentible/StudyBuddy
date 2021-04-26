@@ -12,7 +12,7 @@ public class ConfirmBox {
 
     private static boolean answer;
 
-    public static boolean Display(String title, String message) {
+    public static boolean Display(String title, String message, String style) {
 
         Stage window = new Stage();
 
@@ -38,6 +38,8 @@ public class ConfirmBox {
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add(style);
+        scene.setUserAgentStylesheet(style);
         window.setScene(scene);
         window.showAndWait();
 

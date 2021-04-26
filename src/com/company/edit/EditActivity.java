@@ -3,6 +3,7 @@ package com.company.edit;
 import com.company.add.*;
 import com.company.model.Module;
 import com.company.model.*;
+import com.company.view.ViewActivity;
 import com.company.view.ViewTask;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,35 +21,31 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class EditActivity {
 
-    private static Task task;
-    private static Exam exam;
-    private static ArrayList<Milestone> milestonesList;
-    private static Module module;
-    private static ArrayList<Task> dependenciesList;
-    private static Assignment assignment;
-    private static int displayProgress;
+    private static Activity activity;
+    private static ActivityType type;
+    private static int contribution;
+    private static int timeSpent;
+    private static String notes;
+    private static String title;
+    private static LocalDateTime end;
+    private static ArrayList<Task> relatedTasks;
     static boolean save;
     private static Scene scene;
 
     public static Scene getScene() { return scene; }
 
-    public static boolean Display(SemesterProfile semesterProfile, Task passedTask, Stage window)  {
-
-        task = passedTask;
-        exam = passedTask.getExam();
-        milestonesList = passedTask.getMilestones();
-        module = passedTask.getModule();
-        dependenciesList = passedTask.getDependencies();
-        displayProgress = passedTask.getProgress();
-
+    public static boolean Display(SemesterProfile semesterProfile, Activity passedActivity, Stage window)  {
 
         //window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Edit Task");
+        activity = passedActivity;
+        window.setTitle("Edit Activity");
         //window.setMinWidth(750);
         //window.setMinHeight(500);
         //window.setMaxWidth(750);
@@ -71,43 +68,40 @@ public class EditActivity {
         );
         tl.play();
 
-        // switching from edit and view windows messed with the sizing a bit
-        // so that's why theres so many width and height setting
+        // Buttons, labels, fileds, etc.
+        Label errorMessage = new Label();
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         TextField title = new TextField();
-        title.setText(task.getTitle());
-        DatePicker inputStartDate = new DatePicker(task.getStart().toLocalDate());
-        DatePicker inputEndDate = new DatePicker(task.getEnd().toLocalDate());
-        Slider progressSlider = new Slider(0, 100, 0);
+        title.setText(passedActivity.getTitle());
+        DatePicker inputEndDate = new DatePicker(passedActivity.getEnd().toLocalDate());
         TextArea notes = new TextArea();
-        notes.setText(task.getNotes());
-        TextField startTime = new TextField();
-        startTime.setText(task.getStart().toLocalTime().toString());
+        notes.setText(passedActivity.getNotes());
         TextField endTime = new TextField();
-        endTime.setText(task.getStart().toLocalTime().toString());
+        endTime.setText(passedActivity.getEnd().toLocalTime().toString());
+        ComboBox<ActivityType> activityTypeComboBox = new ComboBox<>();
+        activityTypeComboBox.getItems().setAll(ActivityType.values());
+        activityTypeComboBox.getSelectionModel().select(passedActivity.getType());
 
-        progressSlider.setValue(task.getProgress());
+        Slider timeSpentSlider = new Slider(0, 100, 0);
+        timeSpentSlider.setValue(0);
+        Slider contributionSlider = new Slider(0, 100, 0);
+        contributionSlider.setValue(0);
 
         Label topLabel = new Label("Select items to add to the task");
-        Button examButton = new Button("Add exam");
-        Button assignmentsButton = new Button("Add Assignment");
-        Button modulesButton = new Button("Assign module");
-        Button dependenciesButton = new Button("Add dependencies");
-        Button milestonesButton = new Button("Add milestones");
+        Button tasksButton = new Button("Assign to task(s)");
 
         HBox bottomButtons = new HBox(10);
         bottomButtons.setAlignment(Pos.CENTER);
-        bottomButtons.getChildren().addAll(examButton, assignmentsButton,
-                modulesButton, dependenciesButton, milestonesButton);
+        bottomButtons.getChildren().addAll(tasksButton);
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, saveButton);
+        confirmButtons.getChildren().addAll(errorMessage, cancelButton, saveButton);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
-        HBox startTimeBox = new HBox(8);
         HBox endTimeBox = new HBox(8);
-        startTimeBox.getChildren().addAll(inputStartDate, startTime);
         endTimeBox.getChildren().addAll(inputEndDate, endTime);
+
+        // All previous boxes and elements will be setup onto the GridPane
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
@@ -116,61 +110,73 @@ public class EditActivity {
         gridpane.add(topLabel, 1, 0);
         gridpane.add(new Label("Title: "), 0, 1);
         gridpane.add(title, 1, 1);
-        gridpane.add(new Label("Start Date: "), 0, 2);
-        gridpane.add(startTimeBox, 1, 2);
-        gridpane.add(new Label("End Date: "), 0, 3);
-        gridpane.add(endTimeBox, 1, 3);
-        Label progressLabel = new Label("Progress: " + displayProgress);
+        gridpane.add(new Label("Date: "), 0, 2);
+        gridpane.add(endTimeBox, 1, 2);
+
+        /*
+         * Multiple tasks can be linked but currently do have an individual contribution slider
+         */
+        Label progressLabel = new Label("Progress: " + timeSpentSlider.getValue());
         gridpane.add(progressLabel, 0 ,4);
-        gridpane.add(progressSlider, 1, 4);
-        gridpane.add(notes, 0, 5, 2, 2);
-        gridpane.add(bottomButtons, 0, 8, 2, 2);
+        gridpane.add(timeSpentSlider, 1, 4);
+
+        Label contributionLabel = new Label("Total contribution: " + contributionSlider.getValue());
+        gridpane.add(contributionLabel, 0 ,5);
+        gridpane.add(contributionSlider, 1, 5);
+
+        gridpane.add(notes, 0, 6, 2, 2);
+        gridpane.add(activityTypeComboBox, 0, 9);
+        gridpane.add(bottomButtons, 0, 11, 2, 2);
         GridPane.setHalignment(confirmButtons, HPos.RIGHT);
-        gridpane.add(confirmButtons, 1, 11);
+        gridpane.add(confirmButtons, 1, 13);
 
-
-        dependenciesButton.setOnAction(e -> {
-            dependenciesList = TaskListView.DisplayTasks(semesterProfile, task);
+        tasksButton.setOnAction(e -> {
+            relatedTasks = TaskListView.DisplayTasks(semesterProfile);
         });
-        milestonesButton.setOnAction(e -> {
-            milestonesList = MilestoneListView.DisplayMilestones(semesterProfile, task);
-        });
-        modulesButton.setOnAction(e -> {
-            module = ModuleSingleView.DisplayModules(semesterProfile, task);
-        });
-        examButton.setOnAction(e -> {
-                exam = ExamSingleView.DisplayExams(semesterProfile, task);
-        });
-        assignmentsButton.setOnAction(e -> {
-                assignment = AssignmentSingleView.DisplayAssignments(semesterProfile, task);
-        });
-        progressSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+        // Updates sliders...
+        contributionSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)progressSlider.getValue()));
+                contributionLabel.textProperty().setValue(String.valueOf("Total Contribution: " + (int)contributionSlider.getValue()));
+            }
+        });
+        // ...
+        timeSpentSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)timeSpentSlider.getValue()));
             }
         });
 
-        /* Basic field checking for testing purposes, will improve later */
         saveButton.setOnAction(e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            Task temp = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
-                        formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
-                        (int) progressSlider.getValue(), notes.getText(), exam, assignment,
-                        module, dependenciesList, milestonesList);
-            task.updateTask(temp);
+            // Basic error checking, **need to add a label for an error box**
+            if(title.getText().trim().isEmpty() || activityTypeComboBox.getValue() == null || relatedTasks == null || relatedTasks.isEmpty()) {
+                errorMessage.setText("Some required elements are empty");
+            } else {
+                Activity temp = new Activity(activityTypeComboBox.getValue(), (int)contributionSlider.getValue(), (int)timeSpentSlider.getValue(), notes.getText(), title.getText(), formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
+                        relatedTasks);
+                activity.updateActivity(temp);
+                for(Task task : relatedTasks) {
+                    task.addActivity(activity);
+                }
+                save = true;
+                ViewActivity.Display(semesterProfile, activity, window);
+                window.setScene(ViewActivity.getScene());
+            }
 
-            save = true;
-            ViewTask.Display(semesterProfile, task, window);
-            window.setScene(ViewTask.getScene());
         });
 
         cancelButton.setOnAction(e -> {
             save = false;
-            ViewTask.Display(semesterProfile, task, window);
-            window.setScene(ViewTask.getScene());
+            ViewActivity.Display(semesterProfile, activity, window);
+            window.setScene(ViewActivity.getScene());
         });
         scene = new Scene(gridpane);
+
+        scene.getStylesheets().add(semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+
         window.setScene(scene);
 
         return save;
