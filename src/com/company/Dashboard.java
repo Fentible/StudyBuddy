@@ -335,17 +335,24 @@ public class Dashboard extends Application {
         Menu themeSelect = new Menu("Select Theme");
         MenuItem defaultTheme = new MenuItem("Default");
         MenuItem zenburnTheme = new MenuItem("Zenburn");
-        themeSelect.getItems().addAll(defaultTheme, zenburnTheme);
+        MenuItem koalin_lightTheme = new MenuItem("Koalin-Light");
+        themeSelect.getItems().addAll(defaultTheme, zenburnTheme, koalin_lightTheme);
         defaultTheme.setOnAction(e -> {
             semesterProfile.setStyle("default.css");
-            scene.getStylesheets().removeAll();
+            scene.getStylesheets().removeAll("zenburn.css", "koalin-light.css", "default.css");
             scene.getStylesheets().add("default.css");
             scene.setUserAgentStylesheet(semesterProfile.getStyle());
         });
         zenburnTheme.setOnAction(e -> {
             semesterProfile.setStyle("zenburn.css");
-            scene.getStylesheets().removeAll();
+            scene.getStylesheets().removeAll("zenburn.css", "koalin-light.css", "default.css");
             scene.getStylesheets().add("zenburn.css");
+            scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        });
+        koalin_lightTheme.setOnAction(e -> {
+            semesterProfile.setStyle("koalin-light.css");
+            scene.getStylesheets().removeAll("zenburn.css", "koalin-light.css", "default.css");
+            scene.getStylesheets().add("koalin-light.css");
             scene.setUserAgentStylesheet(semesterProfile.getStyle());
         });
 
