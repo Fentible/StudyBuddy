@@ -428,7 +428,7 @@ public class SemesterProfile implements Serializable {
     public static void main(String[] args) throws IOException {
         // test harness
         // File reading and construction
-        File file = new File("src/com/company/model/test_semester_profile"); // construct profile
+        File file = new File("src/com/company/model/semester_profile"); // construct profile
         Properties properties = new Properties();
         properties.load(new FileInputStream("src/com/company/model/config.properties"));
         SemesterProfile semesterProfile = new SemesterProfile(file, properties);

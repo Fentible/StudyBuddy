@@ -63,13 +63,9 @@ public class Main extends Application {
             }
         } else { // If not save is found, try to find semester profile
             // Will allow user to load file and specify location from dashboard or splash screen eventually
-            System.out.println("New File Being Created");
-            File newFile = new File("src/com/company/model/test_semester_profile"); // construct profile
+            LoadProfile.Display();
+            File newFile = new File(LoadProfile.saveLocation); // construct profile
             semesterProfile = new SemesterProfile(newFile, properties);
-            semesterProfile.addTask(new Task("Title", "15-04-2021 16:00", "15-04-2021 16:00",
-                    0, "", null, null, null, null, null));
-            semesterProfile.addTask(new Task("Title", "16-04-2021 16:00", "16-04-2021 16:00",
-                    0, "", null, null, null, null, null));
         }
         Dashboard dashboard = new Dashboard(semesterProfile);
         dashboard.start(stage);
