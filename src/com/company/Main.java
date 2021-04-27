@@ -13,7 +13,7 @@ import java.util.Properties;
 public class Main extends Application {
 
     /*
-     * Get stored properties such as the file location from config.properties
+     * Get stored properties such as the file location from config.propertiess
      * If one is not found then create a new one and set the default save location
      */
     private Properties getFileProperties() throws IOException {
