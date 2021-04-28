@@ -11,7 +11,7 @@ public class Reminder implements Serializable {
     private CalenderModelClass relatedEvent;
     private LocalDate date;
     private LocalTime time;
-    boolean shown;
+    public boolean shown;
 
     public Reminder(CalenderModelClass relatedEvent) {
         this.relatedEvent = relatedEvent;

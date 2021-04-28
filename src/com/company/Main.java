@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.security.MessageDigest;
 import java.util.Properties;
 
 
@@ -67,10 +68,10 @@ public class Main extends Application {
             File newFile = new File(LoadProfile.saveLocation); // construct profile
             semesterProfile = new SemesterProfile(newFile, properties);
         }
+
         Dashboard dashboard = new Dashboard(semesterProfile);
         dashboard.start(stage);
     }
-
 
 
     public static void main(String[] args) throws FileNotFoundException { launch(args); }

@@ -29,8 +29,8 @@ public class ReminderHandler {
         System.out.println("nope");
         if(semesterProfile.getReminders() != null) {
             for (Reminder reminder : semesterProfile.getReminders()) {
-                if (reminder.getDate().equals(LocalDate.now()) && reminder.getTime().equals(LocalTime.now().minusMinutes(15)) || !reminder.shown) {
-                    Platform.runLater(() -> AlertBox.Display(reminder.getRelatedEvent().getTitle(), "message", semesterProfile.getStyle()));
+                if ((reminder.getDate().equals(LocalDate.now()) && reminder.getTime().equals(LocalTime.now().minusMinutes(15)) && !reminder.shown) || !reminder.shown) {
+                    Platform.runLater(() -> ReminderAlertBox.Display(reminder.getRelatedEvent().getTitle(), reminder.getTime().toString(), semesterProfile.getStyle()));
                     reminder.setShown();
                 }
             }
