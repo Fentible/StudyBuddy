@@ -146,6 +146,6 @@ public class AddActivity {
         window.setScene(scene);
         window.showAndWait();
 
-        return false;
+        return save;
     }
 }

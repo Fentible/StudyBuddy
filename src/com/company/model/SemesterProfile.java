@@ -1,6 +1,7 @@
 package com.company.model;
 
 import com.company.Dashboard;
+import com.company.Reminder;
 
 import java.io.*;
 import java.security.InvalidParameterException;
@@ -25,13 +26,13 @@ public class SemesterProfile implements Serializable {
      * from generic deadlines for the purpose of searching and displaying them
      */
     // exams and assignments are subclasses of deadline
-
+    private ArrayList<Reminder> reminders = new ArrayList<>();
     private ArrayList<Exam> exams = new ArrayList<>();
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private ArrayList<Deadline> deadlines = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
-    private String style;
+    public static String style;
     @Serial
     private static final long serialVersionUID = 6529685098267757690L;
 
@@ -104,6 +105,18 @@ public class SemesterProfile implements Serializable {
     public ArrayList<Deadline> getDeadlines() {
             return (ArrayList<Deadline>) Stream.concat(exams.stream(), assignments.stream()).collect(Collectors.toList());
     }
+
+    public ArrayList<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void addReminder(Reminder reminder) {
+        if(this.reminders == null) {
+            this.reminders = new ArrayList<>();
+        }
+        this.reminders.add(reminder);
+    }
+
     public ArrayList<Activity> getActivities() { return this.activities; }
     public ArrayList<Module> getModules() { return this.modules; }
     public String getSaveFileLocation() { return this.saveFileLocation; }
@@ -407,7 +420,7 @@ public class SemesterProfile implements Serializable {
             fileOut.close();
             this.saveFileLocation = location;
             this.properties.setProperty("location", location);
-            this.properties.setProperty("style", this.getStyle());
+            this.properties.setProperty("style", this.getStyle() == null ? "default.css" : this.getStyle());
             updatePropertiesFile();
         } catch (IOException i) {
             System.out.println("Save failed!" + " : " + location);

@@ -1,9 +1,8 @@
 package com.company.view;
 
+import com.company.Reminder;
 import com.company.edit.EditActivity;
-import com.company.edit.EditTask;
 import com.company.model.Activity;
-import com.company.model.Milestone;
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.animation.KeyFrame;
@@ -74,8 +73,13 @@ public class ViewActivity {
 
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
+        Button addReminder = new Button("Set Reminder");
+        addReminder.setOnAction(e -> {
+            semesterProfile.addReminder(new Reminder(activity));
+        });
+
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, editButton);
+        confirmButtons.getChildren().addAll(cancelButton, editButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         cancelButton.setOnAction(e -> {
@@ -85,6 +89,7 @@ public class ViewActivity {
         editButton.setOnAction(e -> {
             EditActivity.Display(semesterProfile, activity, window);
         });
+
 
         Label title = new Label(activity.getTitle());
 
@@ -205,8 +210,13 @@ public class ViewActivity {
         tl.play();
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
+        Button addReminder = new Button("Set Reminder");
+        addReminder.setOnAction(e -> {
+            semesterProfile.addReminder(new Reminder(activity));
+        });
+
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, editButton);
+        confirmButtons.getChildren().addAll(cancelButton, editButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         cancelButton.setOnAction(e -> {

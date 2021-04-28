@@ -1,6 +1,7 @@
 package com.company.view;
 
-import com.company.edit.EditTask;
+import com.company.Reminder;
+import com.company.ReminderHandler;
 import com.company.model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,7 +22,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,8 +70,13 @@ public class ViewDeadline {
         tl.play();
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
+        Button addReminder = new Button("Set Reminder");
+        addReminder.setOnAction(e -> {
+           semesterProfile.addReminder(new Reminder(deadline));
+        });
+
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, editButton);
+        confirmButtons.getChildren().addAll(cancelButton, editButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         cancelButton.setOnAction(e -> {
@@ -181,8 +186,13 @@ public class ViewDeadline {
         tl.play();
         Button cancelButton = new Button("Close");
         Button editButton = new Button("Edit");
+        Button addReminder = new Button("Set Reminder");
+        addReminder.setOnAction(e -> {
+            semesterProfile.addReminder(new Reminder(deadline));
+        });
+
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, editButton);
+        confirmButtons.getChildren().addAll(cancelButton, editButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         cancelButton.setOnAction(e -> {

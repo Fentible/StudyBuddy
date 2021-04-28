@@ -315,10 +315,10 @@ public class Dashboard extends Application {
         MenuItem addActivity = new MenuItem("Add Activity");
         MenuItem addMilestone = new MenuItem("Add Milestone");
         addTask.setOnAction(e -> {
-                if(AddTask.Display(semesterProfile, null)) { // null or LocalDate.now()
-                    tile.getChildren().clear();
-                    populateCalender(tile, this.month, this.year);
-                }
+            if(AddTask.Display(semesterProfile, null)) { // null or LocalDate.now()
+                tile.getChildren().clear();
+                populateCalender(tile, this.month, this.year);
+            }
         });
         addActivity.setOnAction(e -> {
             if(AddActivity.Display(semesterProfile, null)) {
@@ -397,14 +397,25 @@ public class Dashboard extends Application {
                 populateCalender(tile, this.month, this.year);
             }
         });
+        window.setOnCloseRequest(windowEvent -> {
+            semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
+            Platform.exit();
+            System.exit(0);
+        });
 
+        ReminderHandler reminderHandler = new ReminderHandler();
+        reminderHandler.start(semesterProfile);
+        for(Reminder reminder : semesterProfile.getReminders()) {
+            System.out.println(reminder.getRelatedEvent().getTitle());
+        }
         borderPane.setBottom(options);
         borderPane.setTop(menuVBox);
         borderPane.setLeft(vbox);
         borderPane.setCenter(tile);
         scene = new Scene(borderPane);
-        scene.getStylesheets().add(semesterProfile.getStyle());
-        scene.setUserAgentStylesheet(semesterProfile.getStyle());
+        scene.getStylesheets().add(semesterProfile.getStyle() == null ? "default.css" : semesterProfile.getStyle());
+        scene.setUserAgentStylesheet(semesterProfile.getStyle() == null ? "default.css" : semesterProfile.getStyle());
+        semesterProfile.setStyle("default.css");
         window.setScene(scene);
         window.show();
 

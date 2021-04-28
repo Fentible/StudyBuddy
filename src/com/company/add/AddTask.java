@@ -28,7 +28,7 @@ public class AddTask  {
     private static ArrayList<Task> dependenciesList;
     private static Assignment assignment;
     private static int displayProgress;
-    static boolean save;
+    public static boolean save;
 
     /*
      * See 'AddActivity' for notes as this class is very similar
@@ -132,7 +132,7 @@ public class AddTask  {
         saveButton.setOnAction(e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-            if(title.getText().trim().isEmpty() || exam == null || assignment == null || module == null) {
+            if(title.getText().trim().isEmpty() || (exam == null && assignment == null) ||  module == null) {
                 errorMessage.setText("Some required elements are empty");
             } else {
                 task = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
@@ -149,7 +149,6 @@ public class AddTask  {
                 save = true;
                 window.close();
             }
-
         });
 
         cancelButton.setOnAction(e -> {
