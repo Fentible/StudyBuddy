@@ -26,11 +26,11 @@ public class ReminderHandler {
         timer.schedule (timertask,0,TimeUnit.MINUTES.toMillis(5));
     }
     private void checkReminders() {
-        System.out.println("nope");
         if(semesterProfile.getReminders() != null) {
             for (Reminder reminder : semesterProfile.getReminders()) {
-                if ((reminder.getDate().equals(LocalDate.now()) && reminder.getTime().equals(LocalTime.now().minusMinutes(15)) && !reminder.shown) || !reminder.shown) {
-                    Platform.runLater(() -> ReminderAlertBox.Display(reminder.getRelatedEvent().getTitle(), reminder.getTime().toString(), semesterProfile.getStyle()));
+                if ((reminder.getDate().equals(LocalDate.now()) && LocalTime.now().isAfter(reminder.getTime().minusMinutes(15)) && !reminder.shown)) {
+                    System.out.println("worked");
+                    Platform.runLater(() -> ReminderAlertBox.Display(reminder, semesterProfile));
                     reminder.setShown();
                 }
             }
