@@ -3,6 +3,7 @@ package com.company.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
 public class Deadline implements CalenderModelClass, Serializable {
 
@@ -26,4 +27,10 @@ public class Deadline implements CalenderModelClass, Serializable {
 
     @Override
     public LocalDateTime getEnd() { return dueDate; }
+
+    @Override
+    public String[] toCSV() {
+        return new String[]{this.getTitle(), this.getModule().getCode(), this.getEnd().toString()};
+
+    }
 }

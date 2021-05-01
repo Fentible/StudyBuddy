@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Activity implements CalenderModelClass, Serializable {
 
@@ -36,6 +38,12 @@ public class Activity implements CalenderModelClass, Serializable {
         }
     }
 
+    @Override
+    public String[] toCSV() {
+        return new String[]{this.getTitle(), this.getEnd().toString(),
+               this.getRelatedTasks().stream().map(Task::getTitle).collect(Collectors.joining()),
+                Integer.toString(this.getContribution()), Integer.toString(this.getTimeSpent()) };
+    }
 
     public void updateActivity(Activity activity) {
         this.setTitle(activity.getTitle());

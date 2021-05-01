@@ -2,8 +2,12 @@ package com.company.model;
 
 import com.company.Dashboard;
 import com.company.Reminder;
+import javafx.scene.control.Alert;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.CsvWriter;
 
 import java.io.*;
+import java.nio.file.FileSystemException;
+import java.nio.file.Files;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.*;
@@ -11,6 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import com.opencsv.CSVWriter;
+
 
 /* primarily for handling and storing data, no view or controller is necessary
  * other classes shall query, insert and delete data then provide views appropriately
@@ -434,6 +440,58 @@ public class SemesterProfile implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private boolean isBitSet(byte b, int pos) {
+        return (b & (1 << pos)) != 0;
+    }
+    public void exportDataCVS(byte flag, String saveFileLocation) throws IOException {
+
+        File outFile = new File(saveFileLocation + "\\out.csv");
+        try {
+            Files.deleteIfExists(outFile.toPath());
+        } catch (FileSystemException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to access file for exporting" +
+                    " please ensure it is not open in another application");
+            alert.showAndWait();
+            return;
+        }
+        System.out.println(saveFileLocation);
+        //FileWriter outWriter = new FileWriter(outFile);
+        CSVWriter outWriter = new CSVWriter(new FileWriter(saveFileLocation + "\\out.csv"));
+        if(isBitSet(flag, 0)) {
+            outWriter.writeNext(new String[] {"Tasks:"});
+            outWriter.writeNext(new String[]{"Task Title", "Module Code", "Start Date", "End Date",
+            "Progress", "Dependencies", "Milestones" });
+            for (Task task : tasks) {
+                outWriter.writeNext(task.toCSV());
+            }
+        }
+        if(isBitSet(flag, 1)) {
+            outWriter.writeNext(new String[] {"Milestones:"});
+            outWriter.writeNext(new String[]{"Milestone Title", "Related event title", "End date", "Completion",
+                    "Required Tasks"});
+            for (Milestone milestone : milestones) {
+                outWriter.writeNext(milestone.toCSV());
+            }
+        }
+
+        if(isBitSet(flag, 2)) {
+            outWriter.writeNext(new String[] {"Deadlines:"});
+            outWriter.writeNext(new String[]{"Deadline Title", "Module code", "End date"});
+            for (Deadline deadline : this.getDeadlines()) {
+                outWriter.writeNext(deadline.toCSV());
+            }
+        }
+
+        if(isBitSet(flag, 3)) {
+            outWriter.writeNext(new String[] {"Activities: "});
+            outWriter.writeNext(new String[]{"Activity Title", "End Date", "Related tasks", "Contribution",
+                    "Time spent"});
+            for (Activity activity : activities) {
+                outWriter.writeNext(activity.toCSV());
+            }
+        }
+        outWriter.close();
     }
 
 

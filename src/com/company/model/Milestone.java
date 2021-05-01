@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Milestone implements CalenderModelClass, Serializable {
 
@@ -64,4 +65,12 @@ public class Milestone implements CalenderModelClass, Serializable {
 
     @Override
     public LocalDateTime getEnd() { return end; }
+
+    @Override
+    public String[] toCSV() {
+        return new String[]{this.getTitle(), this.getEvent().getTitle(), this.getEnd().toString(),
+                Integer.toString(this.getCompletion()),
+                this.getRequiredTasks().stream().map(Task::getTitle).collect(Collectors.joining()) };
+
+    }
 }

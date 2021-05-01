@@ -257,6 +257,8 @@ public class Dashboard extends Application {
             }
         });
 
+        sideButtons[1].setOnAction(e -> ExportData.Display(semesterProfile));
+
         sideButtons[2].setOnAction(e -> {
             window.setScene(Search.Display(semesterProfile, window));
         });
@@ -307,6 +309,8 @@ public class Dashboard extends Application {
                 ioException.printStackTrace();
             }
         });
+
+
         Menu displayMenu = new Menu("Display");
         displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
         file.getItems().addAll(openFile, saveFile, exit);
