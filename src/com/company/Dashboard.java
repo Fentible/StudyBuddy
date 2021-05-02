@@ -301,7 +301,10 @@ public class Dashboard extends Application {
         MenuItem openFile = new MenuItem("Load File");
         MenuItem saveFile = new MenuItem("Save File");
         MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction(e -> Platform.exit());
+        exit.setOnAction(e -> {
+            semesterProfile.saveFile(semesterProfile.getSaveFileLocation());
+            Platform.exit();
+        });
         saveFile.setOnAction(e -> {
             try {
                 saveOption();
@@ -319,22 +322,21 @@ public class Dashboard extends Application {
         MenuItem addActivity = new MenuItem("Add Activity");
         MenuItem addMilestone = new MenuItem("Add Milestone");
         addTask.setOnAction(e -> {
-            if(AddTask.Display(semesterProfile, null)) { // null or LocalDate.now()
-                tile.getChildren().clear();
-                populateCalender(tile, this.month, this.year);
-            }
+            AddTask.Display(semesterProfile, null); // null or LocalDate.now()
+            tile.getChildren().clear();
+            populateCalender(tile, this.month, this.year);
+
         });
         addActivity.setOnAction(e -> {
-            if(AddActivity.Display(semesterProfile, null)) {
-                tile.getChildren().clear();
-                populateCalender(tile, this.month, this.year);
-            }
+            AddActivity.Display(semesterProfile, null);
+            tile.getChildren().clear();
+            populateCalender(tile, this.month, this.year);
+
         });
         addMilestone.setOnAction(e -> {
-            if(AddMilestone.Display(semesterProfile, null)) {
-                tile.getChildren().clear();
-                populateCalender(tile, this.month, this.year);
-            }
+            AddMilestone.Display(semesterProfile, null);
+            tile.getChildren().clear();
+            populateCalender(tile, this.month, this.year);
         });
         Menu themeSelect = new Menu("Select Theme");
         MenuItem defaultTheme = new MenuItem("Default");

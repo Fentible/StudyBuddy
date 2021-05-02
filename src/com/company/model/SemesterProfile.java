@@ -3,7 +3,6 @@ package com.company.model;
 import com.company.Dashboard;
 import com.company.Reminder;
 import javafx.scene.control.Alert;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.CsvWriter;
 
 import java.io.*;
 import java.nio.file.FileSystemException;
@@ -16,6 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.opencsv.CSVWriter;
+
 
 
 /* primarily for handling and storing data, no view or controller is necessary

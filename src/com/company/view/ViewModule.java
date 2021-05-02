@@ -36,6 +36,8 @@ public class ViewModule {
         container.setAlignment(Pos.CENTER);
         container.setPadding(new Insets(20, 20, 20, 20));
         Button back = new Button("Return");
+        Button chart = new Button("View Chart");
+        chart.setOnAction(e -> ModuleCharts.createGanttChart(module));
 
         // List views for all of the content...
         ObservableList<Milestone> milestonesList = FXCollections.observableArrayList();
@@ -126,12 +128,11 @@ public class ViewModule {
 
         container.getChildren().addAll(new Label("List of Milestones: "), tableOfMilestones,
                 new Label("List of Deadlines: "), tableOfDeadlines,
-                new Label("List of Tasks: "), tableOfTasks, back);
+                new Label("List of Tasks: "), tableOfTasks, back, chart);
         scene = new Scene(container);
         scene.getStylesheets().add(semesterProfile.getStyle());
         scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
-
         window.show();
 
         return scene;
