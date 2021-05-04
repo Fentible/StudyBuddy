@@ -33,7 +33,7 @@ public class ModuleCharts {
     private static IntervalCategoryDataset getDataSet(Module module) {
         TaskSeries taskSeries = new TaskSeries("Tasks");
         TaskSeries deadlineSeries = new TaskSeries("Deadlines");
-
+        TaskSeries milestoneSeries = new TaskSeries("Milestones");
         for(Task task : module.getTasks()) {
             taskSeries.add(new org.jfree.data.gantt.Task(task.getTitle(),
                     Date.from(Instant.from(task.getStart().toLocalDate().atStartOfDay(ZoneId.systemDefault()))),
@@ -44,10 +44,16 @@ public class ModuleCharts {
                     Date.from(Instant.from(deadline.getDueDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()))),
                     Date.from(Instant.from(deadline.getDueDate().plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault())))));
         }
+        for(Milestone milestone : module.getMilestones()) {
+            deadlineSeries.add(new org.jfree.data.gantt.Task(milestone.getTitle(),
+                    Date.from(Instant.from(milestone.getEnd().toLocalDate().atStartOfDay(ZoneId.systemDefault()))),
+                    Date.from(Instant.from(milestone.getEnd().plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault())))));
+        }
 
         TaskSeriesCollection dataset = new TaskSeriesCollection();
         dataset.add(taskSeries);
         dataset.add(deadlineSeries);
+        dataset.add(milestoneSeries);
         return dataset;
     }
 
