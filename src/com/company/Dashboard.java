@@ -239,8 +239,8 @@ public class Dashboard extends Application {
         vbox.setSpacing(8);
         vbox.setAlignment(Pos.CENTER);
         // Only for testing
-        String[] buttonTitles = {"Modules", "Export", "Search", "Button 4"};
-        Button[] sideButtons = new Button[4];
+        String[] buttonTitles = {"Modules", "Export", "Search"};
+        Button[] sideButtons = new Button[3];
 
 
         for(int i = 0; i < sideButtons.length; i++) {
