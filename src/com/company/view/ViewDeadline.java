@@ -84,7 +84,7 @@ public class ViewDeadline {
         });
 
         editButton.setOnAction(e -> {
-            System.out.println(window.getHeight() + " : " + window.getWidth());
+            //System.out.println(window.getHeight() + " : " + window.getWidth());
         });
 
         Label title = new Label(deadline.getTitle());

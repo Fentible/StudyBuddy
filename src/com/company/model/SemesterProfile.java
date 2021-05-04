@@ -69,21 +69,21 @@ public class SemesterProfile implements Serializable {
                     code = readLine.next();
                     module = new Module(title, code);
                     this.addModule(module);
-                    System.out.println("Adding module: " + title);
+                    //System.out.println("Adding module: " + title);
                 }
                 case "E" -> {
                     title = readLine.next();
                     Exam exam = new Exam(title, readLine.next(), module);
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
-                    System.out.println("Adding exam: " + title);
+                    //System.out.println("Adding exam: " + title);
                 }
                 case "A" -> {
                     title = readLine.next();
                     Assignment assignment = new Assignment(title, readLine.next(), module);
                     this.addAssignment(assignment);
                     this.getModule(code).addDeadline(assignment);
-                    System.out.println("Adding assignment: " + title);
+                    //System.out.println("Adding assignment: " + title);
                 }
                 default -> {
                     // System.out.println("Unknown data type " + readLine.next());
@@ -418,7 +418,7 @@ public class SemesterProfile implements Serializable {
     public void saveFile(String location) {
 
         try {
-            System.out.println(location);
+            //System.out.println(location);
             FileOutputStream fileOut = new FileOutputStream(location);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
@@ -429,7 +429,7 @@ public class SemesterProfile implements Serializable {
             this.properties.setProperty("style", this.getStyle() == null ? "default.css" : this.getStyle());
             updatePropertiesFile();
         } catch (IOException i) {
-            System.out.println("Save failed!" + " : " + location);
+            //System.out.println("Save failed!" + " : " + location);
             i.printStackTrace();
         }
     }
@@ -455,7 +455,7 @@ public class SemesterProfile implements Serializable {
             alert.showAndWait();
             return;
         }
-        System.out.println(saveFileLocation);
+        //System.out.println(saveFileLocation);
         //FileWriter outWriter = new FileWriter(outFile);
         CSVWriter outWriter = new CSVWriter(new FileWriter(saveFileLocation + "\\out.csv"));
         if(isBitSet(flag, 0)) {
@@ -504,24 +504,26 @@ public class SemesterProfile implements Serializable {
         properties.load(new FileInputStream("src/com/company/model/config.properties"));
         SemesterProfile semesterProfile = new SemesterProfile(file, properties);
         for(Module module : semesterProfile.getModules()) { // check file is read and inputted correctly
-            System.out.println("Type " + module.getCode());
-            System.out.println(" Code " + module.getTitle());
+            //System.out.println("Type " + module.getCode());
+            //System.out.println(" Code " + module.getTitle());
         }
         // Add, get, remove
         semesterProfile.addTask(new Task("task1", "18-04-2021 16:00", "18-04-2021 16:00", 0,
                 "This be notes", null, null, null, null, null));
-
-        System.out.println(semesterProfile.getTask("tas").getNotes());
+        /*
+        //System.out.println(semesterProfile.getTask("tas").getNotes());
         // semesterProfile.removeTask(semesterProfile.getTask("tas"));
         if(semesterProfile.getTask("tas") == null)
-            System.out.println("Task not found");
+            //System.out.println("Task not found");
         Dashboard dashboard = new Dashboard(semesterProfile);
         List<LocalDate> dates = dashboard.getDates(LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 19));
 
        ArrayList<Task> tasks = semesterProfile.getTasksFromDate(dates.get(dates.size() - 1));
        for(Task task : tasks) {
-           System.out.println(task.getTitle());
+           //System.out.println(task.getTitle());
        }
+       */
+
 
     }
 

@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -134,6 +135,10 @@ public class AddTask  {
 
             if(title.getText().trim().isEmpty() || (exam == null && assignment == null) ||  module == null) {
                 errorMessage.setText("Some required elements are empty");
+            } else if(inputStartDate.getValue().isAfter(inputEndDate.getValue())) {
+                errorMessage.setText("The start date must be before the end date");
+            } else if(inputStartDate.getValue().isEqual(inputEndDate.getValue()) && LocalTime.parse(startTime.getText()).isAfter(LocalTime.parse(endTime.getText()))) {
+                errorMessage.setText("The start time must be before the end time");
             } else {
                 task = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),

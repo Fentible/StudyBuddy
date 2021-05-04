@@ -412,7 +412,7 @@ public class Dashboard extends Application {
         ReminderHandler reminderHandler = new ReminderHandler();
         reminderHandler.start(semesterProfile);
         for(Reminder reminder : semesterProfile.getReminders()) {
-            System.out.println(reminder.getRelatedEvent().getTitle());
+            //System.out.println(reminder.getRelatedEvent().getTitle());
         }
         borderPane.setBottom(options);
         borderPane.setTop(menuVBox);

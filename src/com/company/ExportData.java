@@ -62,7 +62,7 @@ public class ExportData {
             if(exportMilestones.isSelected()) { flag |= 1 << 1; }
             if(exportDeadlines.isSelected()) { flag |= 1 << 2; }
             if(exportActivities.isSelected()) { flag |= 1 << 3; }
-            System.out.println(Byte.toString(flag));
+           // System.out.println(Byte.toString(flag));
             if(flag != 0x00) {
                 try {
                     semesterProfile.exportDataCVS(flag, file == null ? exportDirectory.getInitialDirectory().getAbsolutePath() : file.getAbsolutePath());

@@ -88,7 +88,6 @@ public class Search {
                 }
             }
         } else {
-            System.out.println("eee");
             modelList.addAll(semesterProfile.getAll());
 
             if (start != null) {
@@ -206,7 +205,7 @@ public class Search {
             }
             modelList.clear();
             modelList.addAll(populateList(semesterProfile, searchInput.getText(), startDate.getValue(), endDate.getValue(), type));
-            System.out.println(Arrays.deepToString(modelList.toArray()));
+            //System.out.println(Arrays.deepToString(modelList.toArray()));
 
         });
 

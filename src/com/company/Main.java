@@ -48,7 +48,7 @@ public class Main extends Application {
         }
         if(inFile.exists()) {
             try {
-                System.out.println("Loading saved file");
+                //System.out.println("Loading saved file");
                 FileInputStream fileIn = new FileInputStream(inFile);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 semesterProfile = (SemesterProfile) in.readObject();
@@ -58,7 +58,7 @@ public class Main extends Application {
                 i.printStackTrace();
                 return;
             } catch (ClassNotFoundException c) {
-                System.out.println("Class not found");
+                //System.out.println("Class not found");
                 c.printStackTrace();
                 return;
             }

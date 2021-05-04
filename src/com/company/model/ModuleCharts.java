@@ -103,7 +103,7 @@ public class ModuleCharts {
         viewer.getCanvas().setOnMouseDragged(Event::consume);
         viewer.getCanvas().setOnMouseReleased(Event::consume);
         viewer.getCanvas().setOnMouseDragReleased(Event::consume);
-
+        
 
         window.setScene(new Scene(viewer));
         window.setTitle(module.getTitle() + " Gantt Chart");

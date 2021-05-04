@@ -29,7 +29,7 @@ public class ReminderHandler {
         if(semesterProfile.getReminders() != null) {
             for (Reminder reminder : semesterProfile.getReminders()) {
                 if ((reminder.getDate().equals(LocalDate.now()) && LocalTime.now().isAfter(reminder.getTime().minusMinutes(15)) && !reminder.shown)) {
-                    System.out.println("worked");
+                    //System.out.println("worked");
                     Platform.runLater(() -> ReminderAlertBox.Display(reminder, semesterProfile));
                     reminder.setShown();
                 }
