@@ -70,7 +70,7 @@ public class Milestone implements CalenderModelClass, Serializable {
     public String[] toCSV() {
         return new String[]{this.getTitle(), this.getEvent().getTitle(), this.getEnd().toString(),
                 Integer.toString(this.getCompletion()),
-                this.getRequiredTasks().stream().map(Task::getTitle).collect(Collectors.joining()) };
+                this.getRequiredTasks() == null ? "" : this.getRequiredTasks().stream().map(Task::getTitle).collect(Collectors.joining()) };
 
     }
 }

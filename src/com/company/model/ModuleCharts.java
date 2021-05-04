@@ -83,6 +83,28 @@ public class ModuleCharts {
         window.showAndWait();
     }
 
+    public static void exportChartNoShow(JFreeChart chart) {
+
+        File file = new File(chart.getTitle().getText() + "_Chart.png");
+        BufferedImage chartImage = chart.createBufferedImage(1920, 1080, null);
+        try {
+            ImageIO.write(chartImage, "png", file);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        return;
+    }
+
+    public static JFreeChart createGanttChartNoShow(Module module) {
+        IntervalCategoryDataset dataset = getDataSet(module);
+
+        JFreeChart chart = ChartFactory.createGanttChart(
+                module.getTitle(), "Tasks", "Timeline", dataset,
+                true, false, false);
+        return chart;
+
+    }
     public static void createGanttChart(Module module) {
 
         Stage window = new Stage();

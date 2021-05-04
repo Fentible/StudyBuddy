@@ -54,8 +54,8 @@ public class Task implements CalenderModelClass, Serializable {
     public String[] toCSV() {
         return new String[]{this.getTitle(), this.getModule().getCode(), this.getStart().toString(),
                 this.getEnd().toString(),  Integer.toString(this.getProgress()),
-                this.getDependencies().stream().map(Task::getTitle).collect(Collectors.joining()),
-                this.getMilestones().stream().map(Milestone::getTitle).collect(Collectors.joining())};
+                this.getDependencies() == null ? "" : this.getDependencies().stream().map(Task::getTitle).collect(Collectors.joining()),
+                this.getMilestones() == null ? "" : this.getMilestones().stream().map(Milestone::getTitle).collect(Collectors.joining())};
     }
 
     public int getProgress() { return progress; }
