@@ -69,22 +69,17 @@ public class ViewDeadline {
         );
         tl.play();
         Button cancelButton = new Button("Close");
-        Button editButton = new Button("Edit");
         Button addReminder = new Button("Set Reminder");
         addReminder.setOnAction(e -> {
            semesterProfile.addReminder(new Reminder(deadline));
         });
 
         HBox confirmButtons = new HBox(10);
-        confirmButtons.getChildren().addAll(cancelButton, editButton, addReminder);
+        confirmButtons.getChildren().addAll(cancelButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
         cancelButton.setOnAction(e -> {
             window.close();
-        });
-
-        editButton.setOnAction(e -> {
-            //System.out.println(window.getHeight() + " : " + window.getWidth());
         });
 
         Label title = new Label(deadline.getTitle());

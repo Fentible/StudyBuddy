@@ -92,7 +92,11 @@ public class AddMilestone {
 
             if(title.getText().trim().isEmpty() || event == null || requiredTasks == null) {
                 errorMessage.setText("Some required elements are empty");
-            } else {
+            }
+            else if (endTime.getText().matches("^..:..$") == false){
+                errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
+            }
+            else {
                 milestone = new Milestone(requiredTasks, event, title.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText());
                 semesterProfile.addMilestone(milestone);

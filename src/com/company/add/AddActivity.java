@@ -122,7 +122,11 @@ public class AddActivity {
             // Basic error checking, **need to add a label for an error box**
             if(title.getText().trim().isEmpty() || activityTypeComboBox.getValue() == null || tasks == null || tasks.isEmpty()) {
                 errorMessage.setText("Some required elements are empty");
-            } else {
+            }
+            else if (endTime.getText().matches("^..:..$") == false){
+                errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
+            }
+            else {
                  activity = new Activity(activityTypeComboBox.getValue(), (int)contributionSlider.getValue(), (int)timeSpentSlider.getValue(), notes.getText(), title.getText(), formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
                         tasks);
                 for(Task task : tasks) {
