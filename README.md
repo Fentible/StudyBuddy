@@ -1,6 +1,8 @@
 # StudyBuddy
 Software Engineering Coursework - Study Planner
 
+**All use cases appear to be implemented, i've begun testing and will start recording the current work tomorrow (06/05/21). If you have any improvements or additions feel free to add them but please check what has been implemented before starting anything new.
+
 *** Current Progress - 10/03/21
 + Task 0 :: github set up 
 + Task 1 :: ideas and sketches added to trello
