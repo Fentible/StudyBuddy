@@ -89,6 +89,8 @@ public class EditTask {
         endTime.setText(task.getEnd().toLocalTime().toString());
 
         progressSlider.setValue(task.getProgress());
+        progressSlider.setDisable(true);
+
 
         Label topLabel = new Label("Select items to add to the task");
         Button examButton = new Button("Add exam");
@@ -154,6 +156,7 @@ public class EditTask {
 
         /* Basic field checking for testing purposes, will improve later */
         saveButton.setOnAction(e -> {
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             Task temp = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
