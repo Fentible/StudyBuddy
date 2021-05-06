@@ -313,6 +313,20 @@ public class Dashboard extends Application {
             }
         });
 
+        ToggleGroup toggleMute = new ToggleGroup();
+        RadioMenuItem muteButton = new RadioMenuItem("Mute");
+        muteButton.setOnAction(e -> {
+            semesterProfile.setMuted(true);
+        });
+        muteButton.setToggleGroup(toggleMute);
+        RadioMenuItem unMuteButton = new RadioMenuItem("Unmute");
+        unMuteButton.setToggleGroup(toggleMute);
+        unMuteButton.setOnAction(e -> {
+            semesterProfile.setMuted(false);
+        });
+        unMuteButton.setSelected(true);
+        Menu toggleMuteMenu = new Menu("Toggle Mute");
+        toggleMuteMenu.getItems().addAll(muteButton, unMuteButton);
 
         Menu displayMenu = new Menu("Display");
         displayMenu.getItems().addAll(tasksButton, deadlinesButton, activitiesButton, milestonesButton);
@@ -363,7 +377,7 @@ public class Dashboard extends Application {
         });
 
         addMenu.getItems().addAll(addTask, addActivity, addMilestone);
-        menuBar.getMenus().addAll(file, displayMenu, addMenu, themeSelect);
+        menuBar.getMenus().addAll(file, displayMenu, addMenu, themeSelect, toggleMuteMenu);
 
 
         VBox menuVBox= new VBox(menuBar);

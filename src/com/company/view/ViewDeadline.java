@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +72,12 @@ public class ViewDeadline {
         Button cancelButton = new Button("Close");
         Button addReminder = new Button("Set Reminder");
         addReminder.setOnAction(e -> {
-           semesterProfile.addReminder(new Reminder(deadline));
+            if(deadline.getEnd().isAfter(LocalDateTime.now())) {
+                semesterProfile.addReminder(new Reminder(deadline));
+            } else {
+                Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
+                reminderAlert.showAndWait();
+            }
         });
 
         HBox confirmButtons = new HBox(10);
@@ -183,7 +189,12 @@ public class ViewDeadline {
         Button editButton = new Button("Edit");
         Button addReminder = new Button("Set Reminder");
         addReminder.setOnAction(e -> {
-            semesterProfile.addReminder(new Reminder(deadline));
+            if (deadline.getEnd().isAfter(LocalDateTime.now())) {
+                semesterProfile.addReminder(new Reminder(deadline));
+            } else {
+                Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
+                reminderAlert.showAndWait();
+            }
         });
 
         HBox confirmButtons = new HBox(10);

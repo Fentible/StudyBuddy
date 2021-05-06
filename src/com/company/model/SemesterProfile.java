@@ -39,6 +39,7 @@ public class SemesterProfile implements Serializable {
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
     public static String style;
+    private boolean muted;
     @Serial
     private static final long serialVersionUID = 6529685098267757690L;
 
@@ -56,6 +57,7 @@ public class SemesterProfile implements Serializable {
         String code = null;
         Scanner read = new Scanner(profile);
         Module module = null;
+        this.muted = false;
         this.properties = properties;
         this.style = properties.getProperty("style");
         while(read.hasNextLine()) {
@@ -96,6 +98,15 @@ public class SemesterProfile implements Serializable {
                 }
             }
         }
+    }
+
+
+    public boolean isMuted() {
+        return muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
     }
 
     public String getStyle() { return style; }
