@@ -31,6 +31,7 @@ public class ReminderAlertBox {
         closeButton.setOnAction(event -> window.close());
         Button viewButton = new Button("View");
         HBox buttons = new HBox(8);
+        buttons.setAlignment(Pos.CENTER);
         viewButton.setOnAction(e -> {
             if(model instanceof Task) { ViewTask.Display(semesterProfile, (Task) model); }
             else if(model instanceof Milestone) { ViewMilestone.Display(semesterProfile, (Milestone) model); }
