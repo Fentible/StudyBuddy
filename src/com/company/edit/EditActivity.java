@@ -45,6 +45,7 @@ public class EditActivity {
 
         //window.initModality(Modality.APPLICATION_MODAL);
         activity = passedActivity;
+        relatedTasks = activity.getRelatedTasks();
         window.setTitle("Edit Activity");
         //window.setMinWidth(750);
         //window.setMinHeight(500);
@@ -84,9 +85,9 @@ public class EditActivity {
         activityTypeComboBox.getSelectionModel().select(passedActivity.getType());
 
         Slider timeSpentSlider = new Slider(0, 100, 0);
-        timeSpentSlider.setValue(0);
+        timeSpentSlider.setValue(activity.getTimeSpent());
         Slider contributionSlider = new Slider(0, 100, 0);
-        contributionSlider.setValue(0);
+        contributionSlider.setValue(activity.getContribution());
 
         Label topLabel = new Label("Select items to add to the task");
         Button tasksButton = new Button("Assign to task(s)");
