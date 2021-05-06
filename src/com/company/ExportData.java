@@ -66,12 +66,19 @@ public class ExportData {
 
         modulePDF.setOnAction(e -> {
             for(Module module : semesterProfile.getModules()) {
+                String pdfSaveLocation ="";
+                if(file != null) {
+                    pdfSaveLocation = file.getAbsolutePath() + "\\" + module.getTitle() + ".pdf";
+                } else {
+                    pdfSaveLocation = module.getTitle() + ".pdf";
+                }
+                System.out.println(pdfSaveLocation);
                 Document document = new Document();
                 ModuleCharts.exportChartNoShow(ModuleCharts.createGanttChartNoShow(module));
                 try {
-                    File outFile = new File(module.getTitle() + ".pdf");
+                    File outFile = new File(pdfSaveLocation);
                     Files.deleteIfExists(outFile.toPath());
-                    PdfWriter.getInstance(document, new FileOutputStream(module.getTitle() + ".pdf"));
+                    PdfWriter.getInstance(document, new FileOutputStream(pdfSaveLocation));
                     module.exportDataCVS();
                     //CSVReader csvReader = new CSVReader(new FileReader(module.getTitle() + ".csv"));
                 } catch (DocumentException | IOException ex) {
@@ -148,7 +155,7 @@ public class ExportData {
         Button directoryButton = new Button("Choose Directory");
         directoryButton.setOnAction(e -> {
             file = exportDirectory.showDialog(window);
-            exportLocation.setText(file.getAbsolutePath());
+            exportLocation.setText(file == null ? "" : file.getAbsolutePath());
         });
         buttons.getChildren().addAll(closeButton, directoryButton, exportButton, modulePDF);
         VBox exportOptions = new VBox(8);
