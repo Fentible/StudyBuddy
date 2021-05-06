@@ -21,9 +21,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import javafx.util.converter.LocalTimeStringConverter;
 
 import java.nio.channels.InterruptedByTimeoutException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,6 +87,23 @@ public class ViewDeadline {
         });
 
         HBox confirmButtons = new HBox(10);
+
+        Button extensionButton = new Button("Apply Extension");
+        DatePicker extensionPicker = new DatePicker();
+        extensionPicker.setValue(deadline.getEnd().toLocalDate());
+        TextField extensionTime = new TextField();
+        extensionTime.setPromptText("12:00");
+
+        extensionButton.setOnAction(e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            if(extensionPicker.getValue().isAfter(deadline.getEnd().toLocalDate()) && extensionPicker.getValue().isAfter(LocalDate.now())) {
+                deadline.applyExtension(formatter.format(extensionPicker.getValue()) + " " + extensionTime.getText());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a date and time after the current deadline");
+                alert.showAndWait();
+            }
+        });
+
         confirmButtons.getChildren().addAll(cancelButton, addReminder);
         confirmButtons.setAlignment(Pos.CENTER_RIGHT);
 
@@ -136,6 +158,9 @@ public class ViewDeadline {
         gridpane.add(title, 1, 1);
         gridpane.add(new Label("Date range: "), 0, 2);
         gridpane.add(timeBox, 1, 2);
+        HBox extensionContainer = new HBox(8);
+        extensionContainer.getChildren().addAll(extensionPicker, extensionTime, extensionButton);
+        gridpane.add(extensionContainer, 0, 3, 3, 1);
 
 
         HBox tables = new HBox(8);

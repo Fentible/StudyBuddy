@@ -27,6 +27,11 @@ public class Deadline implements CalenderModelClass, Serializable {
         return weighting;
     }
 
+    public void applyExtension(String extension) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        this.dueDate = LocalDateTime.parse(extension, formatter);
+    }
+
     public Module getModule() {
         return module;
     }
