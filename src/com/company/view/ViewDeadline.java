@@ -98,6 +98,9 @@ public class ViewDeadline {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             if(extensionPicker.getValue().isAfter(deadline.getEnd().toLocalDate()) && extensionPicker.getValue().isAfter(LocalDate.now())) {
                 deadline.applyExtension(formatter.format(extensionPicker.getValue()) + " " + extensionTime.getText());
+            } else if (!extensionTime.getText().matches("^..:..$")){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "The start time must be in the 23 hour format e.g. 12:00");
+                alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a date and time after the current deadline");
                 alert.showAndWait();
