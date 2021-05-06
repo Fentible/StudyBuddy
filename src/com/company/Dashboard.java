@@ -184,9 +184,21 @@ public class Dashboard extends Application {
             calenderBoxes[i].setOnMouseClicked(mouseEvent -> {
                 if(mouseEvent.getClickCount() == 2) {
                     switch (displayOption) {
-                        case TASKS -> AddTask.Display(semesterProfile, dates.get(finalI));
-                        case MILESTONES -> AddMilestone.Display(semesterProfile, dates.get(finalI));
-                        case ACTIVITIES -> AddActivity.Display(semesterProfile, dates.get(finalI));
+                        case TASKS -> {
+                            AddTask.Display(semesterProfile, dates.get(finalI));
+                            tile.getChildren().clear();
+                            populateCalender(tile, this.month, this.year);
+                        }
+                        case MILESTONES -> {
+                            AddMilestone.Display(semesterProfile, dates.get(finalI));
+                            tile.getChildren().clear();
+                            populateCalender(tile, this.month, this.year);
+                        }
+                        case ACTIVITIES -> {
+                            AddActivity.Display(semesterProfile, dates.get(finalI));
+                            tile.getChildren().clear();
+                            populateCalender(tile, this.month, this.year);
+                        }
                     }
 
                 }
