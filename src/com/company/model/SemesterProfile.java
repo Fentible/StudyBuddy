@@ -75,14 +75,14 @@ public class SemesterProfile implements Serializable {
                 }
                 case "E" -> {
                     title = readLine.next();
-                    Exam exam = new Exam(title, readLine.next(), module);
+                    Exam exam = new Exam(title, readLine.next(), module, Integer.parseInt(readLine.next()));
                     this.addExam(exam);
                     this.getModule(code).addDeadline(exam);
                     //System.out.println("Adding exam: " + title);
                 }
                 case "A" -> {
                     title = readLine.next();
-                    Assignment assignment = new Assignment(title, readLine.next(), module);
+                    Assignment assignment = new Assignment(title, readLine.next(), module, Integer.parseInt(readLine.next()));
                     this.addAssignment(assignment);
                     this.getModule(code).addDeadline(assignment);
                     //System.out.println("Adding assignment: " + title);

@@ -11,7 +11,7 @@ public class Assignment extends Deadline {
 
 
 
-    public Assignment(String title, String dueDate, Module module) { super(dueDate, title, module); }
+    public Assignment(String title, String dueDate, Module module, int weighting) { super(dueDate, title, module, weighting); }
     public static void main(String[] args) {
 
         //Assignment assignment = new Assignment("SoftEng Report", "13-06-2021 12:00");

@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -88,7 +89,7 @@ public class ViewDeadline {
             window.close();
         });
 
-        Label title = new Label(deadline.getTitle());
+        Label title = new Label(deadline.getTitle() + " - " + deadline.getWeighting() + "%");
 
 
         TextField endDate = new TextField();
@@ -209,7 +210,7 @@ public class ViewDeadline {
             //EditTask.Display(semesterProfile, deadline, window);
         });
 
-        Label title = new Label(deadline.getTitle());
+        Label title = new Label(deadline.getTitle() + " - " + deadline.getWeighting() + "%");
 
 
         TextField endDate = new TextField();
