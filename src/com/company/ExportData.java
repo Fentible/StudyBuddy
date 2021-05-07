@@ -54,7 +54,9 @@ public class ExportData {
         window.setTitle("Export Data");
         window.setMinWidth(350);
         window.setMinHeight(250);
-        Label label = new Label("Please select which datasets you which to export");
+        Label label = new Label("Please select which datasets you which to export\n" +
+                "        Note: PDFs will contain all of the above");
+        label.setAlignment(Pos.CENTER);
         Label exportLocation = new Label();
         Button closeButton = new Button("Close");
         Button exportButton = new Button("Export");
