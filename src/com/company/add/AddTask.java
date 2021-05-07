@@ -49,15 +49,12 @@ public class AddTask  {
         title.setPromptText("Title: ");
         DatePicker inputStartDate = new DatePicker(date == null ? LocalDate.now() : date);
         DatePicker inputEndDate = new DatePicker(date == null ? LocalDate.now() : date);
-        Slider progressSlider = new Slider(0, 100, 0);
         TextArea notes = new TextArea();
         notes.setPromptText("Notes: ");
         TextField startTime = new TextField();
         startTime.setPromptText("HH:MM");
         TextField endTime = new TextField();
         endTime.setPromptText("HH:MM");
-
-        progressSlider.setValue(0);
 
         Label topLabel = new Label("Select items to add to the task");
         Button examButton = new Button("Add exam");
@@ -90,13 +87,10 @@ public class AddTask  {
         gridpane.add(startTimeBox, 1, 2);
         gridpane.add(new Label("End Date: "), 0, 3);
         gridpane.add(endTimeBox, 1, 3);
-        Label progressLabel = new Label("Progress: " + displayProgress);
-        gridpane.add(progressLabel, 0 ,4);
-        gridpane.add(progressSlider, 1, 4);
-        gridpane.add(notes, 0, 5, 2, 2);
-        gridpane.add(bottomButtons, 0, 8, 2, 2);
+        gridpane.add(notes, 0, 4, 2, 2);
+        gridpane.add(bottomButtons, 0, 7, 2, 2);
         GridPane.setHalignment(confirmButtons, HPos.RIGHT);
-        gridpane.add(confirmButtons, 1, 11);
+        gridpane.add(confirmButtons, 1, 10);
 
 
         dependenciesButton.setOnAction(e -> {
@@ -122,12 +116,6 @@ public class AddTask  {
             assignment = AssignmentSingleView.DisplayAssignments(semesterProfile);
             }
         });
-        progressSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)progressSlider.getValue()));
-            }
-        });
 
         /* Basic field checking for testing purposes, will improve later */
         saveButton.setOnAction(e -> {
@@ -151,7 +139,7 @@ public class AddTask  {
             else {
                 task = new Task(title.getText(), formatter.format(inputStartDate.getValue()) + " " + startTime.getText(),
                         formatter.format(inputEndDate.getValue()) + " " + endTime.getText(),
-                        (int) progressSlider.getValue(), notes.getText(), exam, assignment,
+                        0, notes.getText(), exam, assignment,
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
                 task.getModule().addTask(task);

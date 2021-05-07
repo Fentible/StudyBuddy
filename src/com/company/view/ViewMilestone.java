@@ -149,6 +149,11 @@ public class ViewMilestone {
 
         GridPane gridpane = new GridPane(); // GridPane for most of the elements
         gridpane.prefWidthProperty().bind(window.widthProperty());
+        boolean missed = false; //bool for if missed
+        LocalDateTime now = LocalDateTime.now(); // current date/time
+        if(milestone.getEnd().isBefore(now) && milestone.getCompletion() < 100){
+            missed = true;
+        }
 
         gridpane.setAlignment(Pos.CENTER);
         gridpane.setPadding(new Insets(15,15,15,15));
@@ -162,7 +167,8 @@ public class ViewMilestone {
         Label progressLabel = new Label("Progress: " + progress.getValue());
         gridpane.add(progressLabel, 0 ,3);
         gridpane.add(progress, 1, 3);
-        gridpane.add(examButton, 1, 4);
+        gridpane.add(new Label("Missed: " + missed), 0, 4);
+        gridpane.add(examButton, 1, 5);
 
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies);
