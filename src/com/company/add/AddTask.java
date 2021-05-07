@@ -26,7 +26,6 @@ public class AddTask  {
     private static Module module;
     private static ArrayList<Task> dependenciesList;
     private static Assignment assignment;
-    private static int displayProgress;
     public static boolean save;
 
     /*
