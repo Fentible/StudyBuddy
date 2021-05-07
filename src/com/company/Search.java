@@ -1,32 +1,21 @@
 package com.company;
 
-import com.company.edit.EditTask;
 import com.company.model.*;
 import com.company.view.ViewDeadline;
 import com.company.view.ViewTask;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Duration;
 
-import javax.swing.text.View;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -175,6 +164,7 @@ public class Search {
         TableColumn<CalenderModelClass, String> dateColumn = new TableColumn<>("Due Date");
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toLocalDate().toString()));
+        //noinspection unchecked
         tableOfModel.getColumns().addAll(nameColumn, dateColumn);
         tableOfModel.setRowFactory(e -> {
             TableRow<CalenderModelClass> row = new TableRow<>();

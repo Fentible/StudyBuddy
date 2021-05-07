@@ -16,7 +16,7 @@ public class LoadProfile {
 
     public static String saveLocation;
 
-    public static String Display() throws IOException {
+    public static void Display() {
 
         Stage window = new Stage();
         window.setMinWidth(250);
@@ -49,6 +49,5 @@ public class LoadProfile {
         window.setScene(scene);
         window.showAndWait();
 
-        return saveLocation;
     }
 }

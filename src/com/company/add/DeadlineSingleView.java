@@ -1,6 +1,5 @@
 package com.company.add;
 
-import com.company.model.Assignment;
 import com.company.model.Deadline;
 import com.company.model.SemesterProfile;
 import javafx.application.Platform;

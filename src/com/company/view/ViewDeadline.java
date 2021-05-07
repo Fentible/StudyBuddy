@@ -1,7 +1,6 @@
 package com.company.view;
 
 import com.company.Reminder;
-import com.company.ReminderHandler;
 import com.company.model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,14 +20,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import javafx.util.converter.LocalTimeStringConverter;
 
-import java.nio.channels.InterruptedByTimeoutException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +34,7 @@ public class ViewDeadline {
 
     public static Scene getScene() { return scene; }
 
+    @SuppressWarnings("unchecked")
     public static void Display(SemesterProfile semesterProfile, Deadline deadline) {
 
 
@@ -191,6 +187,7 @@ public class ViewDeadline {
 
     }
 
+    @SuppressWarnings("unchecked")
     public static void Display(SemesterProfile semesterProfile, Deadline deadline, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);

@@ -3,8 +3,6 @@ package com.company.add;
 import com.company.AlertBox;
 import com.company.model.Module;
 import com.company.model.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +32,7 @@ public class AddTask  {
     /*
      * See 'AddActivity' for notes as this class is very similar
      */
-    public static boolean Display(SemesterProfile semesterProfile, LocalDate date)  {
+    public static void Display(SemesterProfile semesterProfile, LocalDate date)  {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -125,10 +123,10 @@ public class AddTask  {
             if(title.getText().trim().isEmpty() || (exam == null && assignment == null) ||  module == null) {
                 errorMessage.setText("Some required elements are empty");
             }
-            else if (startTime.getText().matches("^..:..$") == false){
+            else if (!startTime.getText().matches("^..:..$")){
                 errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
             }
-            else if (endTime.getText().matches("^..:..$") == false){
+            else if (!endTime.getText().matches("^..:..$")){
                 errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
             }
             else if(inputStartDate.getValue().isAfter(inputEndDate.getValue())) {
@@ -143,11 +141,6 @@ public class AddTask  {
                         module, dependenciesList, milestonesList);
                 semesterProfile.addTask(task);
                 task.getModule().addTask(task);
-                if(exam != null) {
-                    //exam.add
-                } else if(assignment != null) {
-                   // assignment.add
-                }
                 save = true;
                 window.close();
             }
@@ -163,6 +156,5 @@ public class AddTask  {
         window.setScene(scene);
         window.showAndWait();
 
-        return save;
     }
 }

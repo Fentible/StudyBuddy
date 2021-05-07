@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@SuppressWarnings("unchecked")
 public class ViewActivity {
 
     private static Scene scene;

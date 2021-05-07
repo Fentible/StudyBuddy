@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Module implements Serializable {
 
 
-    private String title;
-    private String code;
+    private final String title;
+    private final String code;
     private ArrayList<Task> tasks = new ArrayList<>();
     private ArrayList<Milestone> milestones = new ArrayList<>();
     private ArrayList<Deadline> deadlines = new ArrayList<>();
@@ -72,8 +72,6 @@ public class Module implements Serializable {
             alert.showAndWait();
             return;
         }
-        //System.out.println(saveFileLocation);
-        //FileWriter outWriter = new FileWriter(outFile);
         CSVWriter outWriter = new CSVWriter(new FileWriter(this.getTitle() + ".csv"));
         outWriter.writeNext(new String[] {"Tasks:"});
         outWriter.writeNext(new String[]{"Task Title", "Module Code", "Start Date", "End Date",

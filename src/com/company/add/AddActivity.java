@@ -30,7 +30,7 @@ public class AddActivity {
     /*
      * Function to display window to user when adding an activity
      */
-    public static boolean Display(SemesterProfile semesterProfile, LocalDate date)  {
+    public static void Display(SemesterProfile semesterProfile, LocalDate date)  {
         // General window setup
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -106,14 +106,14 @@ public class AddActivity {
         contributionSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                contributionLabel.textProperty().setValue(String.valueOf("Total Contribution: " + (int)contributionSlider.getValue()));
+                contributionLabel.textProperty().setValue("Total Contribution: " + (int) contributionSlider.getValue());
             }
         });
         // ...
         timeSpentSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)timeSpentSlider.getValue()));
+                progressLabel.textProperty().setValue("Progress: " + (int) timeSpentSlider.getValue());
             }
         });
 
@@ -123,7 +123,7 @@ public class AddActivity {
             if(title.getText().trim().isEmpty() || activityTypeComboBox.getValue() == null || tasks == null || tasks.isEmpty()) {
                 errorMessage.setText("Some required elements are empty");
             }
-            else if (endTime.getText().matches("^..:..$") == false){
+            else if (!endTime.getText().matches("^..:..$")){
                 errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
             }
             else {
@@ -150,6 +150,5 @@ public class AddActivity {
         window.setScene(scene);
         window.showAndWait();
 
-        return save;
     }
 }

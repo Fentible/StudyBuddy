@@ -1,10 +1,8 @@
 package com.company.edit;
 
 import com.company.add.*;
-import com.company.model.Module;
 import com.company.model.*;
 import com.company.view.ViewActivity;
-import com.company.view.ViewTask;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -21,7 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -41,18 +38,12 @@ public class EditActivity {
 
     public static Scene getScene() { return scene; }
 
-    public static boolean Display(SemesterProfile semesterProfile, Activity passedActivity, Stage window)  {
+    public static void Display(SemesterProfile semesterProfile, Activity passedActivity, Stage window)  {
 
         //window.initModality(Modality.APPLICATION_MODAL);
         activity = passedActivity;
         relatedTasks = activity.getRelatedTasks();
         window.setTitle("Edit Activity");
-        //window.setMinWidth(750);
-        //window.setMinHeight(500);
-        //window.setMaxWidth(750);
-        //window.setMaxHeight(500);
-        //window.setWidth(750);
-        //window.setHeight(500);
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -138,14 +129,14 @@ public class EditActivity {
         contributionSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                contributionLabel.textProperty().setValue(String.valueOf("Total Contribution: " + (int)contributionSlider.getValue()));
+                contributionLabel.textProperty().setValue("Total Contribution: " + (int) contributionSlider.getValue());
             }
         });
         // ...
         timeSpentSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)timeSpentSlider.getValue()));
+                progressLabel.textProperty().setValue("Progress: " + (int) timeSpentSlider.getValue());
             }
         });
 
@@ -180,6 +171,5 @@ public class EditActivity {
 
         window.setScene(scene);
 
-        return save;
     }
 }

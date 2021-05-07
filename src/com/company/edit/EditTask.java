@@ -38,7 +38,7 @@ public class EditTask {
 
     public static Scene getScene() { return scene; }
 
-    public static boolean Display(SemesterProfile semesterProfile, Task passedTask, Stage window)  {
+    public static void Display(SemesterProfile semesterProfile, Task passedTask, Stage window)  {
 
         task = passedTask;
         exam = passedTask.getExam();
@@ -50,12 +50,6 @@ public class EditTask {
 
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Task");
-        //window.setMinWidth(750);
-        //window.setMinHeight(500);
-        //window.setMaxWidth(750);
-        //window.setMaxHeight(500);
-        //window.setWidth(750);
-        //window.setHeight(500);
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -150,7 +144,7 @@ public class EditTask {
         progressSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                progressLabel.textProperty().setValue(String.valueOf("Progress: " + (int)progressSlider.getValue()));
+                progressLabel.textProperty().setValue("Progress: " + (int) progressSlider.getValue());
             }
         });
 
@@ -178,6 +172,5 @@ public class EditTask {
         scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
 
-        return save;
     }
 }

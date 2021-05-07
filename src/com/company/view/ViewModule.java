@@ -20,11 +20,12 @@ public class ViewModule {
 
     private String title;
     private String code;
-    private ArrayList<Task> tasks = new ArrayList<>();
-    private ArrayList<Milestone> milestones = new ArrayList<>();
-    private ArrayList<Deadline> deadlines = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Milestone> milestones = new ArrayList<>();
+    private final ArrayList<Deadline> deadlines = new ArrayList<>();
     private static Scene scene;
 
+    @SuppressWarnings("unchecked")
     public static Scene getScene(Module module, Stage window, SemesterProfile semesterProfile)  {
 
         window.setMinWidth(750);

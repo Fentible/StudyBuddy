@@ -1,14 +1,10 @@
 package com.company.edit;
 
 import com.company.add.*;
-import com.company.model.Module;
 import com.company.model.*;
 import com.company.view.ViewMilestone;
-import com.company.view.ViewTask;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -37,7 +33,7 @@ public class EditMilestone {
 
     public static Scene getScene() { return scene; }
 
-    public static boolean Display(SemesterProfile semesterProfile, Milestone passedMilestone, Stage window)  {
+    public static void Display(SemesterProfile semesterProfile, Milestone passedMilestone, Stage window)  {
 
         milestone = passedMilestone;
         event = milestone.getEvent();
@@ -49,12 +45,6 @@ public class EditMilestone {
 
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Milestone");
-        //window.setMinWidth(750);
-        //window.setMinHeight(500);
-        //window.setMaxWidth(750);
-        //window.setMaxHeight(500);
-        //window.setWidth(750);
-        //window.setHeight(500);
         Timeline tl = new Timeline();
         tl.setCycleCount(Timeline.INDEFINITE);
         tl.getKeyFrames().add(
@@ -145,6 +135,5 @@ public class EditMilestone {
         scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
 
-        return save;
     }
 }

@@ -8,9 +8,9 @@ import java.time.LocalTime;
 
 public class Reminder implements Serializable {
 
-    private CalenderModelClass relatedEvent;
-    private LocalDate date;
-    private LocalTime time;
+    private final CalenderModelClass relatedEvent;
+    private final LocalDate date;
+    private final LocalTime time;
     public boolean shown;
 
     public Reminder(CalenderModelClass relatedEvent) {

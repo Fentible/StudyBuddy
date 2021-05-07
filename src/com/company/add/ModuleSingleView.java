@@ -1,6 +1,5 @@
 package com.company.add;
 
-import com.company.model.Milestone;
 import com.company.model.SemesterProfile;
 import com.company.model.Module;
 import com.company.model.Task;
@@ -15,8 +14,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class ModuleSingleView {
 

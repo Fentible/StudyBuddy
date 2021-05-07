@@ -6,10 +6,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,17 +16,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -41,8 +29,7 @@ public class ExportData {
 
     private static PdfPCell createImageCell(String path) throws DocumentException, IOException {
         Image img = Image.getInstance(path);
-        PdfPCell cell = new PdfPCell(img, true);
-        return cell;
+        return new PdfPCell(img, true);
     }
 
     public static void Display(SemesterProfile semesterProfile) {

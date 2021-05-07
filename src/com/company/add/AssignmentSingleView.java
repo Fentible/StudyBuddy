@@ -1,7 +1,6 @@
 package com.company.add;
 
 import com.company.model.*;
-import com.company.model.Module;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

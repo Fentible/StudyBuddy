@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@SuppressWarnings("ALL")
 public class ViewMilestone {
 
     private static Scene scene;

@@ -5,26 +5,24 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.jfree.chart.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.fx.interaction.ChartMouseEventFX;
 import org.jfree.chart.fx.interaction.ChartMouseListenerFX;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.GanttRenderer;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.gantt.TaskSeries;
 import org.jfree.data.gantt.TaskSeriesCollection;
-import org.jfree.chart.fx.ChartViewer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -99,10 +97,9 @@ public class ModuleCharts {
     public static JFreeChart createGanttChartNoShow(Module module) {
         IntervalCategoryDataset dataset = getDataSet(module);
 
-        JFreeChart chart = ChartFactory.createGanttChart(
+        return ChartFactory.createGanttChart(
                 module.getTitle(), "Tasks", "Timeline", dataset,
                 true, false, false);
-        return chart;
 
     }
     public static void createGanttChart(Module module) {

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Activity implements CalenderModelClass, Serializable {
 
@@ -57,8 +56,6 @@ public class Activity implements CalenderModelClass, Serializable {
     }
 
     public static void main(String[] args) {
-        //Activity activity = new Activity(ActivityType.READING, 80, 60);
-        //System.out.println(activity.getTimeSpent());
     }
 
     public ArrayList<Task> getRelatedTasks() {

@@ -2,5 +2,5 @@ package com.company.model;
 
 public enum ActivityType {
 
-   READING, WRITING, PROGRAMMING, DEMO;
+   READING, WRITING, PROGRAMMING, DEMO
 }

@@ -1,7 +1,7 @@
 package com.company.model;
 
-import com.company.Dashboard;
 import com.company.Reminder;
+import com.opencsv.CSVWriter;
 import javafx.scene.control.Alert;
 
 import java.io.*;
@@ -9,13 +9,13 @@ import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import com.opencsv.CSVWriter;
-
 
 
 /* primarily for handling and storing data, no view or controller is necessary
@@ -23,19 +23,19 @@ import com.opencsv.CSVWriter;
  */
 public class SemesterProfile implements Serializable {
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
     // private ArrayList<Reminder> reminders = new ArrayList<>();
-    private ArrayList<Activity> activities = new ArrayList<>();
-    private ArrayList<Module> modules = new ArrayList<>();
-    private ArrayList<Milestone> milestones = new ArrayList<>();
+    private final ArrayList<Activity> activities = new ArrayList<>();
+    private final ArrayList<Module> modules = new ArrayList<>();
+    private final ArrayList<Milestone> milestones = new ArrayList<>();
     /* although exam and assignments extends deadlines it may be beneficial to store them separately
      * from generic deadlines for the purpose of searching and displaying them
      */
     // exams and assignments are subclasses of deadline
     private ArrayList<Reminder> reminders = new ArrayList<>();
-    private ArrayList<Exam> exams = new ArrayList<>();
-    private ArrayList<Assignment> assignments = new ArrayList<>();
-    private ArrayList<Deadline> deadlines = new ArrayList<>();
+    private final ArrayList<Exam> exams = new ArrayList<>();
+    private final ArrayList<Assignment> assignments = new ArrayList<>();
+    private final ArrayList<Deadline> deadlines = new ArrayList<>();
     private String saveFileLocation = "src/com/company/model/profile.ser";
     private Properties properties = new Properties();
     public static String style;
@@ -59,7 +59,7 @@ public class SemesterProfile implements Serializable {
         Module module = null;
         this.muted = false;
         this.properties = properties;
-        this.style = properties.getProperty("style");
+        style = properties.getProperty("style");
         while(read.hasNextLine()) {
             line = read.nextLine();
             Scanner readLine = new Scanner(line);
@@ -445,7 +445,7 @@ public class SemesterProfile implements Serializable {
         }
     }
 
-    public void updatePropertiesFile() throws FileNotFoundException {
+    public void updatePropertiesFile() {
         try (OutputStream outputStream = new FileOutputStream("src/com/company/model/config.properties")) {
             this.properties.store(outputStream, null);
         } catch (IOException e) {
@@ -466,8 +466,6 @@ public class SemesterProfile implements Serializable {
             alert.showAndWait();
             return;
         }
-        //System.out.println(saveFileLocation);
-        //FileWriter outWriter = new FileWriter(outFile);
         CSVWriter outWriter = new CSVWriter(new FileWriter(saveFileLocation + "\\out.csv"));
         if(isBitSet(flag, 0)) {
             outWriter.writeNext(new String[] {"Tasks:"});
@@ -514,26 +512,12 @@ public class SemesterProfile implements Serializable {
         Properties properties = new Properties();
         properties.load(new FileInputStream("src/com/company/model/config.properties"));
         SemesterProfile semesterProfile = new SemesterProfile(file, properties);
-        for(Module module : semesterProfile.getModules()) { // check file is read and inputted correctly
-            //System.out.println("Type " + module.getCode());
-            //System.out.println(" Code " + module.getTitle());
-        }
+        // check file is read and inputted correctly
+        //System.out.println("Type " + module.getCode());
+        //System.out.println(" Code " + module.getTitle());
         // Add, get, remove
         semesterProfile.addTask(new Task("task1", "18-04-2021 16:00", "18-04-2021 16:00", 0,
                 "This be notes", null, null, null, null, null));
-        /*
-        //System.out.println(semesterProfile.getTask("tas").getNotes());
-        // semesterProfile.removeTask(semesterProfile.getTask("tas"));
-        if(semesterProfile.getTask("tas") == null)
-            //System.out.println("Task not found");
-        Dashboard dashboard = new Dashboard(semesterProfile);
-        List<LocalDate> dates = dashboard.getDates(LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 19));
-
-       ArrayList<Task> tasks = semesterProfile.getTasksFromDate(dates.get(dates.size() - 1));
-       for(Task task : tasks) {
-           //System.out.println(task.getTitle());
-       }
-       */
 
 
     }

@@ -31,7 +31,7 @@ public class AddMilestone {
     /*
      * See 'AddActivity' for notes as this class is very similar
      */
-    public static boolean Display(SemesterProfile semesterProfile, LocalDate date) {
+    public static void Display(SemesterProfile semesterProfile, LocalDate date) {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -93,7 +93,7 @@ public class AddMilestone {
             if(title.getText().trim().isEmpty() || event == null || requiredTasks == null) {
                 errorMessage.setText("Some required elements are empty");
             }
-            else if (endTime.getText().matches("^..:..$") == false){
+            else if (!endTime.getText().matches("^..:..$")){
                 errorMessage.setText("The start time must be a proper 24hour time"); //tests format for time
             }
             else {
@@ -116,8 +116,6 @@ public class AddMilestone {
         scene.setUserAgentStylesheet(semesterProfile.getStyle());
         window.setScene(scene);
         window.showAndWait();
-
-        return save;
 
     }
 }

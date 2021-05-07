@@ -1,7 +1,6 @@
 package com.company.add;
 
 import com.company.model.Exam;
-import com.company.model.Module;
 import com.company.model.SemesterProfile;
 import com.company.model.Task;
 import javafx.application.Platform;

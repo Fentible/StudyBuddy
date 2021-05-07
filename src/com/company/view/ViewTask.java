@@ -1,7 +1,6 @@
 package com.company.view;
 
 import com.company.Reminder;
-import com.company.ReminderHandler;
 import com.company.edit.EditTask;
 import com.company.model.*;
 import javafx.animation.KeyFrame;
@@ -15,11 +14,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +34,7 @@ public class ViewTask {
 
     public static Scene getScene() { return scene; }
 
+    @SuppressWarnings("unchecked")
     public static void Display(SemesterProfile semesterProfile, Task task) {
 
 
@@ -247,6 +242,7 @@ public class ViewTask {
 
     }
 
+    @SuppressWarnings("unchecked")
     public static void Display(SemesterProfile semesterProfile, Task task, Stage window) {
 
         //window.initModality(Modality.APPLICATION_MODAL);

@@ -5,6 +5,6 @@ package com.company.model;
  */
 public enum CalenderDisplayType {
 
-    TASKS, DEADLINES, MILESTONES, ACTIVITIES;
+    TASKS, DEADLINES, MILESTONES, ACTIVITIES
 
 }

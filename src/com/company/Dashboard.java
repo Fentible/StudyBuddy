@@ -32,9 +32,9 @@ public class Dashboard extends Application {
 
 
     private CalenderDisplayType displayOption;
-    private SemesterProfile semesterProfile;
+    private final SemesterProfile semesterProfile;
     private int year, month;
-    private TilePane tile = new TilePane();
+    private final TilePane tile = new TilePane();
     private static Stage window;
     private static Module viewModule;
     private static Scene scene;
@@ -437,9 +437,7 @@ public class Dashboard extends Application {
 
         ReminderHandler reminderHandler = new ReminderHandler();
         reminderHandler.start(semesterProfile);
-        for(Reminder reminder : semesterProfile.getReminders()) {
-            //System.out.println(reminder.getRelatedEvent().getTitle());
-        }
+        //System.out.println(reminder.getRelatedEvent().getTitle());
         borderPane.setBottom(options);
         borderPane.setTop(menuVBox);
         borderPane.setLeft(vbox);
