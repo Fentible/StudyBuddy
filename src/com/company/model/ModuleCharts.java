@@ -3,13 +3,14 @@ package com.company.model;
 import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.fx.interaction.ChartMouseEventFX;
@@ -68,6 +69,8 @@ public class ModuleCharts {
             BufferedImage chartImage = chart.createBufferedImage(1920, 1080, null);
             try {
                 ImageIO.write(chartImage, "png", file);
+                Alert alertBox = new Alert(Alert.AlertType.CONFIRMATION, "Your PNG has been exported to: " + file.getAbsolutePath());
+                alertBox.showAndWait();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -108,26 +111,11 @@ public class ModuleCharts {
         IntervalCategoryDataset dataset = getDataSet(module);
 
         JFreeChart chart = ChartFactory.createGanttChart(
-                module.getTitle(), "Tasks", "Timeline", dataset,
+                module.getTitle() + " - Right click to export", "Tasks", "Timeline", dataset,
                 true, false, false);
 
-        ChartUtilities.applyCurrentTheme(chart);
+        ChartUtils.applyCurrentTheme(chart);
         ChartViewer viewer = new ChartViewer(chart);
-        viewer.addChartMouseListener(new ChartMouseListenerFX() {
-            @Override
-            public void chartMouseClicked(ChartMouseEventFX event) {
-                exportChart(viewer.getChart());
-            }
-
-            @Override
-            public void chartMouseMoved(ChartMouseEventFX event) {
-
-            }
-        });
-
-        viewer.getCanvas().setOnMouseDragged(Event::consume);
-        viewer.getCanvas().setOnMouseReleased(Event::consume);
-        viewer.getCanvas().setOnMouseDragReleased(Event::consume);
         
 
         window.setScene(new Scene(viewer));
