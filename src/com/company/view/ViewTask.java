@@ -42,7 +42,7 @@ public class ViewTask {
         task.updateProgress();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("View: " + task.getTitle());
-        window.setHeight(579);
+        window.setHeight(620);
         window.setWidth(700);
         // Opens window slightly offset from the current one
         List<Window> open = Stage.getWindows();
@@ -217,6 +217,11 @@ public class ViewTask {
         gridpane.add(progress, 1, 3);
         gridpane.add(notes, 0, 4, 2, 2);
 
+        HBox tableLabels = new HBox(250);
+        tableLabels.getChildren().addAll(new Label("Dependencies:"), new Label("Activities:"), new Label("Milestones:"));
+        tableLabels.setPadding(new Insets(15,15,0,15));
+        tableLabels.setMaxWidth(950);
+
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies, tableOfActivities, tableOfMilestones);
         tables.setPadding(new Insets(15,15,15,15));
@@ -225,7 +230,8 @@ public class ViewTask {
         VBox container = new VBox(8);
         confirmButtons.setAlignment(Pos.CENTER);
         tables.setAlignment(Pos.CENTER);
-        container.getChildren().addAll(gridpane, tables, confirmButtons);
+        tableLabels.setAlignment(Pos.CENTER);
+        container.getChildren().addAll(gridpane, tableLabels, tables, confirmButtons);
         container.setPadding(new Insets(15,15,15,15));
 
         ScrollPane sp = new ScrollPane();
@@ -248,7 +254,7 @@ public class ViewTask {
         //window.initModality(Modality.APPLICATION_MODAL);
         task.updateProgress();
         window.setTitle("View: " + task.getTitle());
-        window.setHeight(579);
+        window.setHeight(620);
         window.setWidth(700);
         //window.setHeight(875);
         Timeline tl = new Timeline();
@@ -398,6 +404,11 @@ public class ViewTask {
         gridpane.add(progress, 1, 3);
         gridpane.add(notes, 0, 4, 2, 2);
 
+        HBox tableLabels = new HBox(250);
+        tableLabels.getChildren().addAll(new Label("Dependencies:"), new Label("Activities:"), new Label("Milestones:"));
+        tableLabels.setPadding(new Insets(15,15,0,15));
+        tableLabels.setMaxWidth(950);
+
         HBox tables = new HBox(8);
         tables.getChildren().addAll(tableOfDependencies, tableOfActivities, tableOfMilestones);
         tables.setPadding(new Insets(15,15,15,15));
@@ -406,7 +417,8 @@ public class ViewTask {
         VBox container = new VBox(8);
         confirmButtons.setAlignment(Pos.CENTER);
         tables.setAlignment(Pos.CENTER);
-        container.getChildren().addAll(gridpane, tables, confirmButtons);
+        tableLabels.setAlignment(Pos.CENTER);
+        container.getChildren().addAll(gridpane, tableLabels, tables, confirmButtons);
         container.setPadding(new Insets(15,15,15,15));
 
         ScrollPane sp = new ScrollPane();

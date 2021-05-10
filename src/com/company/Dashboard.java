@@ -20,19 +20,23 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class Dashboard extends Application {
 
 
     private CalenderDisplayType displayOption;
-    private final SemesterProfile semesterProfile;
+    private SemesterProfile semesterProfile;
     private int year, month;
     private final TilePane tile = new TilePane();
     private static Stage window;
@@ -212,9 +216,50 @@ public class Dashboard extends Application {
      */
     public void saveOption() throws IOException {
         SaveDialogBox saveDialogBox = new SaveDialogBox();
-        saveDialogBox.Display("Save", "Do you want to save?", semesterProfile.getStyle());
-        if(SaveDialogBox.location != null) {
-            semesterProfile.saveFile(SaveDialogBox.location);
+        saveDialogBox.Display("Save", "Do you want to save?", "Save",  semesterProfile.getStyle());
+        if(saveDialogBox.location != null) {
+            semesterProfile.saveFile(saveDialogBox.location);
+        }
+    }
+
+    public void loadOption() throws IOException {
+        SaveDialogBox loadDialogBox = new SaveDialogBox();
+        loadDialogBox.Display("Load", "Load from where?", "Load", semesterProfile.getStyle());
+        File inFile = null;
+        SemesterProfile newSemesterProfile;
+        if(loadDialogBox.location != null) {
+            inFile = new File(loadDialogBox.location);
+        }
+
+        if(inFile != null) {
+            if (inFile.exists()) {
+                try {
+                    //System.out.println("Loading saved file");
+                    FileInputStream fileIn = new FileInputStream(inFile);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    newSemesterProfile = (SemesterProfile) in.readObject();
+                    in.close();
+                    fileIn.close();
+                    window.close();
+                    Stage stage = new Stage();
+                    stage.setHeight(1000);
+                    stage.setWidth(1500);
+                    stage.setResizable(false);
+                    Dashboard dashboard = new Dashboard(newSemesterProfile);
+                    dashboard.start(stage);
+
+                } catch (IOException i) {
+                    i.printStackTrace();
+                    return;
+                } catch (ClassNotFoundException c) {
+                    //System.out.println("Class not found");
+                    c.printStackTrace();
+                    return;
+                }
+            } else {
+                AlertBox loadingError = new AlertBox();
+                loadingError.Display("Loading Error", "File at directory is not a valid profile", semesterProfile.getStyle());
+            }
         }
     }
 
@@ -320,6 +365,13 @@ public class Dashboard extends Application {
         saveFile.setOnAction(e -> {
             try {
                 saveOption();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        openFile.setOnAction(e -> {
+            try {
+                loadOption();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

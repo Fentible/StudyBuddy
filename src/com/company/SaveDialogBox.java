@@ -21,7 +21,7 @@ public class SaveDialogBox {
 
     static String location;
 
-    public void Display(String title, String message, String style) throws IOException {
+    public void Display(String title, String message, String button, String style) throws IOException {
 
         Stage window = new Stage();
 
@@ -32,7 +32,7 @@ public class SaveDialogBox {
         window.setMinHeight(200);
         Label label = new Label(message);
 
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button(button);
         Button cancelButton = new Button("Cancel");
         TextField inputLocation = new TextField();
         Button directorySelect = new Button("Find Directory");
@@ -46,7 +46,9 @@ public class SaveDialogBox {
         });
         directorySelect.setOnAction(event -> {
             File selected = directoryChooser.showDialog(window);
-            inputLocation.setText(selected.getAbsolutePath() + "\\profile.ser");
+            if(selected != null){
+                inputLocation.setText(selected.getAbsolutePath() + "\\profile.ser");
+            }
         });
         saveButton.setOnAction(event -> {
             location = inputLocation.getText();
