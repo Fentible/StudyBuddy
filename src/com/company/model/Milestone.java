@@ -38,7 +38,9 @@ public class Milestone implements CalenderModelClass, Serializable {
             }
             total++;
         }
-        completion = (complete / total) * 100;
+        if(total !=0) {
+            completion = (complete / total) * 100;
+        }
     }
 
     public void setRequiredTasks(ArrayList<Task> requiredTasks) { this.requiredTasks = requiredTasks; }
