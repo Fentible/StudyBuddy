@@ -79,6 +79,8 @@ public class ViewTask {
         addReminder.setOnAction(e -> {
             if(task.getEnd().isAfter(LocalDateTime.now())) {
                 semesterProfile.addReminder(new Reminder(task));
+                Alert reminderAlter = new Alert(Alert.AlertType.CONFIRMATION, "A reminder for " + task.getTitle() + " at " + task.getEnd() + " has been set");
+                reminderAlter.showAndWait();
             } else {
                 Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
                 reminderAlert.showAndWait();
@@ -278,6 +280,8 @@ public class ViewTask {
         addReminder.setOnAction(e -> {
             if(task.getEnd().isAfter(LocalDateTime.now())) {
                 semesterProfile.addReminder(new Reminder(task));
+                Alert reminderAlter = new Alert(Alert.AlertType.CONFIRMATION, "A reminder for " + task.getTitle() + " at " + task.getEnd() + " has been set");
+                reminderAlter.showAndWait();
             } else {
                 Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
                 reminderAlert.showAndWait();

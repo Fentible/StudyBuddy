@@ -76,6 +76,8 @@ public class ViewDeadline {
         addReminder.setOnAction(e -> {
             if(deadline.getEnd().isAfter(LocalDateTime.now())) {
                 semesterProfile.addReminder(new Reminder(deadline));
+                Alert reminderAlter = new Alert(Alert.AlertType.CONFIRMATION, "A reminder for " + deadline.getTitle() + " at " + deadline.getEnd() + " has been set");
+                reminderAlter.showAndWait();
             } else {
                 Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
                 reminderAlert.showAndWait();
@@ -217,6 +219,8 @@ public class ViewDeadline {
         addReminder.setOnAction(e -> {
             if (deadline.getEnd().isAfter(LocalDateTime.now())) {
                 semesterProfile.addReminder(new Reminder(deadline));
+                Alert reminderAlter = new Alert(Alert.AlertType.CONFIRMATION, "A reminder for " + deadline.getTitle() + " at " + deadline.getEnd() + " has been set");
+                reminderAlter.showAndWait();
             } else {
                 Alert reminderAlert = new Alert(Alert.AlertType.ERROR, "A reminder cannot be set in the past");
                 reminderAlert.showAndWait();
